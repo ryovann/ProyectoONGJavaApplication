@@ -72,13 +72,9 @@ public class LoginWindow extends JFrame {
 					boolean returnedValue = controller.ingresarBtnAcction(new String(txtPassword.getPassword()));
 					if(returnedValue){
 						JOptionPane.showMessageDialog(null, "¡¡Contraseña correcta!!\n Ingresando al Sistema");
-						MainWindow mainWindow = new MainWindow();
-						mainWindow.setVisible(true);
-						setVisible(false);
 					}else{
 						JOptionPane.showMessageDialog(null, "¡¡Contraseña incorrecta!!\n Inténtalo nuevamente");
 					}
-					
 				}
 				
 			}
