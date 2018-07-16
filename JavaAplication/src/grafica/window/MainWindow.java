@@ -78,6 +78,9 @@ public class MainWindow extends JFrame {
 		JMenu menuUsuarios = new JMenu("Usuarios");
 		menuBar.add(menuUsuarios);
 		
+		JMenuItem mntmAgregarUsuario = new JMenuItem("Agregar usuario");
+		menuUsuarios.add(mntmAgregarUsuario);
+		
 		JMenuItem mntmModificarUsuario = new JMenuItem("Modificar usuario");
 		menuUsuarios.add(mntmModificarUsuario);
 		
@@ -131,23 +134,20 @@ public class MainWindow extends JFrame {
 		cmbCriterioBusqueda.setBounds(121, 12, 157, 20);
 		panelBusquedaUsuarios.add(cmbCriterioBusqueda);
 		
-		JLabel lblConsejo = new JLabel("Consejo: ");
-		lblConsejo.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblConsejo.setBounds(10, 40, 88, 28);
-		panelBusquedaUsuarios.add(lblConsejo);
-		
-		JLabel lblNewLabel = new JLabel("Puede seleccionar diferentes criterios para la busqueda en la lista ubicada sobre este texto");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel.setBounds(85, 40, 669, 28);
-		panelBusquedaUsuarios.add(lblNewLabel);
-		
 		panelListaUsuarios = new JPanel();
 		panelListaUsuarios.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelListaUsuarios.setBounds(10, 135, 764, 294);
 		panelNuevasPersonas.add(panelListaUsuarios);
 		panelListaUsuarios.setLayout(null);
-		
+		tableUsuariosNuevos = new JTable();
 		JButton btnContinuarRegistro = new JButton("Continuar registro");
+		btnContinuarRegistro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+			
+			
+			}
+		});
 		btnContinuarRegistro.setBounds(609, 260, 145, 23);
 		panelListaUsuarios.add(btnContinuarRegistro);
 		
@@ -155,7 +155,7 @@ public class MainWindow extends JFrame {
 		scrollPaneListaUsuariosNuevos.setBounds(10, 11, 744, 238);
 		panelListaUsuarios.add(scrollPaneListaUsuariosNuevos);
 		
-		tableUsuariosNuevos = new JTable();
+		
 		tableUsuariosNuevos.setBorder(new LineBorder(new Color(0, 0, 0)));
 		scrollPaneListaUsuariosNuevos.setViewportView(tableUsuariosNuevos);
 		
