@@ -46,6 +46,7 @@ public class MainWindow_Controller {
 					rows[3] = recivedData.getString("motivo_contacto");
 					//termino creacion de fila con datos de usuario
 					model.addRow(rows);//Agrego la fila al modelo
+					
 				}
 				return model;//Retorno modelo de tabla
 			} catch (SQLException e) {
@@ -76,4 +77,7 @@ public class MainWindow_Controller {
 			}
 		}
 	}
+	
+	
+	
 }
