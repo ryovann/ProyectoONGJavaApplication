@@ -16,9 +16,14 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JSeparator;
 import javax.swing.JRadioButton;
 import javax.swing.border.LineBorder;
+
+import grafica.controller.FormularioRegistro_Controller;
+
 import java.awt.Color;
 import javax.swing.JList;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class FormularioRegistro extends JFrame {
 
@@ -125,14 +130,32 @@ public class FormularioRegistro extends JFrame {
 		JComboBox cmbFechaNac_Dia = new JComboBox();
 		cmbFechaNac_Dia.setBounds(553, 8, 57, 20);
 		panelDatosPersonales.add(cmbFechaNac_Dia);
+		cmbFechaNac_Dia.addItem("DD");
+		int dia = 1;
+		while(dia<32){
+			 cmbFechaNac_Dia.addItem(dia);
+			 dia++;
+		}
 		
 		JComboBox cmbFechaNacMes = new JComboBox();
 		cmbFechaNacMes.setBounds(620, 8, 58, 20);
 		panelDatosPersonales.add(cmbFechaNacMes);
+		cmbFechaNacMes.addItem("MM");
+		int mes =1;
+		while(mes<13){
+			cmbFechaNacMes.addItem(mes);
+			mes++;
+		}
 		
 		JComboBox cmbFechaNacAnio = new JComboBox();
 		cmbFechaNacAnio.setBounds(688, 8, 76, 20);
 		panelDatosPersonales.add(cmbFechaNacAnio);
+		cmbFechaNacAnio.addItem("AAAA");
+		int anio=1910;
+		while(anio<=2018){
+			cmbFechaNacAnio.addItem(anio);
+			anio++;
+		}
 		
 		JLabel lblDatosPersonales = new JLabel("Datos personales");
 		lblDatosPersonales.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -460,6 +483,22 @@ public class FormularioRegistro extends JFrame {
 		contentPane.add(btnCancelar);
 		
 		JButton btnConfirmarRegistro = new JButton("CONFIRMAR REGISTRO");
+		btnConfirmarRegistro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				FormularioRegistro_Controller controlador = FormularioRegistro_Controller.getIntancia();
+				String primer_nombre =lblPrimerNombre.getText();
+				String segundo_nombre = txtSegundoNombre.getText();
+				String primer_apellido = "";
+				String segundo_apellido = txtSegundoApellido.getText();
+				String sexo = cmbSexo.getSelectedItem().toString();
+				String dia_nac = cmbFechaNac_Dia.getSelectedItem().toString();
+				String mes_nac = cmbFechaNacMes.getSelectedItem().toString();
+				String anio_nac =cmbFechaNacAnio.getSelectedItem().toString();
+				String pais_nac = cmbPaisNacimiento.getSelectedItem().toString();
+				String estado_civil = cmbEstadoCivil.getSelectedItem().toString();
+				
+			}
+		});
 		btnConfirmarRegistro.setBounds(588, 576, 196, 23);
 		contentPane.add(btnConfirmarRegistro);
 		
@@ -474,5 +513,8 @@ public class FormularioRegistro extends JFrame {
 		JLabel lblCIVenezolana = new JLabel("ci_venezolana");
 		lblCIVenezolana.setBounds(261, 12, 93, 14);
 		contentPane.add(lblCIVenezolana);
+		
+		
+		
 	}
 }
