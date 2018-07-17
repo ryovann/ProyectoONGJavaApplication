@@ -166,7 +166,7 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				tableUsuariosNuevos.setModel(new DefaultTableModel());
 				//Instancio el controlador
-				MainWindow_Controller controller = new MainWindow_Controller();
+				MainWindow_Controller controller = MainWindow_Controller.getInstancia();
 				//int que identifica que tipo de criterio selecciono
 				int type = cmbCriterioBusqueda.getSelectedIndex();
 				//Texto para la busqueda

@@ -68,7 +68,7 @@ public class LoginWindow extends JFrame {
 				if(new String(txtPassword.getPassword()).equals("")){
 					JOptionPane.showMessageDialog(null, "¡¡Debes ingresar una contraseña!!");
 				}else{
-					LoginWindow_Controller controller = new LoginWindow_Controller();
+					LoginWindow_Controller controller = LoginWindow_Controller.getInstancia();
 					boolean returnedValue = controller.ingresarBtnAcction(new String(txtPassword.getPassword()));
 					if(returnedValue){
 						JOptionPane.showMessageDialog(null, "¡¡Contraseña correcta!!\n Ingresando al Sistema");
