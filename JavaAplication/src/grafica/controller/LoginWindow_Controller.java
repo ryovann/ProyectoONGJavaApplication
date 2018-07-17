@@ -5,6 +5,14 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class LoginWindow_Controller {
+	public static LoginWindow_Controller instancia =null;
+	private LoginWindow_Controller(){};
+	public static LoginWindow_Controller getInstancia(){
+		if (instancia == null){
+			instancia= new LoginWindow_Controller();
+		}
+		return instancia;
+	}
 	public boolean ingresarBtnAcction(String pass) {
 		System.out.println("Recived text: " + pass);
 		String storedPassword = obtainConfiguredPassword();

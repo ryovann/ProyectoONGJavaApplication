@@ -8,6 +8,14 @@ import logicaPersistencia.facade.Facade;
 import logicaPersistencia.valueObject.ValueObject_UsuariosNuevosBusqueda;
 
 public class MainWindow_Controller {
+	public static MainWindow_Controller instancia =null;
+	private MainWindow_Controller(){};
+	public static MainWindow_Controller getInstancia(){
+		if (instancia == null){
+			instancia= new MainWindow_Controller();
+		}
+		return instancia;
+	}
 	public DefaultTableModel btnBuscarFunction(int queryType, String value) {
 		// queryType es un int que se utiliza para identificar
 		// si se utilizo la cedula venezolana o otro criterio
