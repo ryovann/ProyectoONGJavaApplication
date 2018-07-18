@@ -79,6 +79,14 @@ public class MainWindow extends JFrame {
 		menuBar.add(menuUsuarios);
 		
 		JMenuItem mntmAgregarUsuario = new JMenuItem("Agregar usuario");
+		mntmAgregarUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				MainWindow_Controller controlador = MainWindow_Controller.getInstancia();
+				controlador.usuariosAgregarUsuarioMenuItem();
+				
+				
+			}
+		});
 		menuUsuarios.add(mntmAgregarUsuario);
 		
 		JMenuItem mntmModificarUsuario = new JMenuItem("Modificar usuario");
@@ -140,16 +148,6 @@ public class MainWindow extends JFrame {
 		panelNuevasPersonas.add(panelListaUsuarios);
 		panelListaUsuarios.setLayout(null);
 		tableUsuariosNuevos = new JTable();
-		JButton btnContinuarRegistro = new JButton("Continuar registro");
-		btnContinuarRegistro.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			
-			
-			
-			}
-		});
-		btnContinuarRegistro.setBounds(609, 260, 145, 23);
-		panelListaUsuarios.add(btnContinuarRegistro);
 		
 		JScrollPane scrollPaneListaUsuariosNuevos = new JScrollPane();
 		scrollPaneListaUsuariosNuevos.setBounds(10, 11, 744, 238);
@@ -175,10 +173,8 @@ public class MainWindow extends JFrame {
 				//controlar la funcionalidad del boton buscar
 				//Luego debo recibir los datos y mostrarlos
 				DefaultTableModel model = controller.btnBuscarFunction(type, value);
+				
 				tableUsuariosNuevos.setModel(model);
-				
-				
-				
 				
 				
 				
@@ -187,9 +183,24 @@ public class MainWindow extends JFrame {
 		btnBuscar.setBounds(665, 11, 89, 23);
 		panelBusquedaUsuarios.add(btnBuscar);
 		
+		JButton btnContinuarRegistro = new JButton("Continuar registro");
+		btnContinuarRegistro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int idSelectedRow = tableUsuariosNuevos.getSelectedRow();
+				int ciVenezolana = Integer.parseInt((String) tableUsuariosNuevos.getModel().getValueAt(idSelectedRow, 0));
+				String primerNombre = (String) tableUsuariosNuevos.getModel().getValueAt(idSelectedRow, 1);
+				String primerApellido =  (String) tableUsuariosNuevos.getModel().getValueAt(idSelectedRow, 2);
+				String motivoContacto =  (String) tableUsuariosNuevos.getModel().getValueAt(idSelectedRow, 3);
+				MainWindow_Controller controlador = MainWindow_Controller.getInstancia();
+				controlador.btnContinuarRegistroFunction(ciVenezolana,primerNombre,primerApellido,motivoContacto);
+				
+			
+			}
+		});
 		
 		
-		//Oculto todas las pestañas antes de mostrar la ventana
+		btnContinuarRegistro.setBounds(609, 260, 145, 23);
+		panelListaUsuarios.add(btnContinuarRegistro);
 		
 	}
 }
