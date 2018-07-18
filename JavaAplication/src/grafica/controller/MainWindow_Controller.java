@@ -4,6 +4,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
+import grafica.window.FormularioRegistro;
+import grafica.window.TableModel;
 import logicaPersistencia.facade.Facade;
 import logicaPersistencia.valueObject.ValueObject_UsuariosNuevosBusqueda;
 
@@ -22,7 +25,7 @@ public class MainWindow_Controller {
 		//columnNames guarda los nombres de las columnas a mostrar en la tabla
 		String[] columnNames = { "Cedula venezolana", "Primer nombre", "Apellido", "Motivo de Contacto" };
 		//Creo una tabla default a la cual no le agrego filas pero si columnas, las cuales esatn en ColumnNames
-		DefaultTableModel model = new DefaultTableModel(null, columnNames);
+		DefaultTableModel model = new TableModel(null, columnNames);
 		//Creo un array que guardara temporalmente los datos que van a ser agregados a el modelo
 		String[] rows = new String[4];
 		//Si los datos son del tipo correcto se ejecuta el bloque if
@@ -85,7 +88,17 @@ public class MainWindow_Controller {
 			}
 		}
 	}
+	public void btnContinuarRegistroFunction(int ciVenezolana, String primerNombre, String primerApellido, String motivoContacto){
+		FormularioRegistro formRegistro = new FormularioRegistro(1);
+		formRegistro.RellenarFormularioFromContinuarRegistro(ciVenezolana,primerNombre,primerApellido,motivoContacto);
+		formRegistro.setLocationRelativeTo(null);
+		formRegistro.setVisible(true);
+	}
 	
 	
-	
+	public void usuariosAgregarUsuarioMenuItem(){
+		FormularioRegistro formRegistro = new FormularioRegistro(0);
+		formRegistro.setLocationRelativeTo(null);
+		formRegistro.setVisible(true);
+	}
 }
