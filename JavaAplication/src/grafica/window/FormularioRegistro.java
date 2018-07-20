@@ -616,12 +616,12 @@ public class FormularioRegistro extends JFrame {
 				}
 				
 				//empiezo con la documentacion QUEDA COMENTADO HASTA QUE SE SOLUCIONE LO DE ARRIBA
-				/*String ci_uruguaya =txtNumeroCIUY.getText();
+				String ci_uruguaya =txtNumeroCIUY.getText();
 				String pasaporte=txtPasaporte.getText();
 				String dia_carnet_salud=cmbCarnetSaludVigente_Dia.getSelectedItem().toString();
 				String mes_carnet_salud=cmbCarnetSaludVigente_Mes.getSelectedItem().toString();
 				String anio_carnet_salud=cmbCarnetSaludVigente_Anio.getSelectedItem().toString();
-				controlador.UpdateDocumentos(ci_uruguaya, pasaporte, dia_carnet_salud, mes_carnet_salud, anio_carnet_salud, ci_venezolana);*/
+				controlador.UpdateDocumentos(ci_uruguaya, pasaporte, dia_carnet_salud, mes_carnet_salud, anio_carnet_salud, ci_venezolana);
 				
 				
 				//EMPIEZO CON LA ESCOLARIDAD, QUEDA COMENTADO HASTA QUE SE FUNCIONE LO DE ARRIBA
