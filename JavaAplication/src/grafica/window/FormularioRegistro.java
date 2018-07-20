@@ -100,7 +100,7 @@ public class FormularioRegistro extends JFrame {
 		panelDatosPersonales.setLayout(null);
 		
 		JLabel lblSegundoNombre = new JLabel("Segundo nombre:");
-		lblSegundoNombre.setBounds(4, 69, 111, 14);
+		lblSegundoNombre.setBounds(4, 59, 111, 14);
 		panelDatosPersonales.add(lblSegundoNombre);
 		
 		JLabel lblSegundoApellido = new JLabel("Segundo apellido");
@@ -108,7 +108,7 @@ public class FormularioRegistro extends JFrame {
 		panelDatosPersonales.add(lblSegundoApellido);
 		
 		txtSegundoNombre = new JTextField();
-		txtSegundoNombre.setBounds(125, 66, 86, 20);
+		txtSegundoNombre.setBounds(130, 56, 86, 20);
 		panelDatosPersonales.add(txtSegundoNombre);
 		txtSegundoNombre.setColumns(10);
 		
@@ -189,16 +189,16 @@ public class FormularioRegistro extends JFrame {
 		txtPrimerApellido.setColumns(10);
 		
 		JLabel lblCedulaVenezolana = new JLabel("Cedula venezolana");
-		lblCedulaVenezolana.setBounds(4, 127, 111, 14);
+		lblCedulaVenezolana.setBounds(4, 107, 111, 14);
 		panelDatosPersonales.add(lblCedulaVenezolana);
 		
 		txtCIVenezolana = new JTextField();
-		txtCIVenezolana.setBounds(125, 124, 86, 20);
+		txtCIVenezolana.setBounds(130, 104, 86, 20);
 		panelDatosPersonales.add(txtCIVenezolana);
 		txtCIVenezolana.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Direcci\u00F3n");
-		lblNewLabel.setBounds(4, 157, 107, 20);
+		lblNewLabel.setBounds(4, 155, 107, 20);
 		panelDatosPersonales.add(lblNewLabel);
 		
 		text_direccion = new JTextField();
