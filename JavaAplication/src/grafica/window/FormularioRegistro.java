@@ -606,14 +606,14 @@ public class FormularioRegistro extends JFrame {
 				//FALTAN LOS IDIOMAS
 				System.out.println("se hizo el update");
 				
-				//telefonos QUEDA COMENTADO HASTA QUE SE SOLUCIONE LA PARTE DE ARRIBA
-				/*String tel1 = txtTelefono.getText();
+				//telefonos 
+				String tel1 = txtTelefono.getText();
 				String tel2=txtOtroTelefono.getText();
-				controlador.InsertarTelefono(ci_venezolana,tel1)
+				controlador.InsertarTelefono(ci_venezolana,tel1);
 				if(tel2.equals("")){
 					System.out.println("tel2 vacio");
 				}else {controlador.InsertarTelefono(ci_venezolana,tel2);
-				}*/
+				}
 				
 				//empiezo con la documentacion QUEDA COMENTADO HASTA QUE SE SOLUCIONE LO DE ARRIBA
 				/*String ci_uruguaya =txtNumeroCIUY.getText();

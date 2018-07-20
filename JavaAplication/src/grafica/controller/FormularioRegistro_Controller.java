@@ -34,8 +34,7 @@ public class FormularioRegistro_Controller {
 		f.UpdatePersona(vop);
 	}
 	
-	public void InsertarTelefono(String ci_venezolana,String tel1,String tel2){
-		
+	public void InsertarTelefono(String ci_venezolana,String tel1){
 		VO_telefonos_Persona votp= new VO_telefonos_Persona(ci_venezolana, tel1);
 		Facade f = new Facade();
 		f.InsertarTelefono(votp);
