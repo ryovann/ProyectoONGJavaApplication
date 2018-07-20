@@ -8,6 +8,7 @@ import java.util.Properties;
 
 import logicaPersistencia.dbAccess.dbFunctions;
 import logicaPersistencia.valueObject.VO_Documentos;
+import logicaPersistencia.valueObject.VO_Formacion_Academica;
 import logicaPersistencia.valueObject.VO_Persona;
 import logicaPersistencia.valueObject.VO_telefonos_Persona;
 import logicaPersistencia.valueObject.ValueObject_UsuariosNuevosBusqueda;
@@ -88,5 +89,10 @@ public class Facade {
 	public void UpdateDocumentos(VO_Documentos vod){
 		dbFunctions dbAccess = new dbFunctions(config);
 		dbAccess.UpdateDocumentos(vod.getCi_uruguaya(),vod.getPasaporte(),vod.getFecha_carnet_salud(),vod.getCi_venezolana());
+	}
+	
+	public void InsertarFormacion_Academica(VO_Formacion_Academica vofa){
+		dbFunctions dbAccess = new dbFunctions(config);
+		dbAccess.InsertarFormacion_Academica(vofa.getNivel(),vofa.getCompletado(),vofa.getCi_venezolana());
 	}
 }

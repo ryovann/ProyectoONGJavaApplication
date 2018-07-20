@@ -26,7 +26,7 @@ public class QueryStore {
 		String query="UPDATE persona as p INNER JOIN documentos d on p.id_persona=d.id_persona"
 				+ "SET segundo_nombre=(?), segundo_apellido=(?), sexo=(?),estado_civil=(?),"
 				+ "email=(?), ocupacion=(?), motivo_contacto=(?), "
-				+ "estado=0,reside_desde = (?),domicilio=(?), id_pais_nac=(?), "
+				+ "estado=1,reside_desde = (?),domicilio=(?), id_pais_nac=(?), "
 				+ "fecha_nac =(?),ciudad_nac =(?)"
 				+ "WHERE ci_venezolana =(?)";
 		return query;
@@ -43,7 +43,17 @@ public class QueryStore {
 	}
 	
 	public String UpdateDocumentos(){
-		String query ="update documentos d set ci_uruguaya=(?), pasaporte=(?), carnet_salud=(?) where d.ci_venezolana=(?)";
+		String query ="UPDATE documentos d SET ci_uruguaya=(?), pasaporte=(?), carnet_salud=(?) WHERE d.ci_venezolana=(?)";
+		return query;
+	}
+	
+	public String InsertarFormacion_Academica(){
+		String query ="INSERT INTO formacion_academica (id_persona,nivel,completado) VALUES ((?),(?),(?))";
+		return query;
+	}
+	
+	public String InsertarProfesion(){
+		String query="insert into tiene_profesion (id_persona,id_prof,titulo,homologacion) values ((?),(?),(?),(?))";
 		return query;
 	}
 }

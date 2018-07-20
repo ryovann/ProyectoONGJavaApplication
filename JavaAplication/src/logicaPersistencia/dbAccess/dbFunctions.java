@@ -150,7 +150,7 @@ public class dbFunctions {
 			//ahora tengo que tomar la consulta para insertar el telefono 
 			PreparedStatement preparedS2 = ConnectionObject.getConnection().prepareStatement(querys.InsertarTelefono());
 			 preparedS2.setInt(1, id_persona);
-			 preparedS2.setString(1, tel);
+			 preparedS2.setString(2, tel);
 			 preparedS2.executeUpdate();
 			 System.out.println("se inserto el telefono");
 			 
@@ -176,6 +176,40 @@ public class dbFunctions {
 			 
 		} catch (SQLException e) {
 			System.out.println("dbFunctions.UpdateDocumentos: Error en la consulta: ");
+			e.printStackTrace();
+		}
+	}
+	
+	public void InsertarFormacion_Academica(String nivel, int completado,String ci_venezolana){
+		ConnectionObject.initializeConnection();
+		try {
+			//consigo el id de la persona 
+			PreparedStatement preparedS = ConnectionObject.getConnection().prepareStatement(querys.idPersona_por_ci_venezolana());
+			preparedS.setString(1,ci_venezolana);
+			ResultSet rs=preparedS.executeQuery();
+			int id_persona=0;
+			if ( rs ==null){ //SI ES UN rs VACIO
+				System.out.println("no hay persona con esa cedula venezolana, estoy en dbfunctions");
+			}else{
+				while (rs.next()){
+	                id_persona= rs.getInt("id_persona");
+	                System.out.println("se encontro id_persona por la cedula, estoy en dbfunctions");
+				} 
+				// una ve que tengo la id  de la persona puedo insertar en la tabla formacion_academica 
+				 PreparedStatement preparedS2 = ConnectionObject.getConnection().prepareStatement(querys.InsertarFormacion_Academica());
+				 preparedS2.setInt(1, id_persona);
+				 preparedS2.setString(2,nivel);
+				 preparedS2.setInt(3,completado);
+				 preparedS2.executeUpdate();
+				 System.out.println("se inserto la formacion academica, estoy en dbFunctions");
+			}//end else
+			rs.close();	
+			preparedS.close();
+			
+		
+			 
+		} catch (SQLException e) {
+			System.out.println("dbFunctions.InsertarFormacion_Academica: Error en la consulta: ");
 			e.printStackTrace();
 		}
 	}

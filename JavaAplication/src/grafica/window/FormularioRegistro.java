@@ -622,6 +622,21 @@ public class FormularioRegistro extends JFrame {
 				String mes_carnet_salud=cmbCarnetSaludVigente_Mes.getSelectedItem().toString();
 				String anio_carnet_salud=cmbCarnetSaludVigente_Anio.getSelectedItem().toString();
 				controlador.UpdateDocumentos(ci_uruguaya, pasaporte, dia_carnet_salud, mes_carnet_salud, anio_carnet_salud, ci_venezolana);*/
+				
+				
+				//EMPIEZO CON LA ESCOLARIDAD, QUEDA COMENTADO HASTA QUE SE FUNCIONE LO DE ARRIBA
+				/*String nivel_escolar = cmbNivelCursado.getSelectedItem().toString();
+				String titulo= cmbTituloObtenido.getSelectedItem().toString();
+				int completado=0;
+				if (radio_nivelCursadoCompleto.isSelected()){
+					completado=1;
+				}
+				int homologacion =0;
+				if (radio_HomologadoSi.isSelected()){
+					homologacion =1;
+				}
+				controlador.InsertarFormacion_Academica(nivel_escolar,completado,ci_venezolana);*/
+				
 			}
 		});
 		btnConfirmarRegistro.setBounds(588, 760, 214, 23);
