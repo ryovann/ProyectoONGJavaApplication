@@ -23,12 +23,7 @@ public class QueryStore {
 	}
 	
 	public String UpdatePersona(){
-		String query="UPDATE persona as p INNER JOIN documentos d on p.id_persona=d.id_persona"
-				+ "SET segundo_nombre=(?), segundo_apellido=(?), sexo=(?),estado_civil=(?),"
-				+ "email=(?), ocupacion=(?), motivo_contacto=(?), "
-				+ "estado=1,reside_desde = (?),domicilio=(?), id_pais_nac=(?), "
-				+ "fecha_nac =(?),ciudad_nac =(?)"
-				+ "WHERE ci_venezolana =(?)";
+		String query="UPDATE persona as p INNER JOIN documentos d on p.id_persona=d.id_persona SET segundo_nombre=(?), segundo_apellido=(?), sexo=(?),estado_civil=(?), email=(?), ocupacion=(?), motivo_contacto=(?), estado=1,reside_desde = (?),domicilio=(?), id_pais_nac=(?), fecha_nac =(?),ciudad_nac =(?) WHERE ci_venezolana =(?)";
 		return query;
 	}
 	
