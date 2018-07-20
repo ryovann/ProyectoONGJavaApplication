@@ -46,6 +46,7 @@ public class FormularioRegistro extends JFrame {
 	private JTextField txtCIVenezolana;
 	private JTextArea txtMotivoContacto = new JTextArea();
 	private int tipoDeRegistro = 0; //Variable para saber el tipo de formulario
+	private JTextField text_direccion;
 
 	/**
 	 * Launch the application.
@@ -86,7 +87,7 @@ public class FormularioRegistro extends JFrame {
 		setTitle("Formulario de Registro");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 817, 797);
+		setBounds(100, 100, 817, 839);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -94,7 +95,7 @@ public class FormularioRegistro extends JFrame {
 		
 		JPanel panelDatosPersonales = new JPanel();
 		panelDatosPersonales.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		panelDatosPersonales.setBounds(10, 36, 792, 159);
+		panelDatosPersonales.setBounds(10, 28, 792, 190);
 		contentPane.add(panelDatosPersonales);
 		panelDatosPersonales.setLayout(null);
 		
@@ -121,7 +122,7 @@ public class FormularioRegistro extends JFrame {
 		panelDatosPersonales.add(lblFechaDeNacimiento);
 		
 		JComboBox cmbSexo = new JComboBox();
-		cmbSexo.setModel(new DefaultComboBoxModel(new String[] {"Femenino", "Masculino"}));
+		cmbSexo.setModel(new DefaultComboBoxModel(new String[] {"F", "M"}));
 		cmbSexo.setBounds(277, 124, 128, 20);
 		panelDatosPersonales.add(cmbSexo);
 		
@@ -136,6 +137,8 @@ public class FormularioRegistro extends JFrame {
 		JComboBox cmbPaisNacimiento = new JComboBox();
 		cmbPaisNacimiento.setBounds(571, 66, 140, 20);
 		panelDatosPersonales.add(cmbPaisNacimiento);
+		cmbPaisNacimiento.addItem("Uruguay");
+		cmbPaisNacimiento.addItem("Venezuela");
 		
 		JLabel lblCiudadDeNacimiento = new JLabel("Ciudad de nacimiento");
 		lblCiudadDeNacimiento.setBounds(415, 127, 124, 14);
@@ -149,27 +152,23 @@ public class FormularioRegistro extends JFrame {
 		JComboBox cmbFechaNac_Dia = new JComboBox();
 		cmbFechaNac_Dia.setBounds(571, 8, 57, 20);
 		panelDatosPersonales.add(cmbFechaNac_Dia);
-		cmbFechaNac_Dia.addItem("DD");
-		int dia = 1;
-		while(dia<32){
-			 cmbFechaNac_Dia.addItem(dia);
-			 dia++;
-		}
+		cmbFechaNac_Dia .setModel(new DefaultComboBoxModel(new String[] {"DD", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
+		
 		
 		JComboBox cmbFechaNac_Mes = new JComboBox();
 		cmbFechaNac_Mes.setBounds(638, 8, 58, 20);
 		panelDatosPersonales.add(cmbFechaNac_Mes);
-		cmbFechaNac_Mes.addItem("MM");
-		int mes =1;
-		while(mes<13){
-			cmbFechaNac_Mes.addItem(mes);
-			mes++;
-		}
+		cmbFechaNac_Mes.setModel(new DefaultComboBoxModel(new String[] {"MM", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"}));
 		
 		JComboBox cmbFechaNac_Anio = new JComboBox();
 		cmbFechaNac_Anio.setBounds(706, 8, 76, 20);
 		panelDatosPersonales.add(cmbFechaNac_Anio);
 		cmbFechaNac_Anio.addItem("AAAA");
+		int anio=1910;
+		while(anio<=2018){
+			cmbFechaNac_Anio.addItem(anio);
+			anio++;
+		}
 		
 		JLabel lblPrimerNombree = new JLabel("Primer nombre");
 		lblPrimerNombree.setBounds(4, 11, 107, 14);
@@ -197,11 +196,16 @@ public class FormularioRegistro extends JFrame {
 		txtCIVenezolana.setBounds(125, 124, 86, 20);
 		panelDatosPersonales.add(txtCIVenezolana);
 		txtCIVenezolana.setColumns(10);
-		int anio=1910;
-		while(anio<=2018){
-			cmbFechaNac_Anio.addItem(anio);
-			anio++;
-		}
+		
+		JLabel lblNewLabel = new JLabel("Direcci\u00F3n");
+		lblNewLabel.setBounds(4, 157, 107, 20);
+		panelDatosPersonales.add(lblNewLabel);
+		
+		text_direccion = new JTextField();
+		text_direccion.setBounds(125, 157, 529, 26);
+		panelDatosPersonales.add(text_direccion);
+		text_direccion.setColumns(10);
+		
 		
 		JLabel lblDatosPersonales = new JLabel("Datos personales");
 		lblDatosPersonales.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -210,13 +214,13 @@ public class FormularioRegistro extends JFrame {
 		
 		JLabel lblDocumentacin = new JLabel("Documentaci\u00F3n");
 		lblDocumentacin.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblDocumentacin.setBounds(10, 206, 141, 14);
+		lblDocumentacin.setBounds(10, 234, 141, 14);
 		contentPane.add(lblDocumentacin);
 		
 		JPanel panelDocumentacion = new JPanel();
 		panelDocumentacion.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelDocumentacion.setLayout(null);
-		panelDocumentacion.setBounds(10, 231, 568, 144);
+		panelDocumentacion.setBounds(10, 249, 568, 144);
 		contentPane.add(panelDocumentacion);
 		
 		JLabel lblCedulaUruguaya = new JLabel("Cedula uruguaya");
@@ -279,8 +283,12 @@ public class FormularioRegistro extends JFrame {
 		JComboBox cmbCarnetSaludVigente_Anio = new JComboBox();
 		cmbCarnetSaludVigente_Anio.setBounds(455, 55, 76, 20);
 		panelDocumentacion.add(cmbCarnetSaludVigente_Anio);
-		cmbCarnetSaludVigente_Anio.setModel(new DefaultComboBoxModel(new String[] {"AAAA", "1920", "1921", "1922", "1923", "1924", "1925", "1926", "1927", "1928", "1929", "1930", "1931", "1932", "1933", "1934", "1934", "1935", "1936", "1937", "1938", "1939", "1940"}));
-		
+		cmbCarnetSaludVigente_Anio.setModel(new DefaultComboBoxModel(new String[] {"AAAA"}));
+		anio=1910;
+		while(anio<=2018){
+			cmbCarnetSaludVigente_Anio.addItem(anio);
+			anio++;
+		}
 		JLabel lblPasaporte = new JLabel("Pasaporte:");
 		lblPasaporte.setBounds(10, 98, 76, 14);
 		panelDocumentacion.add(lblPasaporte);
@@ -309,7 +317,7 @@ public class FormularioRegistro extends JFrame {
 		
 		JPanel panelContacto = new JPanel();
 		panelContacto.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelContacto.setBounds(588, 231, 214, 280);
+		panelContacto.setBounds(588, 249, 214, 280);
 		contentPane.add(panelContacto);
 		panelContacto.setLayout(null);
 		
@@ -354,12 +362,12 @@ public class FormularioRegistro extends JFrame {
 		
 		JLabel lblContacto = new JLabel("Contacto");
 		lblContacto.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblContacto.setBounds(588, 206, 196, 14);
+		lblContacto.setBounds(588, 234, 196, 14);
 		contentPane.add(lblContacto);
 		
 		JPanel panelEscolaridad = new JPanel();
 		panelEscolaridad.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelEscolaridad.setBounds(10, 411, 568, 100);
+		panelEscolaridad.setBounds(10, 429, 568, 100);
 		contentPane.add(panelEscolaridad);
 		panelEscolaridad.setLayout(null);
 		
@@ -407,17 +415,17 @@ public class FormularioRegistro extends JFrame {
 		
 		JLabel lblEscolaridad = new JLabel("Escolaridad");
 		lblEscolaridad.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblEscolaridad.setBounds(10, 386, 141, 14);
+		lblEscolaridad.setBounds(10, 411, 141, 14);
 		contentPane.add(lblEscolaridad);
 		
 		JLabel lblIdiomas = new JLabel("Idiomas");
 		lblIdiomas.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblIdiomas.setBounds(588, 522, 141, 14);
+		lblIdiomas.setBounds(588, 538, 141, 14);
 		contentPane.add(lblIdiomas);
 		
 		JPanel panelIdioma = new JPanel();
 		panelIdioma.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelIdioma.setBounds(588, 546, 214, 182);
+		panelIdioma.setBounds(588, 562, 214, 182);
 		contentPane.add(panelIdioma);
 		panelIdioma.setLayout(null);
 		
@@ -452,7 +460,7 @@ public class FormularioRegistro extends JFrame {
 		
 		JPanel panelSituacionFamiliar = new JPanel();
 		panelSituacionFamiliar.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelSituacionFamiliar.setBounds(10, 547, 568, 119);
+		panelSituacionFamiliar.setBounds(10, 562, 568, 119);
 		contentPane.add(panelSituacionFamiliar);
 		panelSituacionFamiliar.setLayout(null);
 		
@@ -517,38 +525,19 @@ public class FormularioRegistro extends JFrame {
 		
 		JLabel lblSituacionFamiliar = new JLabel("Situacion familiar");
 		lblSituacionFamiliar.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblSituacionFamiliar.setBounds(10, 522, 141, 14);
+		lblSituacionFamiliar.setBounds(10, 538, 141, 14);
 		contentPane.add(lblSituacionFamiliar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(424, 739, 154, 23);
+		btnCancelar.setBounds(424, 760, 154, 23);
 		contentPane.add(btnCancelar);
-		
-		JButton btnConfirmarRegistro = new JButton("CONFIRMAR REGISTRO");
-		btnConfirmarRegistro.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				FormularioRegistro_Controller controlador = FormularioRegistro_Controller.getIntancia();
-				String primer_nombre = txtPrimerNombre.getText();
-				String segundo_nombre = txtSegundoNombre.getText();
-				String primer_apellido = "";
-				String segundo_apellido = txtSegundoApellido.getText();
-				String sexo = cmbSexo.getSelectedItem().toString();
-				String dia_nac = cmbFechaNac_Dia.getSelectedItem().toString();
-				String mes_nac = cmbFechaNac_Mes.getSelectedItem().toString();
-				String anio_nac =cmbFechaNac_Anio.getSelectedItem().toString();
-				String pais_nac = cmbPaisNacimiento.getSelectedItem().toString();
-				String estado_civil = cmbEstadoCivil.getSelectedItem().toString();
-				
-			}
-		});
-		btnConfirmarRegistro.setBounds(588, 739, 214, 23);
-		contentPane.add(btnConfirmarRegistro);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel.setBounds(10, 677, 568, 51);
+		panel.setBounds(10, 696, 568, 51);
 		contentPane.add(panel);
 		panel.setLayout(null);
+		
 		
 		JLabel lblOcupacion = new JLabel("Ocupacion");
 		lblOcupacion.setBounds(10, 11, 96, 29);
@@ -557,6 +546,12 @@ public class FormularioRegistro extends JFrame {
 		JComboBox cmbOcupacion = new JComboBox();
 		cmbOcupacion.setBounds(116, 15, 136, 20);
 		panel.add(cmbOcupacion);
+		cmbOcupacion.addItem("Trabajo fijo");
+		cmbOcupacion.addItem("Trabajo zafral o temporal");
+		cmbOcupacion.addItem("Desocupado");
+		cmbOcupacion.addItem("Jubilado/Pensionista");
+		cmbOcupacion.addItem("Estudiante");
+		
 		
 		JLabel lblResideDesde = new JLabel("Reside desde");
 		lblResideDesde.setBounds(262, 18, 96, 14);
@@ -565,14 +560,75 @@ public class FormularioRegistro extends JFrame {
 		JComboBox cmbResideDesde_Dia = new JComboBox();
 		cmbResideDesde_Dia.setBounds(347, 15, 57, 20);
 		panel.add(cmbResideDesde_Dia);
+		cmbResideDesde_Dia.addItem("DD");
+		 cmbResideDesde_Dia.setModel(new DefaultComboBoxModel(new String[] {"DD", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
 		
 		JComboBox cmbResideDesde_Mes = new JComboBox();
 		cmbResideDesde_Mes.setBounds(414, 15, 58, 20);
 		panel.add(cmbResideDesde_Mes);
+		cmbResideDesde_Mes.addItem("MM");
+		cmbResideDesde_Mes.setModel(new DefaultComboBoxModel(new String[] {"MM", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"}));
 		
 		JComboBox cmbResideDesde_Anio = new JComboBox();
 		cmbResideDesde_Anio.setBounds(482, 15, 76, 20);
 		panel.add(cmbResideDesde_Anio);
+		cmbResideDesde_Anio.addItem("AAAA");
+		anio=1910;
+		while(anio<2019){
+			cmbResideDesde_Anio.addItem(anio);
+			anio++;
+		}
+		JButton btnConfirmarRegistro = new JButton("CONFIRMAR REGISTRO");
+		btnConfirmarRegistro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				FormularioRegistro_Controller controlador = FormularioRegistro_Controller.getIntancia();
+				//DATOS QUE NECESITA TABLA PERSONA 
+				String ci_venezolana =txtCIVenezolana.getText();
+				String primer_nombre = txtPrimerNombre.getText();
+				String segundo_nombre = txtSegundoNombre.getText();
+				String primer_apellido = txtPrimerApellido.getText();
+				String segundo_apellido = txtSegundoApellido.getText();
+				String sexo = cmbSexo.getSelectedItem().toString();
+				String dia_nac = cmbFechaNac_Dia.getSelectedItem().toString();
+				String mes_nac = cmbFechaNac_Mes.getSelectedItem().toString();
+				String anio_nac =cmbFechaNac_Anio.getSelectedItem().toString();
+				String pais_nac = cmbPaisNacimiento.getSelectedItem().toString();
+				String ciudad_nac = txtCiudadNacimiento.getText();
+				String estado_civil = cmbEstadoCivil.getSelectedItem().toString();
+				String ocupacion= cmbOcupacion.getSelectedItem().toString();
+				String direccion = text_direccion.getText();
+				String dia_reside =cmbResideDesde_Dia.getSelectedItem().toString();
+				String mes_reside=cmbResideDesde_Mes.getSelectedItem().toString();
+				String anio_reside =cmbResideDesde_Anio.getSelectedItem().toString();
+				String email =txtCorreoElectronico.getText();
+				String motivo_contacto = txtMotivoContacto.getText();
+				controlador.UpdatePersona(primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, sexo, dia_nac, mes_nac, anio_nac, pais_nac, ciudad_nac, estado_civil, ocupacion, direccion, dia_reside, mes_reside, anio_reside, email, motivo_contacto, ci_venezolana);
+				//FALTAN LOS IDIOMAS
+				System.out.println("se hizo el update");
+				
+				//telefonos QUEDA COMENTADO HASTA QUE SE SOLUCIONE LA PARTE DE ARRIBA
+				/*String tel1 = txtTelefono.getText();
+				String tel2=txtOtroTelefono.getText();
+				controlador.InsertarTelefono(ci_venezolana,tel1)
+				if(tel2.equals("")){
+					System.out.println("tel2 vacio");
+				}else {controlador.InsertarTelefono(ci_venezolana,tel2);
+				}*/
+				
+				//empiezo con la documentacion QUEDA COMENTADO HASTA QUE SE SOLUCIONE LO DE ARRIBA
+				/*String ci_uruguaya =txtNumeroCIUY.getText();
+				String pasaporte=txtPasaporte.getText();
+				String dia_carnet_salud=cmbCarnetSaludVigente_Dia.getSelectedItem().toString();
+				String mes_carnet_salud=cmbCarnetSaludVigente_Mes.getSelectedItem().toString();
+				String anio_carnet_salud=cmbCarnetSaludVigente_Anio.getSelectedItem().toString();
+				controlador.UpdateDocumentos(ci_uruguaya, pasaporte, dia_carnet_salud, mes_carnet_salud, anio_carnet_salud, ci_venezolana);*/
+			}
+		});
+		btnConfirmarRegistro.setBounds(588, 760, 214, 23);
+		contentPane.add(btnConfirmarRegistro);
+		
+		
+		
 	}
 	public FormularioRegistro(int type){
 		this();

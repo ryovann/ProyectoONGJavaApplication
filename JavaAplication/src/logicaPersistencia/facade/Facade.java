@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.util.Properties;
 
 import logicaPersistencia.dbAccess.dbFunctions;
+import logicaPersistencia.valueObject.VO_Documentos;
+import logicaPersistencia.valueObject.VO_Persona;
+import logicaPersistencia.valueObject.VO_telefonos_Persona;
 import logicaPersistencia.valueObject.ValueObject_UsuariosNuevosBusqueda;
 
 public class Facade {
@@ -66,5 +69,24 @@ public class Facade {
 		ResultSet toBeReturnedData = dbAccess.ListarUsuariosNuevos(type, value);
 		System.out.println("Facade.UsuariosNuevosBusquedaFunction: Datos recibidos correctamente desde dbAccess, retornando informacion");
 		return toBeReturnedData;
+	}
+	
+	public void UpdatePersona(VO_Persona vop){
+		dbFunctions dbAccess = new dbFunctions(config);
+		dbAccess.UpdatePersona(vop.getPrimer_nombre(), vop.getSegundo_nombre(),vop.getPrimer_apellido(),
+					vop.getSegundo_apellido(), vop.getSexo(), vop.getFecha_nac(), vop.getPais_nac(), 
+						vop.getCiudad_nac(), vop.getEstado_civil(), vop.getOcupacion(), vop.getDireccion(), 
+							vop.getFecha_reside(), vop.getEmail(), vop.getMotivo_contacto(),vop.getCi_venezolana());
+		
+	}
+	
+	public void InsertarTelefono(VO_telefonos_Persona votp){
+		dbFunctions dbAccess = new dbFunctions(config);
+		dbAccess.InsertarTelefono(votp.getCi_venezolana(),votp.getTel1());
+	}
+	
+	public void UpdateDocumentos(VO_Documentos vod){
+		dbFunctions dbAccess = new dbFunctions(config);
+		dbAccess.UpdateDocumentos(vod.getCi_uruguaya(),vod.getPasaporte(),vod.getFecha_carnet_salud(),vod.getCi_venezolana());
 	}
 }

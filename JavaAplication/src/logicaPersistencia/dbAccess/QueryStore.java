@@ -17,4 +17,33 @@ public class QueryStore {
 		return query;
 	}
 	
+	public String buscar_pais_por_nombre(){
+		String query ="SELECT id_pais FROM paises WHERE nombre_pais=(?)";
+		return query;
+	}
+	
+	public String UpdatePersona(){
+		String query="UPDATE persona as p INNER JOIN documentos d on p.id_persona=d.id_persona"
+				+ "SET segundo_nombre=(?), segundo_apellido=(?), sexo=(?),estado_civil=(?),"
+				+ "email=(?), ocupacion=(?), motivo_contacto=(?), "
+				+ "estado=0,reside_desde = (?),domicilio=(?), id_pais_nac=(?), "
+				+ "fecha_nac =(?),ciudad_nac =(?)"
+				+ "WHERE ci_venezolana =(?)";
+		return query;
+	}
+	
+	public String idPersona_por_ci_venezolana(){
+		String query = "SELECT p.id_persona FROM persona p INNER JOIN documentos d ON p.id_persona= d.id_persona WHERE d.ci_venezolana=(?)";
+		return query;
+	}
+	
+	public String InsertarTelefono(){
+		String query="INSERT INTO telefono_persona (id_persona,tel) VALUES ((?),(?))";
+		return query;
+	}
+	
+	public String UpdateDocumentos(){
+		String query ="update documentos d set ci_uruguaya=(?), pasaporte=(?), carnet_salud=(?) where d.ci_venezolana=(?)";
+		return query;
+	}
 }
