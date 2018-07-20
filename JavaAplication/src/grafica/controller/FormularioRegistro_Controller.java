@@ -2,6 +2,7 @@ package grafica.controller;
 
 import logicaPersistencia.facade.Facade;
 import logicaPersistencia.valueObject.VO_Documentos;
+import logicaPersistencia.valueObject.VO_Formacion_Academica;
 import logicaPersistencia.valueObject.VO_Persona;
 import logicaPersistencia.valueObject.VO_telefonos_Persona;
 
@@ -45,5 +46,11 @@ public class FormularioRegistro_Controller {
 		VO_Documentos vod= new VO_Documentos(ci_uruguaya,pasaporte,fecha_carnet_salud,ci_venezolana);
 		Facade f= new Facade();
 		f.UpdateDocumentos(vod);
+	}
+	
+	public void InsertarFormacion_Academica(String nivel_escolar,int completado,String ci_venezolana){
+		VO_Formacion_Academica vofa= new VO_Formacion_Academica(nivel_escolar,completado,ci_venezolana);
+		Facade f= new Facade();
+		f.InsertarFormacion_Academica(vofa);
 	}
 }
