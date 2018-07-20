@@ -615,7 +615,7 @@ public class FormularioRegistro extends JFrame {
 				}else {controlador.InsertarTelefono(ci_venezolana,tel2);
 				}
 				
-				//empiezo con la documentacion QUEDA COMENTADO HASTA QUE SE SOLUCIONE LO DE ARRIBA
+				//empiezo con la documentacion 
 				String ci_uruguaya =txtNumeroCIUY.getText();
 				String pasaporte=txtPasaporte.getText();
 				String dia_carnet_salud=cmbCarnetSaludVigente_Dia.getSelectedItem().toString();
@@ -624,9 +624,8 @@ public class FormularioRegistro extends JFrame {
 				controlador.UpdateDocumentos(ci_uruguaya, pasaporte, dia_carnet_salud, mes_carnet_salud, anio_carnet_salud, ci_venezolana);
 				
 				
-				//EMPIEZO CON LA ESCOLARIDAD, QUEDA COMENTADO HASTA QUE SE FUNCIONE LO DE ARRIBA
-				/*String nivel_escolar = cmbNivelCursado.getSelectedItem().toString();
-				String titulo= cmbTituloObtenido.getSelectedItem().toString();
+				//EMPIEZO CON LA ESCOLARIDAD
+				String nivel_escolar = cmbNivelCursado.getSelectedItem().toString();
 				int completado=0;
 				if (radio_nivelCursadoCompleto.isSelected()){
 					completado=1;
@@ -635,7 +634,7 @@ public class FormularioRegistro extends JFrame {
 				if (radio_HomologadoSi.isSelected()){
 					homologacion =1;
 				}
-				controlador.InsertarFormacion_Academica(nivel_escolar,completado,ci_venezolana);*/
+				controlador.InsertarFormacion_Academica(nivel_escolar,completado,ci_venezolana);
 				
 			}
 		});
