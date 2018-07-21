@@ -16,7 +16,18 @@ public class QueryStore {
 		String query = "SELECT P.id_persona,ci_venezolana, primer_nombre, primer_apellido, motivo_contacto FROM PERSONA P INNER JOIN DOCUMENTOS D ON D.ID_PERSONA = P.ID_PERSONA WHERE P.ESTADO = 0 AND CONCAT(PRIMER_NOMBRE,' ',PRIMER_APELLIDO) LIKE (?)";
 		return query;
 	}
-	
+	public String select_ListaPaises(){
+		String query = "SELECT nombre_pais from paises";
+		return query;
+	}
+	public String select_ListarIdiomas(){
+		String query = "Select nombre_idioma from idiomas";
+		return query;
+	}
+	public String select_ListarProfesiones(){
+		String query = "SELECT titulo from profesiones";
+		return query;
+	}
 	public String buscar_pais_por_nombre(){
 		String query ="SELECT id_pais FROM paises WHERE nombre_pais=(?)";
 		return query;
