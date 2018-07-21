@@ -3,6 +3,7 @@ package logicaPersistencia.dbAccess;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class dbFunctions {
 	//Esta clase contiene todos los metodos que permitiran
@@ -84,15 +85,15 @@ public class dbFunctions {
 			String fecha_reside,String email,String motivo_contacto,String ci_venezolana){
 		
 		ConnectionObject.initializeConnection();//Inicializo la conexion
-		String qpaisNac=querys.buscar_pais_por_nombre();//tengo que buscar el id del pais 
+		String qpaisNac = querys.buscar_pais_por_nombre();//tengo que buscar el id del pais 
 		
 		try {
 			PreparedStatement preparedS = ConnectionObject.getConnection().prepareStatement(qpaisNac);
 			//Seteo el parametro del nombre del pais al valor que es pasado por parametro
 			preparedS.setString(1,pais_nac);
-			ResultSet rs=preparedS.executeQuery();//ejecuto la consulta.
+			ResultSet rs = preparedS.executeQuery();//ejecuto la consulta.
 			int id_pais_nac=0;
-			if ( rs ==null){ //SI ES UN rs VACIO
+			if ( rs == null){ //SI ES UN rs VACIO
 				System.out.println("no hay pais con ese nombre, estoy en dbfunctions");
 			}else{
 				while (rs.next()){
@@ -213,5 +214,69 @@ public class dbFunctions {
 			e.printStackTrace();
 		}
 	}
-
+	public ResultSet ListarPaises(){
+		ConnectionObject.initializeConnection();
+		String query = querys.select_ListaPaises();
+		ResultSet rs;
+		
+		try {
+			Statement stmt = ConnectionObject.getConnection().createStatement();
+			//---------------------------------------------------------
+			System.out.println("dbFunctions.ListarPaises: Realizando consulta a la base de datos");
+			//---------------------------------------------------------
+			rs = stmt.executeQuery(query);//Ejecuto la consulta
+			//---------------------------------------------------------
+			System.out.println("dbFuncions.ListarPaises: Consulta realizada con exito");
+			//---------------------------------------------------------
+			return rs;
+		} catch (SQLException e) {
+			System.err.println("dbFunctions.ListarPaises: Error en la consulta");
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	public ResultSet ListarIdiomas(){
+		ConnectionObject.initializeConnection();
+		String query = querys.select_ListarIdiomas();
+		ResultSet rs;
+		
+		try {
+			Statement stmt = ConnectionObject.getConnection().createStatement();
+			//---------------------------------------------------------
+			System.out.println("dbFunctions.ListarIdiomas: Realizando consulta a la base de datos");
+			//---------------------------------------------------------
+			rs = stmt.executeQuery(query);//Ejecuto la consulta
+			//---------------------------------------------------------
+			System.out.println("dbFuncions.ListarIdiomas: Consulta realizada con exito");
+			//---------------------------------------------------------
+			return rs;
+		} catch (SQLException e) {
+			System.err.println("dbFunctions.ListarIdiomas: Error en la consulta");
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	public ResultSet ListarProfesiones(){
+		ConnectionObject.initializeConnection();
+		String query = querys.select_ListarProfesiones();
+		ResultSet rs;
+		
+		try {
+			Statement stmt = ConnectionObject.getConnection().createStatement();
+			//---------------------------------------------------------
+			System.out.println("dbFunctions.ListarProfesiones: Realizando consulta a la base de datos");
+			//---------------------------------------------------------
+			rs = stmt.executeQuery(query);//Ejecuto la consulta
+			//---------------------------------------------------------
+			System.out.println("dbFuncions.ListarProfesiones: Consulta realizada con exito");
+			//---------------------------------------------------------
+			return rs;
+		} catch (SQLException e) {
+			System.err.println("dbFunctions.ListarProfesiones: Error en la consulta");
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

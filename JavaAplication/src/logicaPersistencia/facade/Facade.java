@@ -71,6 +71,44 @@ public class Facade {
 		System.out.println("Facade.UsuariosNuevosBusquedaFunction: Datos recibidos correctamente desde dbAccess, retornando informacion");
 		return toBeReturnedData;
 	}
+	public ResultSet ListarPaises_Function(){
+		//---------------------------------------------------------
+		System.out.println("Facade.ListarPaises_Function: Se inicializa un objeto dbFunctions");
+		//---------------------------------------------------------
+		dbFunctions dbAccess = new dbFunctions(config);
+		//---------------------------------------------------------
+		System.out.println("Facade.ListarPaises_Function: Se llama a dbAccess para realizar consulta");
+		//---------------------------------------------------------
+		ResultSet toBeReturnedData = dbAccess.ListarPaises();
+		System.out.println("Facade.ListarPaises_Function: Datos recibidos correctamente desde dbAccess, retornando informacion");
+		return toBeReturnedData;
+	}
+	public ResultSet ListarIdiomas_Function(){
+		//---------------------------------------------------------
+		System.out.println("Facade.ListarIdiomas_Function: Se inicializa un objeto dbFunctions");
+		//---------------------------------------------------------
+		dbFunctions dbAccess = new dbFunctions(config);
+		//---------------------------------------------------------
+		System.out.println("Facade.ListarIdiomas_Function: Se llama a dbAccess para realizar consulta");
+		//---------------------------------------------------------
+		ResultSet toBeReturnedData = dbAccess.ListarIdiomas();
+		System.out.println("Facade.ListarIdiomas_Function: Datos recibidos correctamente desde dbAccess, retornando informacion");
+		return toBeReturnedData;
+	}
+	public ResultSet ListarProfesiones_Function(){
+		//---------------------------------------------------------
+		System.out.println("Facade.ListarProfesiones_Function: Se inicializa un objeto dbFunctions");
+		//---------------------------------------------------------
+		dbFunctions dbAccess = new dbFunctions(config);
+		//---------------------------------------------------------
+		System.out.println("Facade.ListarProfesiones_Function: Se llama a dbAccess para realizar consulta");
+		//---------------------------------------------------------
+		ResultSet toBeReturnedData = dbAccess.ListarProfesiones();
+		System.out.println("Facade.ListarProfesiones_Function: Datos recibidos correctamente desde dbAccess, retornando informacion");
+		return toBeReturnedData;
+	}
+	
+	
 	
 	public void UpdatePersona(VO_Persona vop){
 		dbFunctions dbAccess = new dbFunctions(config);
@@ -95,4 +133,5 @@ public class Facade {
 		dbFunctions dbAccess = new dbFunctions(config);
 		dbAccess.InsertarFormacion_Academica(vofa.getNivel(),vofa.getCompletado(),vofa.getCi_venezolana());
 	}
+	
 }
