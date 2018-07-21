@@ -1,5 +1,8 @@
 package grafica.controller;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.DefaultComboBoxModel;
 import logicaPersistencia.facade.Facade;
 import logicaPersistencia.valueObject.VO_Documentos;
 import logicaPersistencia.valueObject.VO_Formacion_Academica;
@@ -52,4 +55,89 @@ public class FormularioRegistro_Controller {
 		Facade f= new Facade();
 		f.InsertarFormacion_Academica(vofa);
 	}
+	public DefaultComboBoxModel ObtenerPaises(){
+		//Funcion que retorna un ComboBoxModel con una lista de paises
+		// ---------------------------------------------------------
+		System.out.println("FormularioRegistro_Controller.ObtenerPaises: Se crea una nueva instancia de facade y se intenta obtener la configuracion");
+		// ---------------------------------------------------------
+		Facade facade = new Facade();
+		System.out.println("FormularioRegistro_Controller.ObtenerPaises: Se llamo a facade.ListarPaises_Function");
+		// ---------------------------------------------------------
+		ResultSet recivedData = facade.ListarPaises_Function();
+		// ---------------------------------------------------------
+		System.out.println("FormularioRegistro_Controller.ObtenerPaises: Datos recibidos correctamente desde Facade.ListarPaises_Function");
+		// ---------------------------------------------------------
+		DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+		try {
+			while(recivedData.next()){
+				modelo.addElement(recivedData.getString("nombre_pais"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return modelo;
+	}
+	public DefaultComboBoxModel ObtenerIdiomas(){
+		//Funcion que retorna un ComboBoxModel con una lista de idiomas
+		// ---------------------------------------------------------
+		System.out.println("FormularioRegistro_Controller.ObtenerIdiomas: Se crea una nueva instatncia de facade y se intenta obtener la configuracion");
+		// ---------------------------------------------------------
+		
+		Facade facade = new Facade();
+		
+		// ---------------------------------------------------------
+		System.out.println("FormularioRegistro_Controller.ObtenerIdiomas: Se llamo a facade.ListarIdiomas_Function");
+		// ---------------------------------------------------------
+		
+		ResultSet recivedData = facade.ListarIdiomas_Function();
+		
+		// ---------------------------------------------------------
+		System.out.println("FormularioRegistro_Controller.ObtenerIdiomas: Datos recibidos correctamente desdee facade.ListarIdiomas_Function");
+		// ---------------------------------------------------------
+		
+		DefaultComboBoxModel model = new DefaultComboBoxModel();
+		try {
+			while(recivedData.next()){
+				model.addElement(recivedData.getString("nombre_idioma"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return model;
+		
+		
+	}
+	public DefaultComboBoxModel ObtenerProfesiones(){
+		//Funcion que retorna un ComboBoxModel con una lista de profesiones
+		// ---------------------------------------------------------
+		System.out.println("FormularioRegistro_Controller.ObtenerProfesiones: Se crea una nueva instatncia de facade y se intenta obtener la configuracion");
+		// ---------------------------------------------------------
+		
+		Facade facade = new Facade();
+		
+		// ---------------------------------------------------------
+		System.out.println("FormularioRegistro_Controller.ObtenerProfesiones: Se llamo a facade.ListarProfesiones_Function");
+		// ---------------------------------------------------------
+		
+		ResultSet recivedData = facade.ListarProfesiones_Function();
+		
+		// ---------------------------------------------------------
+		System.out.println("FormularioRegistro_Controller.ObtenerProfesiones: Datos recibidos correctamente desdee facade.ListarProfesiones_Function");
+		// ---------------------------------------------------------
+		
+		DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+		try {
+			while(recivedData.next()){
+				modelo.addElement(recivedData.getString("titulo"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return modelo;
+	}
+	
+	
 }
