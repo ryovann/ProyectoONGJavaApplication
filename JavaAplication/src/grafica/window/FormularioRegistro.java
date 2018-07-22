@@ -295,8 +295,8 @@ public class FormularioRegistro extends JFrame {
 		cmbCarnetSaludVigente_Anio.setVisible(false);
 		panelDocumentacion.add(cmbCarnetSaludVigente_Anio);
 		cmbCarnetSaludVigente_Anio.setModel(new DefaultComboBoxModel(new String[] {"AAAA"}));
-		anio=1910;
-		while(anio<=2018){
+		anio=2018;
+		while(anio<=2070){
 			cmbCarnetSaludVigente_Anio.addItem(anio);
 			anio++;
 		}
@@ -868,28 +868,27 @@ public class FormularioRegistro extends JFrame {
 				String anio_reside =cmbResideDesde_Anio.getSelectedItem().toString();
 				String email =txtCorreoElectronico.getText();
 				String motivo_contacto = txtMotivoContacto.getText();
-				controlador.UpdatePersona(primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, sexo, dia_nac, mes_nac, anio_nac, pais_nac, ciudad_nac, estado_civil, ocupacion, direccion, dia_reside, mes_reside, anio_reside, email, motivo_contacto, ci_venezolana);
 				//FALTAN LOS IDIOMAS
-				System.out.println("se hizo el update");
-				
 				//telefonos 
 				String tel1 = txtTelefono.getText();
 				String tel2=txtOtroTelefono.getText();
-				controlador.InsertarTelefono(ci_venezolana,tel1);
-				if(tel2.equals("")){
-					System.out.println("tel2 vacio");
-				}else {controlador.InsertarTelefono(ci_venezolana,tel2);
-				}
-				
 				//empiezo con la documentacion 
-				String ci_uruguaya =txtNumeroCIUY.getText();
-				String pasaporte=txtPasaporte.getText();
-				String dia_carnet_salud=cmbCarnetSaludVigente_Dia.getSelectedItem().toString();
-				String mes_carnet_salud=cmbCarnetSaludVigente_Mes.getSelectedItem().toString();
-				String anio_carnet_salud=cmbCarnetSaludVigente_Anio.getSelectedItem().toString();
-				controlador.UpdateDocumentos(ci_uruguaya, pasaporte, dia_carnet_salud, mes_carnet_salud, anio_carnet_salud, ci_venezolana);
-				
-				
+				String ci_uruguaya ="0";
+				if (radio_ci_uy_si.isSelected()){
+					 ci_uruguaya =txtNumeroCIUY.getText();
+				}
+				String pasaporte= null;
+				if(radio_pasaporteSi.isSelected()){
+					pasaporte=txtPasaporte.getText();
+				}
+				String dia_carnet_salud=null;
+				String mes_carnet_salud=null;
+				String anio_carnet_salud=null;
+				if(radio_carnet_salud_si.isSelected()){
+					 dia_carnet_salud=cmbCarnetSaludVigente_Dia.getSelectedItem().toString();
+					 mes_carnet_salud=cmbCarnetSaludVigente_Mes.getSelectedItem().toString();
+					 anio_carnet_salud=cmbCarnetSaludVigente_Anio.getSelectedItem().toString();
+				}
 				//EMPIEZO CON LA ESCOLARIDAD
 				String nivel_escolar = cmbNivelCursado.getSelectedItem().toString();
 				int completado=0;
@@ -900,9 +899,57 @@ public class FormularioRegistro extends JFrame {
 				if (radio_HomologadoSi.isSelected()){
 					homologacion =1;
 				}
-				controlador.InsertarFormacion_Academica(nivel_escolar,completado,ci_venezolana);
+				int id_titulo = cmbTituloObtenido.getSelectedIndex()+1;//el indice+1 equivale a l clave en la base de datos
+				//ya que el combobox esta cargada desde la misma 
 				
+				//EMPIEZO CON SITUACION FAMILIAR
+				String vive_con=cmbViveCon.getSelectedItem().toString();
+				String detalle=null;
+				if (cmbViveCon.getSelectedIndex()==1){ //vive con familia
+					detalle = cmbDetalleViveConFamilia.getSelectedItem().toString();
+				}else if (cmbViveCon.getSelectedIndex()==3) { //otro
+					detalle = txtDetalleViveConOtro.getText();
+				}
+				int vino_con=cmbVinoCon.getSelectedIndex();//si es 0 vino solo, si es 1 vino acompañado
+				//FALTA PONER TRY CATCH DE CUANDO CANT_HIJOS O HIJOS_EXTERIOR NO SON UN INT
+				int cant_hijos = Integer.parseInt(txtCantHijos.getText());
+				int hijos_exterior=Integer.parseInt(txtCantidadHijosExtranjero.getText());
+				
+				//ejecuto todas las consultas 
+				
+				if(hijos_exterior>cant_hijos){//no dijo toda la cantidad de hijos
+					JOptionPane.showMessageDialog(null, "La cantida de hijos en el exterior es mayor a la cantidad de hijos en total, eso no es posible");
+				}else {
+					controlador.UpdatePersona(primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, sexo, dia_nac, mes_nac, anio_nac, pais_nac, ciudad_nac, estado_civil, ocupacion, direccion, dia_reside, mes_reside, anio_reside, email, motivo_contacto, ci_venezolana);
+					System.out.println("se hizo el update");
+					
+					if(tel1.equals("") || tel1==null){
+						System.out.println("tel1 vacio");
+					}else{
+						controlador.InsertarTelefono(ci_venezolana,tel1);
+						System.out.println("se inserto tel1");
+					}
+					if(tel2.equals("") || tel2==null){
+						System.out.println("tel2 vacio");
+						
+					}else {
+						controlador.InsertarTelefono(ci_venezolana,tel2);
+						System.out.println("se inserto tel 2");
+					}
+					
+					controlador.UpdateDocumentos(ci_uruguaya, pasaporte, dia_carnet_salud, mes_carnet_salud, anio_carnet_salud, ci_venezolana);
+					System.out.println("se actualizaron los documentos");
+					
+					controlador.InsertarFormacion_Academica(nivel_escolar,completado,ci_venezolana);
+					System.out.println("se inserto la formacion academica");
+					controlador.InsertarTiene_profesion(id_titulo,homologacion,ci_venezolana);
+					System.out.println("se inserto la profesion");
+					
+					controlador.Insertar_familia_persona(vive_con,detalle,vino_con,cant_hijos,hijos_exterior,ci_venezolana);
+					System.out.println("se inserto la situacion familiar");
+				}	
 			}
+			
 		});
 		btnConfirmarRegistro.setBounds(588, 695, 214, 23);
 		contentPane.add(btnConfirmarRegistro);
@@ -916,9 +963,7 @@ public class FormularioRegistro extends JFrame {
 		if(type==0){
 			setTitle("Formulario de Registro: Usuario nuevo");
 		}
-		
-		
-		
+			
 	}
 	public void verificarEscoladidad(){
 		int idNivelSelected = cmbNivelCursado.getSelectedIndex();

@@ -59,7 +59,13 @@ public class QueryStore {
 	}
 	
 	public String InsertarProfesion(){
-		String query="insert into tiene_profesion (id_persona,id_prof,titulo,homologacion) values ((?),(?),(?),(?))";
+		String query="insert into tiene_profesion (id_persona,id_prof,homologacion) values ((?),(?),(?))";
 		return query;
 	}
+	
+	public String InsertarFamilia_Persona(){
+		String query = "INSERT INTO familia_persona (id_persona,vive_con,vino_con,cantidad_hijos,cant_hijos_extranjero) VALUES ((?),(?),(?),(?),(?))";
+		return query;
+	}
+	
 }

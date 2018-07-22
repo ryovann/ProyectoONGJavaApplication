@@ -8,8 +8,10 @@ import java.util.Properties;
 
 import logicaPersistencia.dbAccess.dbFunctions;
 import logicaPersistencia.valueObject.VO_Documentos;
+import logicaPersistencia.valueObject.VO_Familia_Persona;
 import logicaPersistencia.valueObject.VO_Formacion_Academica;
 import logicaPersistencia.valueObject.VO_Persona;
+import logicaPersistencia.valueObject.VO_Tiene_Profesion;
 import logicaPersistencia.valueObject.VO_telefonos_Persona;
 import logicaPersistencia.valueObject.ValueObject_UsuariosNuevosBusqueda;
 
@@ -134,4 +136,13 @@ public class Facade {
 		dbAccess.InsertarFormacion_Academica(vofa.getNivel(),vofa.getCompletado(),vofa.getCi_venezolana());
 	}
 	
+	public void InsertarTiene_profesion(VO_Tiene_Profesion votp){
+		dbFunctions dbAccess = new dbFunctions(config);
+		dbAccess.InsertarTiene_profesion(votp.getId_titulo(),votp.getHomologacion(),votp.getCi_venezolana());
+	}
+	
+	public void Insertar_familia_persona(VO_Familia_Persona vofp){
+		dbFunctions dbAccess = new dbFunctions(config);
+		dbAccess.Insertar_familia_persona(vofp.getCi_venezolana(),vofp.getVive_con(),vofp.getDetalle(),vofp.getVino_con(),vofp.getCant_hijos(),vofp.getHijos_exterior());
+	}
 }

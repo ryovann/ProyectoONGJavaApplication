@@ -5,8 +5,10 @@ import java.sql.SQLException;
 import javax.swing.DefaultComboBoxModel;
 import logicaPersistencia.facade.Facade;
 import logicaPersistencia.valueObject.VO_Documentos;
+import logicaPersistencia.valueObject.VO_Familia_Persona;
 import logicaPersistencia.valueObject.VO_Formacion_Academica;
 import logicaPersistencia.valueObject.VO_Persona;
+import logicaPersistencia.valueObject.VO_Tiene_Profesion;
 import logicaPersistencia.valueObject.VO_telefonos_Persona;
 
 public class FormularioRegistro_Controller {
@@ -137,6 +139,18 @@ public class FormularioRegistro_Controller {
 			e.printStackTrace();
 		}
 		return modelo;
+	}
+	
+	public void InsertarTiene_profesion(int id_titulo, int homologacion, String ci_venezolana){
+		VO_Tiene_Profesion votp= new VO_Tiene_Profesion(id_titulo,homologacion,ci_venezolana);
+		Facade f = new Facade();
+		f.InsertarTiene_profesion(votp);
+	}
+	
+	public void Insertar_familia_persona(String vive_con, String detalle, int vino_con,int cant_hijos,int hijos_exterior,String ci_venezolana){
+		VO_Familia_Persona vofp = new VO_Familia_Persona(ci_venezolana,vive_con,detalle,vino_con,cant_hijos,hijos_exterior);
+		Facade f = new Facade();
+		f.Insertar_familia_persona(vofp);
 	}
 	
 	
