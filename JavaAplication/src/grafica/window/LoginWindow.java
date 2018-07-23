@@ -10,13 +10,18 @@ import grafica.controller.LoginWindow_Controller;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.awt.event.ActionEvent;
 import java.awt.Canvas;
+import java.awt.Panel;
 
 public class LoginWindow extends JFrame {
 
@@ -71,9 +76,7 @@ public class LoginWindow extends JFrame {
 					LoginWindow_Controller controller = LoginWindow_Controller.getInstancia();
 					boolean returnedValue = controller.ingresarBtnAcction(new String(txtPassword.getPassword()));
 					if(returnedValue){
-						JOptionPane.showMessageDialog(null, "¡¡Contraseña correcta!!\n Ingresando al Sistema");
-					}else{
-						JOptionPane.showMessageDialog(null, "¡¡Contraseña incorrecta!!\n Inténtalo nuevamente");
+						setVisible(false);
 					}
 				}
 				
@@ -90,9 +93,9 @@ public class LoginWindow extends JFrame {
 		txtPassword.setBounds(65, 225, 170, 20);
 		contentPane.add(txtPassword);
 		
-		Canvas canvas = new Canvas();
-		canvas.setBounds(100, 25, 100, 100);
-		contentPane.add(canvas);
+	
+		
+		
 		
 	}
 }

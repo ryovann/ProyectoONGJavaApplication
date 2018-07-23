@@ -4,6 +4,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import javax.swing.JOptionPane;
+
+import grafica.window.MainWindow;
+
 public class LoginWindow_Controller {
 	public static LoginWindow_Controller instancia =null;
 	private LoginWindow_Controller(){};
@@ -18,8 +22,13 @@ public class LoginWindow_Controller {
 		String storedPassword = obtainConfiguredPassword();
 		System.out.println(storedPassword);
 		if (pass.equals(storedPassword)) {
+			JOptionPane.showMessageDialog(null, "¡¡Contraseña correcta!!\n Ingresando al Sistema");
+			MainWindow ventanaPrincipal = new MainWindow();
+			ventanaPrincipal.setLocationRelativeTo(null);
+			ventanaPrincipal.setVisible(true);
 			return true;
 		} else {
+			JOptionPane.showMessageDialog(null, "¡¡Contraseña incorrecta!!\n Inténtalo nuevamente");
 			return false;
 		}
 	}
