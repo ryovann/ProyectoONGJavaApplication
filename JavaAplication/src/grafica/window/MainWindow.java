@@ -291,14 +291,15 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				int idSelectedRow = tableUsuarios.getSelectedRow();
 				
-				if(idSelectedRow == -1){
+				if(idSelectedRow == -1){// Si no hay filas seleccionadas
 					JOptionPane.showMessageDialog(null, "Debes seleccionar un usuario");
 				}else{
+					//Si hay fila seleccionada
 					int ciVenezolana = Integer.parseInt((String) tableUsuarios.getModel().getValueAt(idSelectedRow, 0));
 					String primerNombre = (String) tableUsuarios.getModel().getValueAt(idSelectedRow, 1);
 					String primerApellido = (String) tableUsuarios.getModel().getValueAt(idSelectedRow, 2);
 					String motivoContacto = (String) tableUsuarios.getModel().getValueAt(idSelectedRow, 3);
-					//Debo programar ventana de informacion
+					//LLamo al metodo que se encarga de controlar el evento del boton
 					MainWindow_Controller controlador = MainWindow_Controller.getInstancia();
 					controlador.MostrarInformacionDeUsuario(ciVenezolana, primerNombre, primerApellido, motivoContacto);
 					
@@ -318,13 +319,15 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int idSelectedRow = tableUsuarios.getSelectedRow();
 				if(idSelectedRow == -1){
+					//Si no hay filas seleccionadas
 					JOptionPane.showMessageDialog(null, "Debes seleccionar un usuario");
 				}else{
-					
+					//Si hay almenos una fila seleccionada
 					int ciVenezolana = Integer.parseInt((String) tableUsuarios.getModel().getValueAt(idSelectedRow, 0));
 					String primerNombre = (String) tableUsuarios.getModel().getValueAt(idSelectedRow, 1);
 					String primerApellido = (String) tableUsuarios.getModel().getValueAt(idSelectedRow, 2);
 					MainWindow_Controller controlador = MainWindow_Controller.getInstancia();
+					//Llamo al metodo que se encarga de la eliminacion de el usuario
 					controlador.eliminarUsuario(ciVenezolana, primerNombre, primerApellido);
 					
 					
