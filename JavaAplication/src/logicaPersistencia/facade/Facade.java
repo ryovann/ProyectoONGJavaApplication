@@ -13,7 +13,7 @@ import logicaPersistencia.valueObject.VO_Formacion_Academica;
 import logicaPersistencia.valueObject.VO_Persona;
 import logicaPersistencia.valueObject.VO_Tiene_Profesion;
 import logicaPersistencia.valueObject.VO_telefonos_Persona;
-import logicaPersistencia.valueObject.ValueObject_UsuariosNuevosBusqueda;
+import logicaPersistencia.valueObject.ValueObject_UsuariosBusqueda;
 
 public class Facade {
 	private String[] config;
@@ -57,20 +57,22 @@ public class Facade {
 			e.printStackTrace();
 		}
 	}
-	public ResultSet UsuariosNuevosBusqueda_Function(ValueObject_UsuariosNuevosBusqueda data){
+	public ResultSet UsuariosNuevosBusqueda_Function(ValueObject_UsuariosBusqueda data){
 		//Funcion que permite buscar en la base datos los nuevos usuarios registrados
 		//Obtengo los datos encapsulados en el ValueObject
 		int type = data.getType();
 		String value = data.getValue();
+		int typeOfSearch = data.getTypeOfSearch();
+		
 		//---------------------------------------------------------
-		System.out.println("Facade.UsuariosNuevosBusquedaFunction: Se inicializa un objeto dbFunctions");
+		System.out.println("Facade.UsuariosBusquedaFunction: Se inicializa un objeto dbFunctions");
 		//---------------------------------------------------------
 		dbFunctions dbAccess = new dbFunctions(config);
 		//---------------------------------------------------------
-		System.out.println("Facade.UsuariosNuevosBusquedaFunction: Se llama a dbAccess para realizar consulta");
+		System.out.println("Facade.UsuariossBusquedaFunction: Se llama a dbAccess para realizar consulta");
 		//---------------------------------------------------------
-		ResultSet toBeReturnedData = dbAccess.ListarUsuariosNuevos(type, value);
-		System.out.println("Facade.UsuariosNuevosBusquedaFunction: Datos recibidos correctamente desde dbAccess, retornando informacion");
+		ResultSet toBeReturnedData = dbAccess.listarUsuarios(typeOfSearch,type, value);
+		System.out.println("Facade.UsuariosBusquedaFunction: Datos recibidos correctamente desde dbAccess, retornando informacion");
 		return toBeReturnedData;
 	}
 	public ResultSet ListarPaises_Function(){
