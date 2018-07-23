@@ -42,13 +42,14 @@ import java.awt.Point;
 import javax.swing.Box;
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
+import javax.swing.ListSelectionModel;
 
 public class MainWindow extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtBusquedaString;
 	private JPanel panelListaUsuarios;
-	private JTable tableUsuariosNuevos;
+	private JTable tableUsuarios;
 	private JRadioButton radio_UsuariosNuevos = new JRadioButton("Buscar usuarios nuevos");
 	private JRadioButton radio_UsuariosYaRegistrados = new JRadioButton("Buscar usuarios ya registrados");
 	private JPanel panelMenuAccionesUsuarios = new JPanel();
@@ -78,6 +79,7 @@ public class MainWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public MainWindow() {
+		setResizable(false);
 		setTitle("Inicio - Manos Veneguayas");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 508);
@@ -105,9 +107,6 @@ public class MainWindow extends JFrame {
 		
 		JMenu mnListados = new JMenu("Listados");
 		menuBar.add(mnListados);
-		
-		JMenuItem mntmRealizarBusqueda = new JMenuItem("Realizar busqueda");
-		mnListados.add(mntmRealizarBusqueda);
 		
 		JMenuItem mntmGenerarLista = new JMenuItem("Generar lista");
 		mnListados.add(mntmGenerarLista);
@@ -152,15 +151,16 @@ public class MainWindow extends JFrame {
 		panelListaUsuarios.setBounds(10, 135, 764, 302);
 		panelNuevasPersonas.add(panelListaUsuarios);
 		panelListaUsuarios.setLayout(null);
-		tableUsuariosNuevos = new JTable();
+		tableUsuarios = new JTable();
+		tableUsuarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		JScrollPane scrollPaneListaUsuariosNuevos = new JScrollPane();
 		scrollPaneListaUsuariosNuevos.setBounds(10, 11, 744, 193);
 		panelListaUsuarios.add(scrollPaneListaUsuariosNuevos);
 		
 		
-		tableUsuariosNuevos.setBorder(null);
-		scrollPaneListaUsuariosNuevos.setViewportView(tableUsuariosNuevos);
+		tableUsuarios.setBorder(null);
+		scrollPaneListaUsuariosNuevos.setViewportView(tableUsuarios);
 		
 		JButton btnBuscar = new JButton("Buscar");
 		JSeparator separatorAccionesUsuarios = new JSeparator();
@@ -168,19 +168,27 @@ public class MainWindow extends JFrame {
 		btnBuscar.addActionListener(new ActionListener() {
 			//Eventto del boton para buscar personas que son nuevas
 			public void actionPerformed(ActionEvent arg0) {
-				tableUsuariosNuevos.setModel(new DefaultTableModel());
+				
+				int typeOfSearch = 0;
+				if(radio_UsuariosNuevos.isSelected()){
+					typeOfSearch = 0;
+				}else if(radio_UsuariosYaRegistrados.isSelected()){
+					typeOfSearch = 1;
+	}
+
+				tableUsuarios.setModel(new DefaultTableModel());
 				//Instancio el controlador
 				MainWindow_Controller controller = MainWindow_Controller.getInstancia();
 				//int que identifica que tipo de criterio selecciono
-				int type = cmbCriterioBusqueda.getSelectedIndex();
+				int typeOfQuery = cmbCriterioBusqueda.getSelectedIndex();
 				//Texto para la busqueda
 				String value = txtBusquedaString.getText();
 				//Llamo al metodo que se encarga de
 				//controlar la funcionalidad del boton buscar
 				//Luego debo recibir los datos y mostrarlos
-				DefaultTableModel model = controller.btnBuscarFunction(type, value);
+				DefaultTableModel model = controller.btnBuscarFunction(typeOfSearch,typeOfQuery, value);
 				if(model.getRowCount()!=0){
-					tableUsuariosNuevos.setModel(model);//muestro los datos en la tabla
+					tableUsuarios.setModel(model);//muestro los datos en la tabla
 					
 					panelListaUsuarios.setVisible(true);//muestro el panel con la lista
 					
@@ -209,7 +217,7 @@ public class MainWindow extends JFrame {
 				}else{
 					panelListaUsuarios.setVisible(false);
 					scrollPaneListaUsuariosNuevos.setBorder(null);
-					radio_UsuariosNuevos.setSelected(true);
+					
 					lblUsuarioSeleccionado.setVisible(false);
 					btnContinuarRegistro.setVisible(false);
 					separatorAccionesUsuarios.setVisible(false);
@@ -279,6 +287,25 @@ public class MainWindow extends JFrame {
 		
 		separatorAccionesUsuarios.setBounds(10, 36, 724, 2);
 		panelMenuAccionesUsuarios.add(separatorAccionesUsuarios);
+		btnVerInformacionUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int idSelectedRow = tableUsuarios.getSelectedRow();
+				
+				if(idSelectedRow == -1){
+					JOptionPane.showMessageDialog(null, "Debes seleccionar un usuario");
+				}else{
+					int ciVenezolana = Integer.parseInt((String) tableUsuarios.getModel().getValueAt(idSelectedRow, 0));
+					String primerNombre = (String) tableUsuarios.getModel().getValueAt(idSelectedRow, 1);
+					String primerApellido = (String) tableUsuarios.getModel().getValueAt(idSelectedRow, 2);
+					String motivoContacto = (String) tableUsuarios.getModel().getValueAt(idSelectedRow, 3);
+					//Debo programar ventana de informacion
+					MainWindow_Controller controlador = MainWindow_Controller.getInstancia();
+					controlador.MostrarInformacionDeUsuario(ciVenezolana, primerNombre, primerApellido, motivoContacto);
+					
+					
+				}
+			}
+		});
 		
 		
 		btnVerInformacionUsuario.setBounds(524, 42, 210, 23);
@@ -287,20 +314,39 @@ public class MainWindow extends JFrame {
 		
 		btnModificarUsuario.setBounds(10, 42, 185, 23);
 		panelMenuAccionesUsuarios.add(btnModificarUsuario);
+		btnEliminarUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int idSelectedRow = tableUsuarios.getSelectedRow();
+				if(idSelectedRow == -1){
+					JOptionPane.showMessageDialog(null, "Debes seleccionar un usuario");
+				}else{
+					
+					int ciVenezolana = Integer.parseInt((String) tableUsuarios.getModel().getValueAt(idSelectedRow, 0));
+					String primerNombre = (String) tableUsuarios.getModel().getValueAt(idSelectedRow, 1);
+					String primerApellido = (String) tableUsuarios.getModel().getValueAt(idSelectedRow, 2);
+					MainWindow_Controller controlador = MainWindow_Controller.getInstancia();
+					controlador.eliminarUsuario(ciVenezolana, primerNombre, primerApellido);
+					
+					
+				}
+				
+				
+			}
+		});
 		
 		
 		btnEliminarUsuario.setBounds(205, 42, 126, 23);
 		panelMenuAccionesUsuarios.add(btnEliminarUsuario);
 		btnContinuarRegistro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int idSelectedRow = tableUsuariosNuevos.getSelectedRow();
+				int idSelectedRow = tableUsuarios.getSelectedRow();
 				if(idSelectedRow==-1){
 					JOptionPane.showMessageDialog(null, "Debes seleccionar un usuario");
 				}else{
-					int ciVenezolana = Integer.parseInt((String) tableUsuariosNuevos.getModel().getValueAt(idSelectedRow, 0));
-					String primerNombre = (String) tableUsuariosNuevos.getModel().getValueAt(idSelectedRow, 1);
-					String primerApellido =  (String) tableUsuariosNuevos.getModel().getValueAt(idSelectedRow, 2);
-					String motivoContacto =  (String) tableUsuariosNuevos.getModel().getValueAt(idSelectedRow, 3);
+					int ciVenezolana = Integer.parseInt((String) tableUsuarios.getModel().getValueAt(idSelectedRow, 0));
+					String primerNombre = (String) tableUsuarios.getModel().getValueAt(idSelectedRow, 1);
+					String primerApellido =  (String) tableUsuarios.getModel().getValueAt(idSelectedRow, 2);
+					String motivoContacto =  (String) tableUsuarios.getModel().getValueAt(idSelectedRow, 3);
 					MainWindow_Controller controlador = MainWindow_Controller.getInstancia();
 					controlador.btnContinuarRegistroFunction(ciVenezolana,primerNombre,primerApellido,motivoContacto);
 				}
