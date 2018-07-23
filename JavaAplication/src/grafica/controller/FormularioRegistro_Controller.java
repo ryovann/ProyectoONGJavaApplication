@@ -8,6 +8,7 @@ import logicaPersistencia.valueObject.VO_Documentos;
 import logicaPersistencia.valueObject.VO_Familia_Persona;
 import logicaPersistencia.valueObject.VO_Formacion_Academica;
 import logicaPersistencia.valueObject.VO_Persona;
+import logicaPersistencia.valueObject.VO_Persona_Idioma;
 import logicaPersistencia.valueObject.VO_Tiene_Profesion;
 import logicaPersistencia.valueObject.VO_telefonos_Persona;
 
@@ -152,6 +153,42 @@ public class FormularioRegistro_Controller {
 		Facade f = new Facade();
 		f.Insertar_familia_persona(vofp);
 	}
+
+	public void InsertarIdiomaPersona(String idioma, String nivel, String ci_venezolana) {
+		VO_Persona_Idioma vopi = new VO_Persona_Idioma(idioma,nivel,ci_venezolana);
+		Facade f = new Facade();
+		f.InsertarIdiomaPersona(vopi);
+		
+	}
+
+	
+	public void InsertDocumentos(String ci_uruguaya, String pasaporte, String dia_carnet_salud, String mes_carnet_salud,
+			String anio_carnet_salud, String ci_venezolana) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void InsertPersona(String primer_nombre, String segundo_nombre, String primer_apellido,
+			String segundo_apellido, String sexo, String dia_nac, String mes_nac, String anio_nac, String id_pais_nac,
+			String ciudad_nac, String estado_civil, String ocupacion, String direccion, String dia_reside,
+			String mes_reside, String anio_reside, String email, String motivo_contacto) {
+		
+		//Creo strings de fechas
+		String fecha_nacimiento = anio_nac+"-"+mes_nac+"-"+dia_nac;
+		String fecha_reside =  anio_reside+"-"+mes_reside+"-"+dia_reside;
+		
+		VO_Persona vop = new VO_Persona(primer_nombre, segundo_nombre,primer_apellido,
+				segundo_apellido,sexo,estado_civil, email, ocupacion,
+				motivo_contacto, fecha_reside, direccion, id_pais_nac, fecha_nacimiento,
+				ciudad_nac);
+		Facade f = new Facade();
+		f.InsertarPersona(vop);
+		//verificar
+		
+	}
+	
+	
+	
 	
 	
 }
