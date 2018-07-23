@@ -868,7 +868,13 @@ public class FormularioRegistro extends JFrame {
 				String anio_reside =cmbResideDesde_Anio.getSelectedItem().toString();
 				String email =txtCorreoElectronico.getText();
 				String motivo_contacto = txtMotivoContacto.getText();
-				//FALTAN LOS IDIOMAS
+				
+				
+				
+				
+				
+				
+				
 				//telefonos 
 				String tel1 = txtTelefono.getText();
 				String tel2=txtOtroTelefono.getText();
@@ -920,8 +926,16 @@ public class FormularioRegistro extends JFrame {
 				if(hijos_exterior>cant_hijos){//no dijo toda la cantidad de hijos
 					JOptionPane.showMessageDialog(null, "La cantida de hijos en el exterior es mayor a la cantidad de hijos en total, eso no es posible");
 				}else {
-					controlador.UpdatePersona(primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, sexo, dia_nac, mes_nac, anio_nac, pais_nac, ciudad_nac, estado_civil, ocupacion, direccion, dia_reside, mes_reside, anio_reside, email, motivo_contacto, ci_venezolana);
-					System.out.println("se hizo el update");
+					//if tipo es 0 o 1 insertar o hacer update
+					if(tipoDeRegistro==1){
+						controlador.UpdatePersona(primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, sexo, dia_nac, mes_nac, anio_nac, pais_nac, ciudad_nac, estado_civil, ocupacion, direccion, dia_reside, mes_reside, anio_reside, email, motivo_contacto, ci_venezolana);
+						System.out.println("se hizo el update");
+					}else{
+						controlador.InsertPersona(primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, sexo, dia_nac, mes_nac, anio_nac, pais_nac, ciudad_nac, estado_civil, ocupacion, direccion, dia_reside, mes_reside, anio_reside, email, motivo_contacto);
+						System.out.println("se hizo el insert de persona");
+					}
+					
+					
 					
 					if(tel1.equals("") || tel1==null){
 						System.out.println("tel1 vacio");
@@ -936,9 +950,15 @@ public class FormularioRegistro extends JFrame {
 						controlador.InsertarTelefono(ci_venezolana,tel2);
 						System.out.println("se inserto tel 2");
 					}
+					//if tipo es 0 o 1 insertar o hacer update
+					if(tipoDeRegistro==1){
+						controlador.UpdateDocumentos(ci_uruguaya, pasaporte, dia_carnet_salud, mes_carnet_salud, anio_carnet_salud, ci_venezolana);
+						System.out.println("se actualizaron los documentos");
+					}else{
+						controlador.InsertDocumentos(ci_uruguaya, pasaporte, dia_carnet_salud, mes_carnet_salud, anio_carnet_salud, ci_venezolana);
+						System.out.println("se insertaron los documentos");
+					}
 					
-					controlador.UpdateDocumentos(ci_uruguaya, pasaporte, dia_carnet_salud, mes_carnet_salud, anio_carnet_salud, ci_venezolana);
-					System.out.println("se actualizaron los documentos");
 					
 					controlador.InsertarFormacion_Academica(nivel_escolar,completado,ci_venezolana);
 					System.out.println("se inserto la formacion academica");
@@ -947,6 +967,16 @@ public class FormularioRegistro extends JFrame {
 					
 					controlador.Insertar_familia_persona(vive_con,detalle,vino_con,cant_hijos,hijos_exterior,ci_venezolana);
 					System.out.println("se inserto la situacion familiar");
+					
+					String row;
+					String[] separado;
+					
+					for(int i =0;i<listIdiomasAgregados.getModel().getSize();i++){
+						row = listIdiomasAgregados.getModel().getElementAt(i).toString();
+						separado = row.split(" - ");
+						//INSERT IDIOMAS
+						controlador.InsertarIdiomaPersona(separado[0],separado[1],ci_venezolana);//idioma,nivel*//
+					}
 				}	
 			}
 			
