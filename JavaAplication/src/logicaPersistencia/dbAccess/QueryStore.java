@@ -67,6 +67,22 @@ public class QueryStore {
 		String query = "INSERT INTO familia_persona (id_persona,vive_con,vino_con,cantidad_hijos,cant_hijos_extranjero) VALUES ((?),(?),(?),(?),(?))";
 		return query;
 	}
-	
+	public String InsertarIdiomaPersona(){
+		String query = "INSERT INTO sabe_idioma (id_persona,id_idioma, nivel) values (?,?,?)";
+		return query;
+	}
+	public String id_idioma_por_nombre(){
+		String query = "SELECT id_idioma from idiomas where nombre_idioma = (?)";
+		return query;
+	}
+	public String insertPersonaNueva(){
+		String query = "INSERT INTO PERSONA(primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,sexo,estado_civil,email,ocupacion,motivo_contacto,estado,reside_desde,domicilio,id_pais_nac,fecha_nac,ciudad_nac) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		return query;
+	}
+	public String insertDocumentosNuevos(){
+		String query = "INSERT INTO DOCUMENTOS(id_persona,ci_venezolana,ci_uruguaya,pasaporte,carnet_salud) values (?,?,?,?)";
+		return query;
+		//esto esta bien
+	}
 	
 }
