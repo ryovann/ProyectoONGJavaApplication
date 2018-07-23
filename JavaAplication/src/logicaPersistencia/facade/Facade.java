@@ -11,6 +11,7 @@ import logicaPersistencia.valueObject.VO_Documentos;
 import logicaPersistencia.valueObject.VO_Familia_Persona;
 import logicaPersistencia.valueObject.VO_Formacion_Academica;
 import logicaPersistencia.valueObject.VO_Persona;
+import logicaPersistencia.valueObject.VO_Persona_Idioma;
 import logicaPersistencia.valueObject.VO_Tiene_Profesion;
 import logicaPersistencia.valueObject.VO_telefonos_Persona;
 import logicaPersistencia.valueObject.ValueObject_UsuariosBusqueda;
@@ -146,5 +147,16 @@ public class Facade {
 	public void Insertar_familia_persona(VO_Familia_Persona vofp){
 		dbFunctions dbAccess = new dbFunctions(config);
 		dbAccess.Insertar_familia_persona(vofp.getCi_venezolana(),vofp.getVive_con(),vofp.getDetalle(),vofp.getVino_con(),vofp.getCant_hijos(),vofp.getHijos_exterior());
+	}
+	public void InsertarIdiomaPersona(VO_Persona_Idioma vopi) {
+		dbFunctions dbAccess = new dbFunctions(config);
+		dbAccess.InsertarIdiomaPersona(vopi.getIdioma(),vopi.getNivel(),vopi.getCi_venezolana());
+		
+	}
+	public void InsertarPersona(VO_Persona vop) {
+		dbFunctions dbAccess = new dbFunctions(config);
+		dbAccess.InsertarPersona(vop.getPrimer_nombre(),vop.getSegundo_nombre(),vop.getPrimer_apellido(),vop.getSegundo_apellido(),vop.getSexo(),vop.getEstado_civil(),vop.getEmail(),vop.getOcupacion(),vop.getMotivo_contacto(),vop.getFecha_reside(),vop.getDireccion(),vop.getPais_nac(),vop.getFecha_nac(),vop.getCiudad_nac());
+		
+		
 	}
 }
