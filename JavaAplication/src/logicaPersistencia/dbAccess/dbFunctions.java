@@ -28,48 +28,51 @@ public class dbFunctions {
 		//En la linea anterior inicializo el objeto ConnectionObject el cual permite
 		//Realizar la conexion con la base de datos
 	}
-	public ResultSet ListarUsuariosNuevos(int type,String value){
+	public ResultSet listarUsuarios(int typeOfSearch, int type,String value){
 		ConnectionObject.initializeConnection();//Inicializo la conexion
+		
 		if(type==0){
 			//Aqui debo programar la consulta cuando 
 			//el parametro de busqueda sea la cedula venezolana
 			
 			try {
 				//Creo el objecto PreparedStatement para poder realizar la consulta
-				PreparedStatement preparedS = ConnectionObject.getConnection().prepareStatement(querys.select_NuevosUsuarios_Lista__CIVenezolana());
+				PreparedStatement preparedS = ConnectionObject.getConnection().prepareStatement(querys.select_Lista__CIVenezolana());
 				//Seteo el parametro de cedula venezolana al valor que es pasado por parametro
-				preparedS.setInt(1, Integer.parseInt(value));
+				preparedS.setInt(1,typeOfSearch);
+				preparedS.setInt(2, Integer.parseInt(value));
 				ResultSet rs;//objeto resultset que guardara los datos
 				//---------------------------------------------------------
-				System.out.println("dbFunctions.ListarUsuariosNuevos: Realizando consulta a la base de datos");
+				System.out.println("dbFunctions.ListarUsuarios: Realizando consulta a la base de datos");
 				//---------------------------------------------------------
 				rs = preparedS.executeQuery();//ejecuto la consulta.
 				//---------------------------------------------------------
-				System.out.println("dbFuncions.ListarUsuariosNuevos: Consulta realizada con exito");
+				System.out.println("dbFuncions.ListarUsuarios: Consulta realizada con exito");
 				//---------------------------------------------------------
 				return rs;
 			} catch (SQLException e) {
-				System.out.println("dbFunctions.ListarUsuariosNuevos: Error en la consulta: ");
+				System.out.println("dbFunctions.ListarUsuarios: Error en la consulta: ");
 				e.printStackTrace();
 			}
 		}else{
 			//Debo programar la consulta para el segundo tipo de parametro
 			try {
 				//Creo el objecto PreparedStatement para poder realizar la consulta
-				PreparedStatement preparedS = ConnectionObject.getConnection().prepareStatement(querys.select_NuevosUsuarios_Lista__NombreApellido());
+				PreparedStatement preparedS = ConnectionObject.getConnection().prepareStatement(querys.select_Lista__NombreApellido());
 				//Seteo el parametro de nombre y apellido al valor que es pasado por parametro
-				preparedS.setString(1, "%"+value+"%");
+				preparedS.setInt(1,typeOfSearch);
+				preparedS.setString(2, "%"+value+"%");
 				ResultSet rs;//objeto resultset que guardara los datos
 				//---------------------------------------------------------
-				System.out.println("dbFunctions.ListarUsuariosNuevos: Realizando consulta a la base de datos");
+				System.out.println("dbFunctions.ListarUsuarios: Realizando consulta a la base de datos");
 				//---------------------------------------------------------
 				rs = preparedS.executeQuery();//ejecuto la consulta.
 				//---------------------------------------------------------
-				System.out.println("dbFuncions.ListarUsuariosNuevos: Consulta realizada con exito");
+				System.out.println("dbFuncions.ListarUsuarios: Consulta realizada con exito");
 				//---------------------------------------------------------
 				return rs;
 			} catch (SQLException e) {
-				System.out.println("dbFunctions.ListarUsuariosNuevos: Error en la consulta: ");
+				System.out.println("dbFunctions.ListarUsuarios: Error en la consulta: ");
 				e.printStackTrace();
 			}
 			
