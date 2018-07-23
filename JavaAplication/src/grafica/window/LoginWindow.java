@@ -53,6 +53,7 @@ public class LoginWindow extends JFrame {
 	 */
 	public LoginWindow() {
 		setResizable(false);
+		setLocationRelativeTo(null);
 		setTitle("Ingresar - Manos Veneguayas");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 300, 377);
