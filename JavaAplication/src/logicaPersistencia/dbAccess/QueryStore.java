@@ -121,7 +121,10 @@ public class QueryStore {
 		return query;
 	}
 	
-
+	public String Eliminar_Persona(){
+		String query = "DELETE FROM persona WHERE id_persona = (?)";
+		return query;
+	}
 	
 
 	
