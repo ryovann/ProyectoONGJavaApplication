@@ -9,12 +9,16 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
+
+import grafica.controller.VerInformacion_Controller;
+
 import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JButton;
 import java.awt.SystemColor;
+import java.util.HashMap;
 
 public class VerInformacion extends JFrame {
 	private JPanel contentPane;
@@ -38,6 +42,9 @@ public class VerInformacion extends JFrame {
 		panel.setBounds(10, 36, 428, 135);
 		contentPane.add(panel);
 		panel.setLayout(null);
+		
+		VerInformacion_Controller controlador = VerInformacion_Controller.getIntancia();
+		HashMap<String,String> datos_persona = controlador.Datos_Persona(cedulaVenezolana+"");
 		
 		JLabel lblPrimerNombre = new JLabel("Primer nombre: ");
 		lblPrimerNombre.setBounds(10, 11, 199, 14);

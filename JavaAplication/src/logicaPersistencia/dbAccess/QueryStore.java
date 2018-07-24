@@ -86,7 +86,7 @@ public class QueryStore {
 	}
 	
 	public String Obtener_Datos_Persona(){
-		String query = "SELECT primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,sexo,email,ocupacion,motivo_contacto,reside_desde,domicilio,id_pais_nac,fecha_nac,ciudad_nac,estado_civil FROM Persona WHERE id_persona = (?);";
+		String query = "SELECT segundo_nombre,segundo_apellido,sexo,email,ocupacion,reside_desde,domicilio,id_pais_nac,fecha_nac,ciudad_nac,estado_civil FROM Persona WHERE id_persona = (?);";
 		return query;
 	}
 	
@@ -123,6 +123,11 @@ public class QueryStore {
 	
 	public String Eliminar_Persona(){
 		String query = "DELETE FROM persona WHERE id_persona = (?)";
+		return query;
+	}
+	
+	public String Buscar_paisNac_por_idPais(){
+		String query = "SELECT p.nombre_pais FROM paises p INNER JOIN persona per ON p.id_pais=per.id_pais_nac WHERE per.id_persona = (?)";
 		return query;
 	}
 	

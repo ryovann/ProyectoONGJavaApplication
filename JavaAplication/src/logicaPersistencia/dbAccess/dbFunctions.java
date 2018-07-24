@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 
 public class dbFunctions {
 	// Esta clase contiene todos los metodos que permitiran
@@ -421,6 +422,72 @@ public class dbFunctions {
 		
 		//se debe programar el insert de persona
 
+	}
+	
+	public HashMap<String,String> Datos_Persona(String ci_venezolana){
+		HashMap<String,String> datos = null;
+		try {
+			PreparedStatement preparedS = ConnectionObject.getConnection()
+					.prepareStatement(querys.idPersona_por_ci_venezolana());
+			preparedS.setString(1, ci_venezolana);
+			ResultSet rs = preparedS.executeQuery();
+			int id_persona = 0, id_idioma = 0;
+			if (rs == null) {
+				System.err.println("dbFunctions.Datos_Persona: No hay una persona con esa cedula");
+			} else {
+				while (rs.next()) {
+					id_persona = rs.getInt("id_persona");
+					// Se guarda la persona en la variable
+				}
+
+				rs=null;
+				preparedS = ConnectionObject.getConnection().prepareStatement(querys.Obtener_Datos_Familia_Persona());
+				preparedS.setInt(1, id_persona);
+				rs = preparedS.executeQuery();
+				datos = new HashMap();
+				while (rs.next()) {
+					//,,,,,,,,
+					String segundo_nombre= rs.getString("segundo_nombre");
+					datos.put("segundo_Nombre",segundo_nombre ); 
+					String segundo_apellido = rs.getString("segundo_apellido");
+					datos.put("segundo_apellido",segundo_apellido);
+					String sexo = rs.getString("sexo");
+					datos.put("sexo", sexo);
+					String email = rs.getString("email");
+					datos.put("email",email);
+					String ocupacion = rs.getString("ocupacion");
+					datos.put("ocupacion", ocupacion);
+					String reside_desde = rs.getString("reside_desde");
+					String[] parts = reside_desde.split("-");
+					datos.put("reside_desde",parts[2]+"/"+parts[1]+"/"+parts[0]);
+					//tengo que transformar la fecha 
+					String domicilio = rs.getString("domicilio");
+					datos.put("domicilio", domicilio);
+					int id_pais_nac = rs.getInt("id_pais_nac");
+					preparedS =ConnectionObject.getConnection().prepareStatement(querys.Buscar_paisNac_por_idPais());
+					preparedS.setInt(1,id_pais_nac);
+					ResultSet rs2 = preparedS.executeQuery();
+					String nombre_pais_nac = rs2.getString("nombre_pais");
+					datos.put("pais_nac", nombre_pais_nac);
+					// tengo que buscar al nombre del pais 
+					String fecha_nac = rs.getString("fecha_nac");
+					parts = fecha_nac.split("-");
+					datos.put("fecha_nac", parts[2]+"/"+parts[1]+"/"+parts[0]);
+					//tengo que transformar la fecha
+					String ciudad_nac = rs.getString("ciudad_nac");
+					datos.put("ciudad_nac", ciudad_nac);
+					String estado_civil = rs.getString("estado_civil");
+					datos.put("estado_civil", estado_civil);
+					
+					
+				}
+				rs.close();
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return datos;
 	}
 
 }

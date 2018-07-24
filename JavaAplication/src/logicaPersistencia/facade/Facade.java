@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.util.HashMap;
 import java.util.Properties;
 
 import logicaPersistencia.dbAccess.dbFunctions;
@@ -158,5 +159,11 @@ public class Facade {
 		dbAccess.InsertarPersona(vop.getPrimer_nombre(),vop.getSegundo_nombre(),vop.getPrimer_apellido(),vop.getSegundo_apellido(),vop.getSexo(),vop.getEstado_civil(),vop.getEmail(),vop.getOcupacion(),vop.getMotivo_contacto(),vop.getFecha_reside(),vop.getDireccion(),vop.getPais_nac(),vop.getFecha_nac(),vop.getCiudad_nac());
 		
 		
+	}
+	
+	public HashMap Datos_Persona(VO_Documentos vod){
+		dbFunctions dbAccess = new dbFunctions(config);
+		HashMap datos = dbAccess.Datos_Persona(vod.getCi_venezolana());
+		return datos;
 	}
 }

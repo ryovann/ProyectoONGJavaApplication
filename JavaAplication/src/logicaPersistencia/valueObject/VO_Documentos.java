@@ -13,6 +13,13 @@ public class VO_Documentos {
 		this.fecha_carnet_salud = fecha_carnet_salud;
 		this.ci_venezolana=ci_venezolana;
 	}
+	
+	public VO_Documentos (String ci_venezolana){
+		this.ci_venezolana=ci_venezolana;
+		this.ci_uruguaya = null;
+		this.pasaporte = null;
+		this.fecha_carnet_salud = null;
+	}
 	public String getCi_uruguaya() {
 		return ci_uruguaya;
 	}
