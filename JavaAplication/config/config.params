@@ -1,5 +1,5 @@
 driver=com.mysql.jdbc.Driver
 url=jdbc:mysql://localhost:3306/manosveneguayas
 username=root
-password=
+password=root
 p=1234

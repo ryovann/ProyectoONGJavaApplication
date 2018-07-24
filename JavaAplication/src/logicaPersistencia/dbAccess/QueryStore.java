@@ -85,4 +85,51 @@ public class QueryStore {
 		//esto esta bien
 	}
 	
+	public String Obtener_Datos_Persona(){
+		String query = "SELECT primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,sexo,email,ocupacion,motivo_contacto,reside_desde,domicilio,id_pais_nac,fecha_nac,ciudad_nac,estado_civil FROM Persona WHERE id_persona = (?);";
+		return query;
+	}
+	
+	
+	public String Obtener_Datos_Documentos(){
+		String query = "SELECT * FROM documentos WHERE id_persona = (?);";
+		return query;
+	}
+	
+	public String Obtener_Datos_Formacion_Academica(){
+		String query = "SELECT nivel,completado FROM formacion_academica  WHERE id_persona= (?);";
+		return query;
+	}
+	
+	public String Obtener_Datos_Tiene_Profesion(){
+		String query = "SELECT titulo,homologacion FROM tiene_profesion tp INNER JOIN profesiones p ON tp.id_prof=p.id_prof WHERE id_persona= (?);";
+		return query;
+	}
+	
+	public String Obtener_Datos_Familia_Persona(){
+		String query = "SELECT  vive_con,vino_con,cantidad_hijos,cant_hijos_extranjero FROM familia_persona WHERE id_persona= (?);";
+		return query;
+	}
+	
+	public String Obtener_Telefonos_Persona(){
+		String query = "SELECT tel FROM telefono_persona WHERE id_persona= (?);";
+		return query;
+	}
+	
+	public String Obtener_Idiomas(){
+		String query = "SELECT nombre_idioma,nivel FROM sabe_idioma s INNER JOIN idiomas i ON s.id_idioma=s.id_idioma WHERE s.id_persona= (?);";
+		return query;
+	}
+	
+
+	
+
+	
+
+	
+
+	
+
+
+	
 }
