@@ -14,7 +14,7 @@ import logicaPersistencia.valueObject.VO_telefonos_Persona;
 
 public class FormularioRegistro_Controller {
 	//SINGLETON
-	public static FormularioRegistro_Controller instancia = null;
+	private static FormularioRegistro_Controller instancia = null;
 	
 	private FormularioRegistro_Controller(){};
 	

@@ -19,8 +19,8 @@ public class VerInformacion_Controller {
 		
 	}
 	
-	public HashMap<String,String> Datos_Persona(String string){
-		VO_Documentos vod = new VO_Documentos(string);
+	public HashMap<String,String> Datos_Persona(String ci_venezolana){
+		VO_Documentos vod = new VO_Documentos(ci_venezolana);
 		Facade f = new Facade();
 		HashMap<String,String> datos = f.Datos_Persona(vod);
 		return datos;

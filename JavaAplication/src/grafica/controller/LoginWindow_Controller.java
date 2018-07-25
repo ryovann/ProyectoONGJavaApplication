@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 import grafica.window.MainWindow;
 
 public class LoginWindow_Controller {
-	public static LoginWindow_Controller instancia =null;
+	private static LoginWindow_Controller instancia =null;
 	private LoginWindow_Controller(){};
 	public static LoginWindow_Controller getInstancia(){
 		if (instancia == null){

@@ -12,7 +12,7 @@ import logicaPersistencia.facade.Facade;
 import logicaPersistencia.valueObject.ValueObject_UsuariosBusqueda;
 
 public class MainWindow_Controller {
-	public static MainWindow_Controller instancia =null;
+	private static MainWindow_Controller instancia =null;
 	private MainWindow_Controller(){};
 	public static MainWindow_Controller getInstancia(){
 		if (instancia == null){

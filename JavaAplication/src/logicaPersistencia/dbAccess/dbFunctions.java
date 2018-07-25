@@ -425,10 +425,10 @@ public class dbFunctions {
 	}
 	
 	public HashMap<String,String> Datos_Persona(String ci_venezolana){
+		ConnectionObject.initializeConnection();
 		HashMap<String,String> datos = null;
 		try {
-			PreparedStatement preparedS = ConnectionObject.getConnection()
-					.prepareStatement(querys.idPersona_por_ci_venezolana());
+			PreparedStatement preparedS = ConnectionObject.getConnection().prepareStatement(querys.idPersona_por_ci_venezolana());
 			preparedS.setString(1, ci_venezolana);
 			ResultSet rs = preparedS.executeQuery();
 			int id_persona = 0, id_idioma = 0;
@@ -438,42 +438,50 @@ public class dbFunctions {
 				while (rs.next()) {
 					id_persona = rs.getInt("id_persona");
 					// Se guarda la persona en la variable
+					System.out.println("dbFunctions.Datos_Persona: se encontro a la persona por la cedula venezolana");
 				}
-
 				rs=null;
-				preparedS = ConnectionObject.getConnection().prepareStatement(querys.Obtener_Datos_Familia_Persona());
+				preparedS = ConnectionObject.getConnection().prepareStatement(querys.Obtener_Datos_Persona());
 				preparedS.setInt(1, id_persona);
 				rs = preparedS.executeQuery();
-				datos = new HashMap();
+				System.out.println("dbFunctions.Datos_Persona: se ejecuto obtener datos persona");
+				datos = new HashMap<String, String>();
 				while (rs.next()) {
-					//,,,,,,,,
+					//voy obteniendo los datos e insertandolos en el HashMap, la clave es el nombre del atributo
 					String segundo_nombre= rs.getString("segundo_nombre");
+					System.out.println("dbFunctions.Datos_Persona: imprimo segundo nombre "+ segundo_nombre);
 					datos.put("segundo_Nombre",segundo_nombre ); 
 					String segundo_apellido = rs.getString("segundo_apellido");
 					datos.put("segundo_apellido",segundo_apellido);
+					System.out.println("dbFunctions.Datos_Persona: imprimo segundo nombre "+ datos.get("segundo_apellido"));
 					String sexo = rs.getString("sexo");
 					datos.put("sexo", sexo);
 					String email = rs.getString("email");
 					datos.put("email",email);
 					String ocupacion = rs.getString("ocupacion");
 					datos.put("ocupacion", ocupacion);
+					//tengo que transformar la fecha 
 					String reside_desde = rs.getString("reside_desde");
 					String[] parts = reside_desde.split("-");
 					datos.put("reside_desde",parts[2]+"/"+parts[1]+"/"+parts[0]);
-					//tengo que transformar la fecha 
+					
 					String domicilio = rs.getString("domicilio");
 					datos.put("domicilio", domicilio);
 					int id_pais_nac = rs.getInt("id_pais_nac");
-					preparedS =ConnectionObject.getConnection().prepareStatement(querys.Buscar_paisNac_por_idPais());
-					preparedS.setInt(1,id_pais_nac);
-					ResultSet rs2 = preparedS.executeQuery();
-					String nombre_pais_nac = rs2.getString("nombre_pais");
-					datos.put("pais_nac", nombre_pais_nac);
 					// tengo que buscar al nombre del pais 
+					preparedS =ConnectionObject.getConnection().prepareStatement(querys.Buscar_paisNac_por_idPais());
+					preparedS.setInt(1,id_persona);
+					ResultSet rs2 = preparedS.executeQuery();
+					while (rs2.next()){
+						String nombre_pais_nac = rs2.getString("nombre_pais");
+						datos.put("pais_nac", nombre_pais_nac);
+					}
+					rs2.close();
+					//tengo que transformar la fecha
 					String fecha_nac = rs.getString("fecha_nac");
 					parts = fecha_nac.split("-");
 					datos.put("fecha_nac", parts[2]+"/"+parts[1]+"/"+parts[0]);
-					//tengo que transformar la fecha
+					
 					String ciudad_nac = rs.getString("ciudad_nac");
 					datos.put("ciudad_nac", ciudad_nac);
 					String estado_civil = rs.getString("estado_civil");

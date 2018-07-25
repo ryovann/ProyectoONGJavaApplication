@@ -46,39 +46,39 @@ public class VerInformacion extends JFrame {
 		VerInformacion_Controller controlador = VerInformacion_Controller.getIntancia();
 		HashMap<String,String> datos_persona = controlador.Datos_Persona(cedulaVenezolana+"");
 		
-		JLabel lblPrimerNombre = new JLabel("Primer nombre: ");
+		JLabel lblPrimerNombre = new JLabel("Primer nombre: "+primerNombre);
 		lblPrimerNombre.setBounds(10, 11, 199, 14);
 		panel.add(lblPrimerNombre);
 		
-		JLabel lblSegundoNombre = new JLabel("Segundo nombre: ");
+		JLabel lblSegundoNombre = new JLabel("Segundo nombre: "+datos_persona.get("segundo_nombre"));
 		lblSegundoNombre.setBounds(219, 11, 199, 14);
 		panel.add(lblSegundoNombre);
 		
-		JLabel lblPrimerApellido = new JLabel("Primer apellido: ");
+		JLabel lblPrimerApellido = new JLabel("Primer apellido: "+primerApellido);
 		lblPrimerApellido.setBounds(10, 36, 199, 14);
 		panel.add(lblPrimerApellido);
 		
-		JLabel lblSegundoApellido = new JLabel("Segundo apellido: ");
+		JLabel lblSegundoApellido = new JLabel("Segundo apellido: "+datos_persona.get("segundo_apellido"));
 		lblSegundoApellido.setBounds(219, 36, 199, 14);
 		panel.add(lblSegundoApellido);
 		
-		JLabel lblFechaDeNacimientto = new JLabel("Fecha de nacimiento");
+		JLabel lblFechaDeNacimientto = new JLabel("Fecha de nacimiento: "+datos_persona.get("fecha_nac"));
 		lblFechaDeNacimientto.setBounds(10, 61, 199, 14);
 		panel.add(lblFechaDeNacimientto);
 		
-		JLabel lblPaisDeNacimiento = new JLabel("Pais de nacimiento");
+		JLabel lblPaisDeNacimiento = new JLabel("Pais de nacimiento: "+datos_persona.get("pais_nac"));
 		lblPaisDeNacimiento.setBounds(219, 61, 199, 14);
 		panel.add(lblPaisDeNacimiento);
 		
-		JLabel lblDireccion = new JLabel("Direccion");
+		JLabel lblDireccion = new JLabel("Direccion: "+datos_persona.get("domicilio"));
 		lblDireccion.setBounds(10, 111, 199, 14);
 		panel.add(lblDireccion);
 		
-		JLabel lblCiudadDeNacimiento = new JLabel("Ciudad de nacimiento");
+		JLabel lblCiudadDeNacimiento = new JLabel("Ciudad de nacimiento: "+ datos_persona.get("ciudad_nac"));
 		lblCiudadDeNacimiento.setBounds(10, 86, 199, 14);
 		panel.add(lblCiudadDeNacimiento);
 		
-		JLabel lblSexo = new JLabel("Sexo");
+		JLabel lblSexo = new JLabel("Sexo: "+datos_persona.get("sexo"));
 		lblSexo.setBounds(219, 86, 46, 14);
 		panel.add(lblSexo);
 		
@@ -153,7 +153,7 @@ public class VerInformacion extends JFrame {
 		lblCantidadDeHijos.setBounds(10, 36, 199, 14);
 		panel_3.add(lblCantidadDeHijos);
 		
-		JLabel lblEstadoCivil = new JLabel("Estado civil");
+		JLabel lblEstadoCivil = new JLabel("Estado civil: "+datos_persona.get("estado_civil"));
 		lblEstadoCivil.setBounds(10, 61, 199, 14);
 		panel_3.add(lblEstadoCivil);
 		
@@ -163,7 +163,7 @@ public class VerInformacion extends JFrame {
 		contentPane.add(panel_4);
 		panel_4.setLayout(null);
 		
-		JLabel lblResideDesde = new JLabel("Reside desde");
+		JLabel lblResideDesde = new JLabel("Reside desde:"+datos_persona.get("reside_desde"));
 		lblResideDesde.setBounds(219, 11, 199, 14);
 		panel_4.add(lblResideDesde);
 		
