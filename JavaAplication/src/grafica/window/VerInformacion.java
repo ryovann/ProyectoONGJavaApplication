@@ -20,6 +20,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.SystemColor;
 import java.util.HashMap;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VerInformacion extends JFrame {
 	private JPanel contentPane;
@@ -27,7 +29,7 @@ public class VerInformacion extends JFrame {
 		setTitle("Informacion de: "+primerNombre+" "+primerApellido+" - CI: "+cedulaVenezolana);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 701, 543);
+		setBounds(100, 100, 701, 556);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -253,12 +255,13 @@ public class VerInformacion extends JFrame {
 		lblIdiomas.setBounds(448, 345, 221, 14);
 		contentPane.add(lblIdiomas);
 		
-		JButton btnModificarUsuario = new JButton("Modificar usuario");
-		btnModificarUsuario.setBounds(168, 468, 148, 23);
+		JButton btnModificarUsuario = new JButton("Cerrar");
+		btnModificarUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
+		btnModificarUsuario.setBounds(521, 468, 148, 23);
 		contentPane.add(btnModificarUsuario);
-		
-		JButton btnEliminarUsuario = new JButton("Eliminar usuario");
-		btnEliminarUsuario.setBounds(10, 468, 148, 23);
-		contentPane.add(btnEliminarUsuario);
 	}
 }

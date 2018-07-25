@@ -2,6 +2,7 @@ package grafica.controller;
 
 import java.util.HashMap;
 
+import grafica.window.FormularioRegistro;
 import logicaPersistencia.facade.Facade;
 import logicaPersistencia.valueObject.VO_Documentos;
 import logicaPersistencia.valueObject.VO_Formacion_Academica;
@@ -72,4 +73,8 @@ public class VerInformacion_Controller {
 		String[] idiomas = f.Obtener_Idiomas(vo);
 		return idiomas;
 	}
+	public void modificarBoton(){
+		FormularioRegistro formulario = new FormularioRegistro(1);
+	}
 }
+
