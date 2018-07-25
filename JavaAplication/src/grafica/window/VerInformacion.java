@@ -55,7 +55,8 @@ public class VerInformacion extends JFrame {
 		//obtengo los datos de la formacion academica 
 		HashMap<String,String> formacion_academica = controlador.Datos_Formacion_Academica(cedulaVenezolana+"");
 		
-		
+		//obtengo profesion 
+		HashMap<String,String> tiene_profesion = controlador.Obtener_Profesion(cedulaVenezolana+"",formacion_academica.get("nivel"), formacion_academica.get("completado"));
 		
 		JLabel lblPrimerNombre = new JLabel("Primer nombre: "+primerNombre);
 		lblPrimerNombre.setBounds(10, 11, 199, 14);
@@ -136,11 +137,11 @@ public class VerInformacion extends JFrame {
 		lblEstadoEscolar.setBounds(219, 11, 199, 14);
 		panel_2.add(lblEstadoEscolar);
 		
-		JLabel lblTitulo = new JLabel("Titulo");
+		JLabel lblTitulo = new JLabel("Titulo: "+tiene_profesion.get("titulo"));
 		lblTitulo.setBounds(10, 36, 199, 14);
 		panel_2.add(lblTitulo);
 		
-		JLabel lblHomologado = new JLabel("Homologado");
+		JLabel lblHomologado = new JLabel("Homologado: "+tiene_profesion.get("homologacion"));
 		lblHomologado.setBounds(219, 36, 199, 14);
 		panel_2.add(lblHomologado);
 		

@@ -643,6 +643,7 @@ public class dbFunctions {
 						parts = carnet_salud.split("-");
 						documentos.put("carnet_salud", parts[2]+"/"+parts[1]+"/"+parts[0]);
 					}else{// no tiene carnet de salud 
+						
 						documentos.put("carnet_salud", "---");
 					}
 				}
@@ -657,6 +658,60 @@ public class dbFunctions {
 			e.printStackTrace();
 		}
 		return documentos;
+	}
+	
+	public HashMap<String,String> Obtener_Profesion(String ci_v, String nivel, int completado){
+		ConnectionObject.initializeConnection();
+		HashMap<String,String> tiene_profesion =null;
+		try {
+			// consigo el id de la persona
+			PreparedStatement preparedS = ConnectionObject.getConnection().prepareStatement(querys.idPersona_por_ci_venezolana());
+			preparedS.setString(1, ci_v);
+			ResultSet rs = preparedS.executeQuery();
+			int id_persona = 0;
+			if (rs == null) { // SI ES UN rs VACIO
+				System.out.println("no hay persona con esa cedula venezolana, estoy en dbfunctions");
+			} else {
+				while (rs.next()) {
+					id_persona = rs.getInt("id_persona");
+					System.out.println("se encontro id_persona por la cedula,dbFunctions.Obtener_Profesion() "+id_persona);
+				}
+				
+			} // end else
+			rs=null;
+			preparedS = ConnectionObject.getConnection().prepareStatement(querys.Obtener_Datos_Tiene_Profesion());
+			preparedS.setInt(1,id_persona);
+			rs = preparedS.executeQuery();
+			if (rs !=null){
+				tiene_profesion = new HashMap<String,String>();
+				tiene_profesion.put("titulo", "---");
+				tiene_profesion.put("homologacion", "---");
+				if (completado==0){ // si esta completo
+					if (nivel.equals("Terciario/Tecnica")|| nivel.equals("Grado universitario")|| nivel.equals("Postgrado universitario")){	
+						while (rs.next()){
+							String titulo = rs.getString("titulo");
+							tiene_profesion.put("titulo", titulo);
+							
+							int homologacion = rs.getInt("homologacion");
+							if(homologacion==1){
+								tiene_profesion.put("homologacion", "Si");
+							}else{
+								tiene_profesion.put("homologacion", "No");
+							}
+						}//end while
+					}//end if
+				}//end if completo
+			}else{
+				System.out.println("dbfunctions.Obtener_profesion(): la persona no tiene formacion academica");
+			}
+			rs.close();
+			preparedS.close();
+
+		} catch (SQLException e) {
+			System.out.println("dbFunctions.Obtener_profesion(): Error en la consulta: ");
+			e.printStackTrace();
+		}
+		return tiene_profesion;
 	}
 
 }

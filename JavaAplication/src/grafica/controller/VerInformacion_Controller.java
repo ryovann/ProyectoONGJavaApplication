@@ -40,4 +40,15 @@ public class VerInformacion_Controller {
 		HashMap<String,String> documentos = f.Documentos(vod);
 		return documentos;
 	}
+	
+	public HashMap<String,String> Obtener_Profesion(String ci_v,String nivel, String completado){
+		int comp =0;
+		if (completado.equals("completo")){
+			comp=1;
+		}
+		VO_Formacion_Academica vo = new VO_Formacion_Academica(nivel,comp,ci_v);
+		Facade f= new Facade();
+		HashMap<String,String> tiene_profesion = f.Obtener_Profesion(vo);
+		return tiene_profesion;
+	}
 }
