@@ -166,4 +166,16 @@ public class Facade {
 		HashMap<String,String> datos = dbAccess.Datos_Persona(vod.getCi_venezolana());
 		return datos;
 	}
+	
+	public HashMap<String,String> Datos_Formacion_Academica(VO_Formacion_Academica vofa){
+		dbFunctions dbAccess = new dbFunctions(config);
+		HashMap<String,String> formacion_academica = dbAccess.Datos_Formacion_Academica(vofa.getCi_venezolana());
+		return formacion_academica;
+	}
+	 
+	public HashMap<String,String> Documentos (VO_Documentos vod){
+		dbFunctions dbAccess = new dbFunctions(config);
+		HashMap<String,String> documentos = dbAccess.Documentos(vod.getCi_venezolana());
+		return documentos;
+	}
 }

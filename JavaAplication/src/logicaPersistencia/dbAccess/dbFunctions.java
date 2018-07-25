@@ -449,46 +449,98 @@ public class dbFunctions {
 				while (rs.next()) {
 					//voy obteniendo los datos e insertandolos en el HashMap, la clave es el nombre del atributo
 					String segundo_nombre= rs.getString("segundo_nombre");
-					System.out.println("dbFunctions.Datos_Persona: imprimo segundo nombre "+ segundo_nombre);
-					datos.put("segundo_Nombre",segundo_nombre ); 
+					System.out.println(segundo_nombre);
+					//puede ser que no tenga segundo nombre
+					if (segundo_nombre!=null){
+						datos.put("segundo_nombre",segundo_nombre );
+					}else{
+						datos.put("segundo_nombre", "---");
+					}
+					
 					String segundo_apellido = rs.getString("segundo_apellido");
-					datos.put("segundo_apellido",segundo_apellido);
-					System.out.println("dbFunctions.Datos_Persona: imprimo segundo nombre "+ datos.get("segundo_apellido"));
+					if (segundo_apellido!=null){
+						datos.put("segundo_apellido",segundo_apellido);
+					}else {
+						datos.put("segundo_apellido","---");
+					}
+					
 					String sexo = rs.getString("sexo");
-					datos.put("sexo", sexo);
+					if(sexo!=null){
+						datos.put("sexo", sexo);
+					}else{
+						datos.put("sexo","---");
+					}
+					
 					String email = rs.getString("email");
-					datos.put("email",email);
+					if(email!=null){
+						datos.put("email",email);
+					} else{
+						datos.put("email","---");
+					}
+					
 					String ocupacion = rs.getString("ocupacion");
-					datos.put("ocupacion", ocupacion);
+					if(ocupacion!=null){
+						datos.put("ocupacion", ocupacion);
+					}else{
+						datos.put("ocupacion","---");
+					}
 					//tengo que transformar la fecha 
 					String reside_desde = rs.getString("reside_desde");
-					String[] parts = reside_desde.split("-");
-					datos.put("reside_desde",parts[2]+"/"+parts[1]+"/"+parts[0]);
+					if(reside_desde!=null){
+						String[] parts = reside_desde.split("-");
+						datos.put("reside_desde",parts[2]+"/"+parts[1]+"/"+parts[0]);
+					}else {
+						datos.put("reside_desde","---");
+					}
 					
 					String domicilio = rs.getString("domicilio");
-					datos.put("domicilio", domicilio);
-					int id_pais_nac = rs.getInt("id_pais_nac");
-					// tengo que buscar al nombre del pais 
-					preparedS =ConnectionObject.getConnection().prepareStatement(querys.Buscar_paisNac_por_idPais());
-					preparedS.setInt(1,id_persona);
-					ResultSet rs2 = preparedS.executeQuery();
-					while (rs2.next()){
-						String nombre_pais_nac = rs2.getString("nombre_pais");
-						datos.put("pais_nac", nombre_pais_nac);
+					if(domicilio!=null){
+						datos.put("domicilio", domicilio);
+					}else{
+						datos.put("domicilio", "---");
 					}
-					rs2.close();
-					//tengo que transformar la fecha
+					
+					String id_pais_nac = rs.getInt("id_pais_nac")+"";
+					if (id_pais_nac.equals("")){
+						datos.put("pais_nac", "---");
+					}else{
+						// tengo que buscar al nombre del pais 
+						int id_pais = rs.getInt("id_pais_nac");
+						preparedS =ConnectionObject.getConnection().prepareStatement(querys.Buscar_paisNac_por_idPais());
+						preparedS.setInt(1,id_persona);
+						ResultSet rs2 = preparedS.executeQuery();
+						while (rs2.next()){
+							String nombre_pais_nac = rs2.getString("nombre_pais");
+							datos.put("pais_nac", nombre_pais_nac);
+						}
+						rs2.close();
+					}
+					
 					String fecha_nac = rs.getString("fecha_nac");
-					parts = fecha_nac.split("-");
-					datos.put("fecha_nac", parts[2]+"/"+parts[1]+"/"+parts[0]);
+					if(fecha_nac!=null){
+						//tengo que transformar la fecha
+						String[] parts;
+						parts = fecha_nac.split("-");
+						datos.put("fecha_nac", parts[2]+"/"+parts[1]+"/"+parts[0]);
+					}else{
+						datos.put("fecha_nac", "---");
+					}
 					
 					String ciudad_nac = rs.getString("ciudad_nac");
-					datos.put("ciudad_nac", ciudad_nac);
+					if(ciudad_nac!=null){
+						datos.put("ciudad_nac", ciudad_nac);
+					}else {
+						datos.put("ciudad_nac", "---");
+					}
+					
 					String estado_civil = rs.getString("estado_civil");
-					datos.put("estado_civil", estado_civil);
-					
-					
-				}
+					if(estado_civil!=null){
+						datos.put("estado_civil", estado_civil);
+					}else{
+						datos.put("estado_civil", "---");
+					}
+						
+				} //end while
 				rs.close();
 			}
 
@@ -496,6 +548,115 @@ public class dbFunctions {
 			e.printStackTrace();
 		}
 		return datos;
+	}
+	
+	public HashMap<String,String> Datos_Formacion_Academica(String ci_v){
+		ConnectionObject.initializeConnection();
+		HashMap<String,String> formacion_academica=null;
+		try {
+			// consigo el id de la persona
+			PreparedStatement preparedS = ConnectionObject.getConnection().prepareStatement(querys.idPersona_por_ci_venezolana());
+			preparedS.setString(1, ci_v);
+			ResultSet rs = preparedS.executeQuery();
+			int id_persona = 0;
+			if (rs == null) { // SI ES UN rs VACIO
+				System.out.println("no hay persona con esa cedula venezolana, estoy en dbfunctions");
+			} else {
+				while (rs.next()) {
+					id_persona = rs.getInt("id_persona");
+					System.out.println("se encontro id_persona por la cedula, estoy en Datos_Formacion_Academca, dbfunctions "+id_persona);
+				}
+				
+			} // end else
+			rs=null;
+			preparedS = ConnectionObject.getConnection().prepareStatement(querys.Obtener_Datos_Formacion_Academica());
+			preparedS.setInt(1,id_persona);
+			rs = preparedS.executeQuery();
+			if (rs !=null){
+				formacion_academica = new HashMap<String,String>();
+				while (rs.next()){
+					String nivel = rs.getString("nivel");
+					formacion_academica.put("nivel", nivel);
+					int completado = rs.getInt("completado");
+					if(completado == 0){
+						formacion_academica.put("completado","completo");
+					}else{
+						formacion_academica.put("completado","no completo");
+					}
+				}
+			}else{
+				System.out.println("dbfunctions.Datos_Formacion_Academica(): la persona no tiene formacion academica");
+			}
+			rs.close();
+			preparedS.close();
+
+		} catch (SQLException e) {
+			System.out.println("dbFunctions.Datos_Formacion_Academica: Error en la consulta: ");
+			e.printStackTrace();
+		}
+		return formacion_academica;
+	}
+	
+	public HashMap<String,String> Documentos(String ci_v){
+		ConnectionObject.initializeConnection();
+		HashMap<String,String> documentos =null;
+		try {
+			// consigo el id de la persona
+			PreparedStatement preparedS = ConnectionObject.getConnection().prepareStatement(querys.idPersona_por_ci_venezolana());
+			preparedS.setString(1, ci_v);
+			ResultSet rs = preparedS.executeQuery();
+			int id_persona = 0;
+			if (rs == null) { // SI ES UN rs VACIO
+				System.out.println("no hay persona con esa cedula venezolana, estoy en dbfunctions");
+			} else {
+				while (rs.next()) {
+					id_persona = rs.getInt("id_persona");
+					System.out.println("se encontro id_persona por la cedula,dbFunctions.Documentos() "+id_persona);
+				}
+				
+			} // end else
+			rs=null;
+			preparedS = ConnectionObject.getConnection().prepareStatement(querys.Obtener_Datos_Documentos());
+			preparedS.setInt(1,id_persona);
+			rs = preparedS.executeQuery();
+			if (rs !=null){
+				documentos = new HashMap<String,String>();
+				while (rs.next()){
+					String ci_uru = rs.getInt("ci_uruguaya")+"";
+					if(ci_uru.equals("0")|| ci_uru==null){ // si no tiene cedula uruguaya
+						documentos.put("ci_uruguaya", "---");
+					}else{
+						documentos.put("ci_uruguaya", ci_uru);
+					}
+					
+					String pasaporte = rs.getString("pasaporte");
+					if(pasaporte!=null){
+						documentos.put("pasaporte", pasaporte);
+					}else{// no tiene pasaporte 
+						documentos.put("pasaporte", "---");
+					}
+					
+					String carnet_salud = rs.getString("carnet_salud");
+					if (carnet_salud!=null){
+						//tengo que modificar la fecha 
+						String[] parts;
+						parts = carnet_salud.split("-");
+						documentos.put("carnet_salud", parts[2]+"/"+parts[1]+"/"+parts[0]);
+					}else{// no tiene carnet de salud 
+						documentos.put("carnet_salud", "---");
+					}
+				}
+			}else{
+				System.out.println("dbfunctions.Documentos(): la persona no tiene formacion academica");
+			}
+			rs.close();
+			preparedS.close();
+
+		} catch (SQLException e) {
+			System.out.println("dbFunctions.Documentos(): Error en la consulta: ");
+			e.printStackTrace();
+		}
+		return documentos;
 	}
 
 }

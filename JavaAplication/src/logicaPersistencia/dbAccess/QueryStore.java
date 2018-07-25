@@ -92,12 +92,12 @@ public class QueryStore {
 	
 	
 	public String Obtener_Datos_Documentos(){
-		String query = "SELECT * FROM documentos WHERE id_persona = (?);";
+		String query = "SELECT ci_uruguaya,pasaporte,carnet_salud FROM documentos WHERE id_persona = (?);";
 		return query;
 	}
 	
 	public String Obtener_Datos_Formacion_Academica(){
-		String query = "SELECT nivel,completado FROM formacion_academica  WHERE id_persona= (?);";
+		String query = "SELECT nivel,completado FROM formacion_academica f  WHERE f.id_persona= (?);";
 		return query;
 	}
 	
@@ -130,6 +130,7 @@ public class QueryStore {
 		String query = "SELECT p.nombre_pais FROM paises p INNER JOIN persona per ON p.id_pais=per.id_pais_nac WHERE per.id_persona = (?)";
 		return query;
 	}
+	
 	
 
 	

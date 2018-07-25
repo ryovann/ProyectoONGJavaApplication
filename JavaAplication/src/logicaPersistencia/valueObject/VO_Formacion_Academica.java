@@ -12,6 +12,12 @@ public class VO_Formacion_Academica {
 		this.completado = completado;
 		this.ci_venezolana=ci_venezolana;
 	}
+	
+	public VO_Formacion_Academica(String ci_venezolana){
+		this.ci_venezolana=ci_venezolana;
+		this.nivel=null;
+		this.completado=-1;
+	}
 
 	public String getNivel() {
 		return nivel;

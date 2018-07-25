@@ -43,8 +43,19 @@ public class VerInformacion extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
+		System.out.println(cedulaVenezolana);
+		
 		VerInformacion_Controller controlador = VerInformacion_Controller.getIntancia();
+		//obtengo los datos de la tabla persona
 		HashMap<String,String> datos_persona = controlador.Datos_Persona(cedulaVenezolana+"");
+		
+		//obtengo los docuentos 
+		HashMap<String,String> documentos = controlador.Documentos(cedulaVenezolana+"");
+		
+		//obtengo los datos de la formacion academica 
+		HashMap<String,String> formacion_academica = controlador.Datos_Formacion_Academica(cedulaVenezolana+"");
+		
+		
 		
 		JLabel lblPrimerNombre = new JLabel("Primer nombre: "+primerNombre);
 		lblPrimerNombre.setBounds(10, 11, 199, 14);
@@ -93,19 +104,20 @@ public class VerInformacion extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel lblCedulaVenezolana = new JLabel("Cedula venezolana");
+		//DOCUMENTOS
+		JLabel lblCedulaVenezolana = new JLabel("Cedula venezolana: "+cedulaVenezolana);
 		lblCedulaVenezolana.setBounds(10, 11, 199, 14);
 		panel_1.add(lblCedulaVenezolana);
 		
-		JLabel lblCedulaUrugaya = new JLabel("Cedula urugaya");
+		JLabel lblCedulaUrugaya = new JLabel("Cedula urugaya: "+documentos.get("ci_uruguaya"));
 		lblCedulaUrugaya.setBounds(10, 36, 199, 14);
 		panel_1.add(lblCedulaUrugaya);
 		
-		JLabel lblPasaporte = new JLabel("Pasaporte");
+		JLabel lblPasaporte = new JLabel("Pasaporte: "+documentos.get("pasaporte"));
 		lblPasaporte.setBounds(10, 61, 199, 14);
 		panel_1.add(lblPasaporte);
 		
-		JLabel lblCarnetDeSalud = new JLabel("Carnet de salud");
+		JLabel lblCarnetDeSalud = new JLabel("Carnet de salud: "+documentos.get("carnet_salud"));
 		lblCarnetDeSalud.setBounds(10, 86, 199, 14);
 		panel_1.add(lblCarnetDeSalud);
 		
@@ -115,11 +127,12 @@ public class VerInformacion extends JFrame {
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 		
-		JLabel lblNivelEducativo = new JLabel("Nivel educativo");
+		//ESCOLARIDAD 
+		JLabel lblNivelEducativo = new JLabel("Nivel educativo: "+formacion_academica.get("nivel"));
 		lblNivelEducativo.setBounds(10, 11, 199, 14);
 		panel_2.add(lblNivelEducativo);
 		
-		JLabel lblEstadoEscolar = new JLabel("Estado del curso");
+		JLabel lblEstadoEscolar = new JLabel("Estado del curso: "+ formacion_academica.get("completado"));
 		lblEstadoEscolar.setBounds(219, 11, 199, 14);
 		panel_2.add(lblEstadoEscolar);
 		
