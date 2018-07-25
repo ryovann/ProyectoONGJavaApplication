@@ -9,6 +9,7 @@ import grafica.window.FormularioRegistro;
 import grafica.window.TableModel;
 import grafica.window.VerInformacion;
 import logicaPersistencia.facade.Facade;
+import logicaPersistencia.valueObject.VO_Documentos;
 import logicaPersistencia.valueObject.ValueObject_UsuariosBusqueda;
 
 public class MainWindow_Controller {
@@ -113,12 +114,11 @@ public class MainWindow_Controller {
 	public void eliminarUsuario(int cedulaVenezolana, String primerNombre, String primerApellido){
 		int question = JOptionPane.showOptionDialog(null, "Realmente desea eliminar de los registros a: "+primerNombre+" "+primerApellido+"?", "Pregunta", 0,JOptionPane.YES_NO_OPTION, null, null, null);
 		System.out.println(question);
-		
-		
-		
-		
-		
-		
+		if(question == JOptionPane.YES_OPTION) {
+			VO_Documentos vo = new VO_Documentos(cedulaVenezolana+"");
+			Facade f = new Facade();
+			f.EliminarUsuario(vo);
+          }	
 	}
 	
 }

@@ -328,12 +328,9 @@ public class MainWindow extends JFrame {
 					String primerApellido = (String) tableUsuarios.getModel().getValueAt(idSelectedRow, 2);
 					MainWindow_Controller controlador = MainWindow_Controller.getInstancia();
 					//Llamo al metodo que se encarga de la eliminacion de el usuario
-					controlador.eliminarUsuario(ciVenezolana, primerNombre, primerApellido);
-					
-					
+					controlador.eliminarUsuario(ciVenezolana, primerNombre, primerApellido);	
 				}
-				
-				
+					
 			}
 		});
 		
@@ -352,9 +349,7 @@ public class MainWindow extends JFrame {
 					String motivoContacto =  (String) tableUsuarios.getModel().getValueAt(idSelectedRow, 3);
 					MainWindow_Controller controlador = MainWindow_Controller.getInstancia();
 					controlador.btnContinuarRegistroFunction(ciVenezolana,primerNombre,primerApellido,motivoContacto);
-				}
-				
-				
+				}	
 				
 			}
 		});

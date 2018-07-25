@@ -202,4 +202,9 @@ public class Facade {
 		String[] idiomas = dbAccess.Obtener_Idiomas(vo.getCi_venezolana());
 		return idiomas;
 	}
+	
+	public void EliminarUsuario(VO_Documentos vo){
+		dbFunctions dbAccess = new dbFunctions(config);
+		dbAccess.EliminarUsuario(vo.getCi_venezolana());
+	}
 }

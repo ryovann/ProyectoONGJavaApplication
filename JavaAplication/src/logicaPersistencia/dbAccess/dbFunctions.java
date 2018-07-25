@@ -861,5 +861,36 @@ public class dbFunctions {
 		}
 		return idiomas;
 	}
+	
+	public void EliminarUsuario(String ci_v){
+		ConnectionObject.initializeConnection();
+		try {
+			// consigo el id de la persona
+			PreparedStatement preparedS = ConnectionObject.getConnection().prepareStatement(querys.idPersona_por_ci_venezolana());
+			preparedS.setString(1, ci_v);
+			ResultSet rs = preparedS.executeQuery();
+			int id_persona = 0;
+			if (rs == null) { // SI ES UN rs VACIO
+				System.out.println("no hay persona con esa cedula venezolana, estoy en dbfunctions");
+			} else {
+				while (rs.next()) {
+					id_persona = rs.getInt("id_persona");
+					System.out.println("se encontro id_persona por la cedula,dbFunctions.Eliminar_Persona() "+id_persona);
+				}
+				
+			} // end else
+			preparedS = ConnectionObject.getConnection().prepareStatement(querys.Eliminar_Persona());
+			preparedS.setInt(1,id_persona);
+			preparedS.executeUpdate();
+	
+			rs.close();
+			preparedS.close();
+
+		} catch (SQLException e) {
+			System.out.println("dbFunctions.Eliminar_Persona(): Error en la consulta: ");
+			e.printStackTrace();
+		}
+		
+	}
 
 }
