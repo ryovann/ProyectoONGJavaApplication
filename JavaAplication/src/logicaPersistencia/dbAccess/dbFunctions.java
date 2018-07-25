@@ -648,7 +648,7 @@ public class dbFunctions {
 					}
 				}
 			}else{
-				System.out.println("dbfunctions.Documentos(): la persona no tiene formacion academica");
+				System.out.println("dbfunctions.Documentos(): la persona no tiene documentos");
 			}
 			rs.close();
 			preparedS.close();
@@ -702,7 +702,7 @@ public class dbFunctions {
 					}//end if
 				}//end if completo
 			}else{
-				System.out.println("dbfunctions.Obtener_profesion(): la persona no tiene formacion academica");
+				System.out.println("dbfunctions.Obtener_profesion(): la persona no tiene profesion");
 			}
 			rs.close();
 			preparedS.close();
@@ -747,7 +747,7 @@ public class dbFunctions {
 					cont++;
 				}	
 			}else{
-				System.out.println("dbfunctions.Obtener_telefonos(): la persona no tiene formacion academica");
+				System.out.println("dbfunctions.Obtener_telefonos(): ");
 			}
 			rs.close();
 			preparedS.close();
@@ -757,6 +757,109 @@ public class dbFunctions {
 			e.printStackTrace();
 		}
 		return telefonos;
+	}
+	
+	public HashMap<String,String> Obtener_Familia_Persona(String ci_v){
+		ConnectionObject.initializeConnection();
+		HashMap<String,String> familia_persona =null;
+		try {
+			// consigo el id de la persona
+			PreparedStatement preparedS = ConnectionObject.getConnection().prepareStatement(querys.idPersona_por_ci_venezolana());
+			preparedS.setString(1, ci_v);
+			ResultSet rs = preparedS.executeQuery();
+			int id_persona = 0;
+			if (rs == null) { // SI ES UN rs VACIO
+				System.out.println("no hay persona con esa cedula venezolana, estoy en dbfunctions");
+			} else {
+				while (rs.next()) {
+					id_persona = rs.getInt("id_persona");
+					System.out.println("se encontro id_persona por la cedula,dbFunctions.Obtener_familia_persona() "+id_persona);
+				}
+				
+			} // end else
+			rs=null;
+			preparedS = ConnectionObject.getConnection().prepareStatement(querys.Obtener_Datos_Familia_Persona());
+			preparedS.setInt(1,id_persona);
+			rs = preparedS.executeQuery();
+			familia_persona = new HashMap<String,String>();
+			familia_persona.put("vive_con", "---");
+			familia_persona.put("vino_con", "---");
+			familia_persona.put("cant_hijos", "---");
+			familia_persona.put("hijos_extranjero","---");
+			if (rs !=null){
+				while (rs.next()){
+					String vive_con = rs.getString("vive_con");
+					familia_persona.put("vive_con", vive_con);
+					
+					int vino_con = rs.getInt("vino_con");
+					if(vino_con == 0){
+						familia_persona.put("vino_con", "Solo");
+					}else{
+						familia_persona.put("vino_con","Acompañado");
+					}
+					
+					int cant_hijos = rs.getInt("cantidad_hijos");
+					familia_persona.put("cant_hijos", cant_hijos+"");
+					
+					int hijos_extranjero = rs.getInt("cant_hijos_extranjero");
+					familia_persona.put("hijos_extranjero",hijos_extranjero+"");		
+				}	
+			}else{
+				System.out.println("dbfunctions.Obtener_familia_persona(): ");
+			}
+			rs.close();
+			preparedS.close();
+
+		} catch (SQLException e) {
+			System.out.println("dbFunctions.Obtener_Familia_Persona(): Error en la consulta: ");
+			e.printStackTrace();
+		}
+		return familia_persona;
+	}
+	
+	public String[] Obtener_Idiomas(String ci_v){
+		ConnectionObject.initializeConnection();
+		String[] idiomas = new String[100];
+		try {
+			// consigo el id de la persona
+			PreparedStatement preparedS = ConnectionObject.getConnection().prepareStatement(querys.idPersona_por_ci_venezolana());
+			preparedS.setString(1, ci_v);
+			ResultSet rs = preparedS.executeQuery();
+			int id_persona = 0;
+			if (rs == null) { // SI ES UN rs VACIO
+				System.out.println("no hay persona con esa cedula venezolana, estoy en dbfunctions");
+			} else {
+				while (rs.next()) {
+					id_persona = rs.getInt("id_persona");
+					System.out.println("se encontro id_persona por la cedula,dbFunctions.Obtener_Idiomas() "+id_persona);
+				}
+				
+			} // end else
+			rs=null;
+			preparedS = ConnectionObject.getConnection().prepareStatement(querys.Obtener_Idiomas());
+			preparedS.setInt(1,id_persona);
+			rs = preparedS.executeQuery();
+			if (rs !=null){
+				int cont = 0;
+				while (rs.next()){
+					String idioma = rs.getString("nombre_idioma");	
+					System.out.println(idioma);
+					String nivel = rs.getString("nivel");
+					System.out.println(nivel);
+					idiomas[cont]=idioma+"-"+nivel;
+					cont++;
+				}	
+			}else{
+				System.out.println("dbfunctions.Obtener_Idiomas():");
+			}
+			rs.close();
+			preparedS.close();
+
+		} catch (SQLException e) {
+			System.out.println("dbFunctions.Obtener_Idimas(): Error en la consulta: ");
+			e.printStackTrace();
+		}
+		return idiomas;
 	}
 
 }

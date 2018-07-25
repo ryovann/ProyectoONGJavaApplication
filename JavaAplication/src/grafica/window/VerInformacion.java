@@ -16,6 +16,7 @@ import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.SystemColor;
 import java.util.HashMap;
@@ -60,6 +61,12 @@ public class VerInformacion extends JFrame {
 		
 		//obtengo telefonos 
 		HashMap<String,String> telefonos = controlador.Obtener_tenefonos(cedulaVenezolana+"");
+		
+		//obtengo familia_persona 
+		HashMap<String,String> familia_persona = controlador.Obtener_Familia_Persona(cedulaVenezolana+"");
+		
+		//obtengo los idiomas 
+		String[] idiomas = controlador.Obtener_Idiomas(cedulaVenezolana+"");
 		
 		
 		JLabel lblPrimerNombre = new JLabel("Primer nombre: "+primerNombre);
@@ -155,19 +162,19 @@ public class VerInformacion extends JFrame {
 		contentPane.add(panel_3);
 		panel_3.setLayout(null);
 		
-		JLabel lblViveCon = new JLabel("Vive con");
+		JLabel lblViveCon = new JLabel("Vive con: "+familia_persona.get("vive_con"));
 		lblViveCon.setBounds(10, 11, 199, 14);
 		panel_3.add(lblViveCon);
 		
-		JLabel lblVinoCon = new JLabel("Vino con");
+		JLabel lblVinoCon = new JLabel("Vino con: "+familia_persona.get("vino_con"));
 		lblVinoCon.setBounds(219, 11, 199, 14);
 		panel_3.add(lblVinoCon);
 		
-		JLabel lblCantidadDeHijos_1 = new JLabel("Hijos en el extranjero");
+		JLabel lblCantidadDeHijos_1 = new JLabel("Hijos en el extranjero: "+familia_persona.get("hijos_extranjero"));
 		lblCantidadDeHijos_1.setBounds(219, 36, 199, 14);
 		panel_3.add(lblCantidadDeHijos_1);
 		
-		JLabel lblCantidadDeHijos = new JLabel("Cantidad de hijos");
+		JLabel lblCantidadDeHijos = new JLabel("Cantidad de hijos: "+familia_persona.get("cant_hijos"));
 		lblCantidadDeHijos.setBounds(10, 36, 199, 14);
 		panel_3.add(lblCantidadDeHijos);
 		
@@ -233,6 +240,11 @@ public class VerInformacion extends JFrame {
 		panel_6.add(scrollPane, BorderLayout.CENTER);
 		
 		JList list = new JList();
+		DefaultListModel oldModel = new DefaultListModel();//objeto temporal que contiene los elementos de la lista
+		for(int i=0; i<idiomas.length;i++){
+			oldModel.addElement(idiomas[i]);
+			list.setModel(oldModel);
+		}
 		list.setBackground(SystemColor.control);
 		scrollPane.setViewportView(list);
 		

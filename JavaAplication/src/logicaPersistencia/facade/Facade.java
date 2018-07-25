@@ -190,4 +190,16 @@ public class Facade {
 		HashMap<String,String> telefonos = dbAccess.Obtener_telefonos(vo.getCi_venezolana());
 		return telefonos;
 	}
+	
+	public HashMap<String,String> Obtener_Familia_Persona(VO_Documentos vo){
+		dbFunctions dbAccess = new dbFunctions(config);
+		HashMap<String,String> familia_persona = dbAccess.Obtener_Familia_Persona(vo.getCi_venezolana());
+		return familia_persona;
+	}
+	
+	public String[] Obtener_Idiomas(VO_Documentos vo){
+		dbFunctions dbAccess = new dbFunctions(config);
+		String[] idiomas = dbAccess.Obtener_Idiomas(vo.getCi_venezolana());
+		return idiomas;
+	}
 }

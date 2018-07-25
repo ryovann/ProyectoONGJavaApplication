@@ -58,4 +58,18 @@ public class VerInformacion_Controller {
 		HashMap<String,String> telefonos = f.Obtener_Telefonos(vo);
 		return telefonos;
 	}
+	
+	public HashMap<String,String> Obtener_Familia_Persona (String ci_v){
+		VO_Documentos vo= new VO_Documentos(ci_v);
+		Facade f= new Facade();
+		HashMap<String,String> familia_persona = f.Obtener_Familia_Persona(vo);
+		return familia_persona;
+	}
+	
+	public String[] Obtener_Idiomas(String ci_v){
+		VO_Documentos vo= new VO_Documentos(ci_v);
+		Facade f = new Facade();
+		String[] idiomas = f.Obtener_Idiomas(vo);
+		return idiomas;
+	}
 }

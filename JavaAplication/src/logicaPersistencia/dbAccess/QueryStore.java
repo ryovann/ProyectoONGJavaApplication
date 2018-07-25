@@ -117,7 +117,7 @@ public class QueryStore {
 	}
 	
 	public String Obtener_Idiomas(){
-		String query = "SELECT nombre_idioma,nivel FROM sabe_idioma s INNER JOIN idiomas i ON s.id_idioma=s.id_idioma WHERE s.id_persona= (?);";
+		String query = "SELECT nombre_idioma,nivel FROM sabe_idioma s INNER JOIN idiomas i ON s.id_idioma=i.id_idioma WHERE s.id_persona= (?);";
 		return query;
 	}
 	
