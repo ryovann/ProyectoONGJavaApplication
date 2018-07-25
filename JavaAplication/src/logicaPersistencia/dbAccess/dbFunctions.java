@@ -581,7 +581,7 @@ public class dbFunctions {
 					if(completado == 0){
 						formacion_academica.put("completado","completo");
 					}else{
-						formacion_academica.put("completado","no completo");
+						formacion_academica.put("completado","Incompleto");
 					}
 				}
 			}else{
@@ -712,6 +712,51 @@ public class dbFunctions {
 			e.printStackTrace();
 		}
 		return tiene_profesion;
+	}
+	
+	public HashMap<String,String> Obtener_telefonos(String ci_v){
+		ConnectionObject.initializeConnection();
+		HashMap<String,String> telefonos =null;
+		try {
+			// consigo el id de la persona
+			PreparedStatement preparedS = ConnectionObject.getConnection().prepareStatement(querys.idPersona_por_ci_venezolana());
+			preparedS.setString(1, ci_v);
+			ResultSet rs = preparedS.executeQuery();
+			int id_persona = 0;
+			if (rs == null) { // SI ES UN rs VACIO
+				System.out.println("no hay persona con esa cedula venezolana, estoy en dbfunctions");
+			} else {
+				while (rs.next()) {
+					id_persona = rs.getInt("id_persona");
+					System.out.println("se encontro id_persona por la cedula,dbFunctions.Obtener_telefonos() "+id_persona);
+				}
+				
+			} // end else
+			rs=null;
+			preparedS = ConnectionObject.getConnection().prepareStatement(querys.Obtener_Telefonos_Persona());
+			preparedS.setInt(1,id_persona);
+			rs = preparedS.executeQuery();
+			telefonos = new HashMap<String,String>();
+			telefonos.put("tel1", "---");
+			telefonos.put("tel2", "---");
+			if (rs !=null){
+				int cont = 1;
+				while (rs.next()){
+					String tel = rs.getString("tel");
+					telefonos.put("tel"+cont, tel );
+					cont++;
+				}	
+			}else{
+				System.out.println("dbfunctions.Obtener_telefonos(): la persona no tiene formacion academica");
+			}
+			rs.close();
+			preparedS.close();
+
+		} catch (SQLException e) {
+			System.out.println("dbFunctions.Obtener_telefonos(): Error en la consulta: ");
+			e.printStackTrace();
+		}
+		return telefonos;
 	}
 
 }

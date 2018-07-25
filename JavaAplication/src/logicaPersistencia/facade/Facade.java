@@ -184,4 +184,10 @@ public class Facade {
 		HashMap<String,String> tiene_profesion = dbAccess.Obtener_Profesion(vo.getCi_venezolana(),vo.getNivel(), vo.getCompletado());
 		return tiene_profesion;
 	}
+	
+	public HashMap<String,String> Obtener_Telefonos(VO_Documentos vo){
+		dbFunctions dbAccess = new dbFunctions(config);
+		HashMap<String,String> telefonos = dbAccess.Obtener_telefonos(vo.getCi_venezolana());
+		return telefonos;
+	}
 }

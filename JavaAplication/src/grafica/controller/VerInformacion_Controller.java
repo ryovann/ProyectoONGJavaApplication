@@ -51,4 +51,11 @@ public class VerInformacion_Controller {
 		HashMap<String,String> tiene_profesion = f.Obtener_Profesion(vo);
 		return tiene_profesion;
 	}
+	
+	public HashMap<String,String> Obtener_tenefonos(String ci_v){
+		VO_Documentos vo= new VO_Documentos(ci_v);
+		Facade f= new Facade();
+		HashMap<String,String> telefonos = f.Obtener_Telefonos(vo);
+		return telefonos;
+	}
 }

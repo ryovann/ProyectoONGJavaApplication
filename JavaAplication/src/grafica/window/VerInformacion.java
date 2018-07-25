@@ -58,6 +58,10 @@ public class VerInformacion extends JFrame {
 		//obtengo profesion 
 		HashMap<String,String> tiene_profesion = controlador.Obtener_Profesion(cedulaVenezolana+"",formacion_academica.get("nivel"), formacion_academica.get("completado"));
 		
+		//obtengo telefonos 
+		HashMap<String,String> telefonos = controlador.Obtener_tenefonos(cedulaVenezolana+"");
+		
+		
 		JLabel lblPrimerNombre = new JLabel("Primer nombre: "+primerNombre);
 		lblPrimerNombre.setBounds(10, 11, 199, 14);
 		panel.add(lblPrimerNombre);
@@ -181,7 +185,7 @@ public class VerInformacion extends JFrame {
 		lblResideDesde.setBounds(219, 11, 199, 14);
 		panel_4.add(lblResideDesde);
 		
-		JLabel lblOcupacion = new JLabel("Ocupacion");
+		JLabel lblOcupacion = new JLabel("Ocupacion: "+datos_persona.get("ocupacion"));
 		lblOcupacion.setBounds(10, 11, 199, 14);
 		panel_4.add(lblOcupacion);
 		
@@ -191,15 +195,16 @@ public class VerInformacion extends JFrame {
 		contentPane.add(panel_5);
 		panel_5.setLayout(null);
 		
-		JLabel lblTelefono = new JLabel("Telefono");
+		//TELEFONOS
+		JLabel lblTelefono = new JLabel("Telefono: "+telefonos.get("tel1"));
 		lblTelefono.setBounds(10, 50, 199, 14);
 		panel_5.add(lblTelefono);
 		
-		JLabel lblOtroTel = new JLabel("Otro telefono");
+		JLabel lblOtroTel = new JLabel("Otro telefono:"+telefonos.get("tel2"));
 		lblOtroTel.setBounds(10, 75, 199, 14);
 		panel_5.add(lblOtroTel);
 		
-		JLabel lblDireccionDeEmail = new JLabel("Email");
+		JLabel lblDireccionDeEmail = new JLabel("Email: "+datos_persona.get("email"));
 		lblDireccionDeEmail.setBounds(8, 100, 201, 14);
 		panel_5.add(lblDireccionDeEmail);
 		
