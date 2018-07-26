@@ -20,6 +20,8 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
@@ -112,7 +114,23 @@ public class FormularioRegistro extends JFrame {
 	}
 	
 	
-	
+	public static boolean Verificar_Email(String email) {
+		 
+        // Patrón para validar el email
+        Pattern pattern = Pattern
+                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+ 
+        Matcher mather = pattern.matcher(email);
+        boolean result;
+        if (mather.find() == true) {
+            result=true;
+        } else {
+            result=false;
+        }
+        return result;
+    }
+ 
 	public FormularioRegistro() {
 		setTitle("Formulario de Registro");
 		setResizable(false);
@@ -649,13 +667,7 @@ public class FormularioRegistro extends JFrame {
 					}else{//Si no hay un elemento en la lista lo agrego y muestro la nueva lista
 						oldModel.addElement(selectedIdioma+" - "+selectedNivel);
 						listIdiomasAgregados.setModel(oldModel);
-					}
-						
-					
-
-				
-				
-					
+					}	
 					
 				}
 			}
@@ -844,6 +856,7 @@ public class FormularioRegistro extends JFrame {
 			cmbResideDesde_Anio.addItem(anio);
 			anio++;
 		}
+		
 		JButton btnConfirmarRegistro = new JButton("CONFIRMAR REGISTRO");
 		btnConfirmarRegistro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -870,11 +883,6 @@ public class FormularioRegistro extends JFrame {
 				String motivo_contacto = txtMotivoContacto.getText();
 				int id_persona = 0;
 				boolean docInserted = false;
-				
-				
-				
-				
-				
 				
 				//telefonos 
 				String tel1 = txtTelefono.getText();
@@ -923,9 +931,17 @@ public class FormularioRegistro extends JFrame {
 				int hijos_exterior=Integer.parseInt(txtCantidadHijosExtranjero.getText());
 				
 				//ejecuto todas las consultas 
-				
+				boolean verificar_email = Verificar_Email(email);
+				boolean cerrar_ventana = false;
 				if(hijos_exterior>cant_hijos){//no dijo toda la cantidad de hijos
-					JOptionPane.showMessageDialog(null, "La cantida de hijos en el exterior es mayor a la cantidad de hijos en total, eso no es posible");
+					JOptionPane.showMessageDialog(null, "La cantida de hijos en el exterior es mayor a la cantidad de hijos en total, eso no es posible", "ERROR", JOptionPane.ERROR_MESSAGE);
+					
+				}else if (!verificar_email){
+					JOptionPane.showMessageDialog(null, "El email es inválido", "ERROR EMAIL", JOptionPane.ERROR_MESSAGE);
+				}else if(dia_nac.equals("DD") ||mes_nac.equals("MM")|| anio_nac.equals("AAAA")){
+					JOptionPane.showMessageDialog(null, "Fecha de nacimiento inválida", "ERRORFECHA DE NACIMIENTO", JOptionPane.ERROR_MESSAGE);
+				}else if(dia_reside.equals("DD")|| mes_reside.equals("MM")|| anio_reside.equals("AAAA")){
+					JOptionPane.showMessageDialog(null, "Fecha de residencia inválida", "ERROR FECHA DE RESIDENCIA", JOptionPane.ERROR_MESSAGE);
 				}else {
 					//if tipo es 0 o 1 insertar o hacer update
 					if(tipoDeRegistro==1){
@@ -935,10 +951,7 @@ public class FormularioRegistro extends JFrame {
 						id_persona = controlador.InsertPersona(primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, sexo, dia_nac, mes_nac, anio_nac, pais_nac, ciudad_nac, estado_civil, ocupacion, direccion, dia_reside, mes_reside, anio_reside, email, motivo_contacto);
 						System.out.println("se hizo el insert de persona");
 					}
-					
-					
-					
-System.err.println(id_persona);
+					System.err.println(id_persona);
 					
 					if(tipoDeRegistro==1){
 						controlador.UpdateDocumentos(ci_uruguaya, pasaporte, dia_carnet_salud, mes_carnet_salud, anio_carnet_salud, ci_venezolana);
@@ -957,11 +970,12 @@ System.err.println(id_persona);
 						}else{
 							controlador.InsertarTelefono(ci_venezolana,tel1);
 							System.out.println("se inserto tel1");
+							
 						}
 						if(tel2.equals("") || tel2==null){
 							System.out.println("tel2 vacio");
 							
-						}else {
+						}else if (!tel2.equals(tel1)) { //si los dos telefonos son distintos
 							controlador.InsertarTelefono(ci_venezolana,tel2);
 							System.out.println("se inserto tel 2");
 						}
@@ -983,6 +997,7 @@ System.err.println(id_persona);
 							//INSERT IDIOMAS
 							controlador.InsertarIdiomaPersona(separado[0],separado[1],ci_venezolana);//idioma,nivel*//
 						}
+						cerrar_ventana=true;
 					}else {
 						if(docInserted){
 							if(tel1.equals("") || tel1==null){
@@ -994,7 +1009,7 @@ System.err.println(id_persona);
 							if(tel2.equals("") || tel2==null){
 								System.out.println("tel2 vacio");
 								
-							}else {
+							}else if (!tel2.equals(tel1)){ // si los telefonos son distintos, que lo inserte 
 								controlador.InsertarTelefono(ci_venezolana,tel2);
 								System.out.println("se inserto tel 2");
 							}
@@ -1015,10 +1030,16 @@ System.err.println(id_persona);
 								separado = row.split(" - ");
 								//INSERT IDIOMAS
 								controlador.InsertarIdiomaPersona(separado[0],separado[1],ci_venezolana);//idioma,nivel*//
-							}
-						}
-					}
-				}	
+							}//end for
+							cerrar_ventana=true;
+						} //end if docinserted
+					}// end else 
+				}
+				if(cerrar_ventana){
+					JOptionPane.showMessageDialog(null, "Se han guardado lo datos correctamente");
+					dispose();
+				}
+				
 			}
 			
 		});

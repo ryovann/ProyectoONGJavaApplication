@@ -174,7 +174,7 @@ public class MainWindow extends JFrame {
 					typeOfSearch = 0;
 				}else if(radio_UsuariosYaRegistrados.isSelected()){
 					typeOfSearch = 1;
-	}
+				}
 
 				tableUsuarios.setModel(new DefaultTableModel());
 				//Instancio el controlador
@@ -226,12 +226,6 @@ public class MainWindow extends JFrame {
 					btnVerInformacionUsuario.setVisible(false);
 					panelMenuAccionesUsuarios.setVisible(false);
 				}
-				
-				
-				
-				
-				
-				
 				
 			}
 		});
@@ -301,8 +295,7 @@ public class MainWindow extends JFrame {
 					String motivoContacto = (String) tableUsuarios.getModel().getValueAt(idSelectedRow, 3);
 					//LLamo al metodo que se encarga de controlar el evento del boton
 					MainWindow_Controller controlador = MainWindow_Controller.getInstancia();
-					controlador.MostrarInformacionDeUsuario(ciVenezolana, primerNombre, primerApellido, motivoContacto);
-					
+					controlador.MostrarInformacionDeUsuario(ciVenezolana, primerNombre, primerApellido, motivoContacto);		
 					
 				}
 			}
