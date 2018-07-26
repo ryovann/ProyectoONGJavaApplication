@@ -41,7 +41,7 @@ public class VO_Persona {
 	}
 	public VO_Persona(String primer_nombre, String segundo_nombre, String primer_apellido,
 			String segundo_apellido, String sexo, String estado_civil, String email, String ocupacion,
-			String motivo_contacto, String reside_desde, String domicilio, String id_pais_nac, String fecha_nac,
+			String motivo_contacto, String reside_desde, String direccion, String pais_nac, String fecha_nac,
 			String ciudad_nac){
 		
 		this.primer_nombre= primer_nombre;
@@ -55,7 +55,7 @@ public class VO_Persona {
 		this.estado_civil = estado_civil;
 		this.ocupacion = ocupacion;
 		this.direccion = direccion;
-		this.fecha_reside = fecha_reside;
+		this.fecha_reside = reside_desde;
 		this.email = email;
 		this.motivo_contacto= motivo_contacto;
 	}
