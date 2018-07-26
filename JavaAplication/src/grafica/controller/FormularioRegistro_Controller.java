@@ -162,30 +162,36 @@ public class FormularioRegistro_Controller {
 	}
 
 	
-	public void InsertDocumentos(String ci_uruguaya, String pasaporte, String dia_carnet_salud, String mes_carnet_salud,
+	public boolean InsertDocumentos(int id_persona, String ci_uruguaya, String pasaporte, String dia_carnet_salud, String mes_carnet_salud,
 			String anio_carnet_salud, String ci_venezolana) {
-		// TODO Auto-generated method stub
-		
-	}
+			String fecha_carnet_salud = anio_carnet_salud+"-"+mes_carnet_salud+"-"+dia_carnet_salud;
+			VO_Documentos vod = new VO_Documentos(id_persona,ci_uruguaya,pasaporte,fecha_carnet_salud,ci_venezolana);
+			boolean completed = false;
+			Facade f = new Facade();
+			completed = f.InsertarDocumentos(vod);
+			
+			return completed;
+		}
 
-	public void InsertPersona(String primer_nombre, String segundo_nombre, String primer_apellido,
-			String segundo_apellido, String sexo, String dia_nac, String mes_nac, String anio_nac, String id_pais_nac,
-			String ciudad_nac, String estado_civil, String ocupacion, String direccion, String dia_reside,
-			String mes_reside, String anio_reside, String email, String motivo_contacto) {
-		
-		//Creo strings de fechas
-		String fecha_nacimiento = anio_nac+"-"+mes_nac+"-"+dia_nac;
-		String fecha_reside =  anio_reside+"-"+mes_reside+"-"+dia_reside;
-		
-		VO_Persona vop = new VO_Persona(primer_nombre, segundo_nombre,primer_apellido,
-				segundo_apellido,sexo,estado_civil, email, ocupacion,
-				motivo_contacto, fecha_reside, direccion, id_pais_nac, fecha_nacimiento,
-				ciudad_nac);
-		Facade f = new Facade();
-		f.InsertarPersona(vop);
-		//verificar
-		
-	}
+		public int InsertPersona(String primer_nombre, String segundo_nombre, String primer_apellido,
+				String segundo_apellido, String sexo, String dia_nac, String mes_nac, String anio_nac, String pais_nac,
+				String ciudad_nac, String estado_civil, String ocupacion, String direccion, String dia_reside,
+				String mes_reside, String anio_reside, String email, String motivo_contacto) {
+			
+			//Creo strings de fechas
+			String fecha_nacimiento = anio_nac+"-"+mes_nac+"-"+dia_nac;
+			String fecha_reside =  anio_reside+"-"+mes_reside+"-"+dia_reside;
+			
+			VO_Persona vop = new VO_Persona(primer_nombre, segundo_nombre,primer_apellido,
+					segundo_apellido,sexo,estado_civil, email, ocupacion,
+					motivo_contacto, fecha_reside, direccion, pais_nac, fecha_nacimiento,
+					ciudad_nac);
+			//cambie aca
+			Facade f = new Facade();
+			int recivedData = -1;
+			recivedData = f.InsertarPersona(vop);
+			return recivedData;
+		}
 	
 	
 	
