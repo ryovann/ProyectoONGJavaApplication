@@ -896,7 +896,7 @@ public class dbFunctions {
 	
 	public String[] Obtener_Idiomas(String ci_v){
 		ConnectionObject.initializeConnection();
-		String[] idiomas = new String[100];
+		String[] idiomas = new String[20];
 		try {
 			// consigo el id de la persona
 			PreparedStatement preparedS = ConnectionObject.getConnection().prepareStatement(querys.idPersona_por_ci_venezolana());
