@@ -868,7 +868,8 @@ public class FormularioRegistro extends JFrame {
 				String anio_reside =cmbResideDesde_Anio.getSelectedItem().toString();
 				String email =txtCorreoElectronico.getText();
 				String motivo_contacto = txtMotivoContacto.getText();
-				
+				int id_persona = 0;
+				boolean docInserted = false;
 				
 				
 				
@@ -931,51 +932,91 @@ public class FormularioRegistro extends JFrame {
 						controlador.UpdatePersona(primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, sexo, dia_nac, mes_nac, anio_nac, pais_nac, ciudad_nac, estado_civil, ocupacion, direccion, dia_reside, mes_reside, anio_reside, email, motivo_contacto, ci_venezolana);
 						System.out.println("se hizo el update");
 					}else{
-						controlador.InsertPersona(primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, sexo, dia_nac, mes_nac, anio_nac, pais_nac, ciudad_nac, estado_civil, ocupacion, direccion, dia_reside, mes_reside, anio_reside, email, motivo_contacto);
+						id_persona = controlador.InsertPersona(primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, sexo, dia_nac, mes_nac, anio_nac, pais_nac, ciudad_nac, estado_civil, ocupacion, direccion, dia_reside, mes_reside, anio_reside, email, motivo_contacto);
 						System.out.println("se hizo el insert de persona");
 					}
 					
 					
 					
-					if(tel1.equals("") || tel1==null){
-						System.out.println("tel1 vacio");
-					}else{
-						controlador.InsertarTelefono(ci_venezolana,tel1);
-						System.out.println("se inserto tel1");
-					}
-					if(tel2.equals("") || tel2==null){
-						System.out.println("tel2 vacio");
-						
-					}else {
-						controlador.InsertarTelefono(ci_venezolana,tel2);
-						System.out.println("se inserto tel 2");
-					}
-					//if tipo es 0 o 1 insertar o hacer update
+System.err.println(id_persona);
+					
 					if(tipoDeRegistro==1){
 						controlador.UpdateDocumentos(ci_uruguaya, pasaporte, dia_carnet_salud, mes_carnet_salud, anio_carnet_salud, ci_venezolana);
 						System.out.println("se actualizaron los documentos");
 					}else{
-						controlador.InsertDocumentos(ci_uruguaya, pasaporte, dia_carnet_salud, mes_carnet_salud, anio_carnet_salud, ci_venezolana);
-						System.out.println("se insertaron los documentos");
+						if(id_persona != -1){
+							docInserted = controlador.InsertDocumentos(id_persona, ci_uruguaya, pasaporte, dia_carnet_salud, mes_carnet_salud, anio_carnet_salud, ci_venezolana);
+							System.out.println("se insertaron los documentos");
+						}
+						
 					}
 					
-					
-					controlador.InsertarFormacion_Academica(nivel_escolar,completado,ci_venezolana);
-					System.out.println("se inserto la formacion academica");
-					controlador.InsertarTiene_profesion(id_titulo,homologacion,ci_venezolana);
-					System.out.println("se inserto la profesion");
-					
-					controlador.Insertar_familia_persona(vive_con,detalle,vino_con,cant_hijos,hijos_exterior,ci_venezolana);
-					System.out.println("se inserto la situacion familiar");
-					
-					String row;
-					String[] separado;
-					
-					for(int i =0;i<listIdiomasAgregados.getModel().getSize();i++){
-						row = listIdiomasAgregados.getModel().getElementAt(i).toString();
-						separado = row.split(" - ");
-						//INSERT IDIOMAS
-						controlador.InsertarIdiomaPersona(separado[0],separado[1],ci_venezolana);//idioma,nivel*//
+					if(tipoDeRegistro==1){
+						if(tel1.equals("") || tel1==null){
+							System.out.println("tel1 vacio");
+						}else{
+							controlador.InsertarTelefono(ci_venezolana,tel1);
+							System.out.println("se inserto tel1");
+						}
+						if(tel2.equals("") || tel2==null){
+							System.out.println("tel2 vacio");
+							
+						}else {
+							controlador.InsertarTelefono(ci_venezolana,tel2);
+							System.out.println("se inserto tel 2");
+						}
+						
+						controlador.InsertarFormacion_Academica(nivel_escolar,completado,ci_venezolana);
+						System.out.println("se inserto la formacion academica");
+						controlador.InsertarTiene_profesion(id_titulo,homologacion,ci_venezolana);
+						System.out.println("se inserto la profesion");
+						
+						controlador.Insertar_familia_persona(vive_con,detalle,vino_con,cant_hijos,hijos_exterior,ci_venezolana);
+						System.out.println("se inserto la situacion familiar");
+						
+						String row;
+						String[] separado;
+						
+						for(int i =0;i<listIdiomasAgregados.getModel().getSize();i++){
+							row = listIdiomasAgregados.getModel().getElementAt(i).toString();
+							separado = row.split(" - ");
+							//INSERT IDIOMAS
+							controlador.InsertarIdiomaPersona(separado[0],separado[1],ci_venezolana);//idioma,nivel*//
+						}
+					}else {
+						if(docInserted){
+							if(tel1.equals("") || tel1==null){
+								System.out.println("tel1 vacio");
+							}else{
+								controlador.InsertarTelefono(ci_venezolana,tel1);
+								System.out.println("se inserto tel1");
+							}
+							if(tel2.equals("") || tel2==null){
+								System.out.println("tel2 vacio");
+								
+							}else {
+								controlador.InsertarTelefono(ci_venezolana,tel2);
+								System.out.println("se inserto tel 2");
+							}
+							
+							controlador.InsertarFormacion_Academica(nivel_escolar,completado,ci_venezolana);
+							System.out.println("se inserto la formacion academica");
+							controlador.InsertarTiene_profesion(id_titulo,homologacion,ci_venezolana);
+							System.out.println("se inserto la profesion");
+							
+							controlador.Insertar_familia_persona(vive_con,detalle,vino_con,cant_hijos,hijos_exterior,ci_venezolana);
+							System.out.println("se inserto la situacion familiar");
+							
+							String row;
+							String[] separado;
+							
+							for(int i =0;i<listIdiomasAgregados.getModel().getSize();i++){
+								row = listIdiomasAgregados.getModel().getElementAt(i).toString();
+								separado = row.split(" - ");
+								//INSERT IDIOMAS
+								controlador.InsertarIdiomaPersona(separado[0],separado[1],ci_venezolana);//idioma,nivel*//
+							}
+						}
 					}
 				}	
 			}
