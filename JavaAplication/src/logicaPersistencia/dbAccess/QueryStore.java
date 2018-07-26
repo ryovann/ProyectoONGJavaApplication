@@ -80,7 +80,8 @@ public class QueryStore {
 		return query;
 	}
 	public String insertDocumentosNuevos(){
-		String query = "INSERT INTO DOCUMENTOS(id_persona,ci_venezolana,ci_uruguaya,pasaporte,carnet_salud) values (?,?,?,?)";
+		//Cambios aqui
+		String query = "INSERT INTO DOCUMENTOS(id_persona,ci_venezolana,ci_uruguaya,pasaporte,carnet_salud) values (?,?,?,?,?)";
 		return query;
 		//esto esta bien
 	}
