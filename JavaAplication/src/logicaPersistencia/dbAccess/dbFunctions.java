@@ -405,7 +405,7 @@ public class dbFunctions {
 				preparedS.setInt(1, id_persona);
 				preparedS.setInt(2, id_idioma);
 				preparedS.setString(3, nivel);
-				preparedS.executeQuery();
+				preparedS.executeUpdate();
 				System.out.println("Se inserto un idioma para una persona");
 			}
 
@@ -415,13 +415,90 @@ public class dbFunctions {
 
 	}
 
-	public void InsertarPersona(String primer_nombre, String segundo_nombre, String primer_apellido,
+	public int InsertarPersona(String primer_nombre, String segundo_nombre, String primer_apellido,
 			String segundo_apellido, String sexo, String estado_civil, String email, String ocupacion,
-			String motivo_contacto, String reside_desde, String domicilio, String id_pais_nac, String fecha_nac,
+			String motivo_contacto, String reside_desde, String domicilio, String pais_nac, String fecha_nac,
 			String ciudad_nac) {
+	
+		ConnectionObject.initializeConnection();
+		String qpaisNac = querys.buscar_pais_por_nombre();
+		ResultSet rs = null;
+		int returnedId = 0;
+		int id_pais_nac = 0;
 		
-		//se debe programar el insert de persona
-
+		String query = querys.insertPersonaNueva();
+		try {
+			//primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,sexo,estado_civil,email,
+			//ocupacion,motivo_contacto,estado,reside_desde,domicilio,id_pais_nac,fecha_nac,ciudad_nac
+			
+			PreparedStatement preparedS = ConnectionObject.getConnection().prepareStatement(qpaisNac);
+			preparedS.setString(1, pais_nac);
+			rs = preparedS.executeQuery();
+			while (rs.next()) {
+				id_pais_nac = rs.getInt("id_pais");
+			}
+			System.out.println(id_pais_nac);
+			
+			rs = null;
+			preparedS = ConnectionObject.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			preparedS.setString(1, primer_nombre);
+			preparedS.setString(2, segundo_nombre);
+			preparedS.setString(3, primer_apellido);
+			preparedS.setString(4, segundo_apellido);
+			preparedS.setString(5, sexo);
+			preparedS.setString(6, estado_civil);
+			preparedS.setString(7, email);
+			preparedS.setString(8, ocupacion);
+			preparedS.setString(9, motivo_contacto);
+			preparedS.setInt(10, 1);
+			preparedS.setString(11, reside_desde);
+			preparedS.setString(12, domicilio);
+			preparedS.setInt(13, id_pais_nac);
+			preparedS.setString(14, fecha_nac);
+			preparedS.setString(15, ciudad_nac);
+			preparedS.executeUpdate();
+			rs = preparedS.getGeneratedKeys();
+			while(rs.next()){
+				returnedId = (int) rs.getLong(1);
+			}
+			System.err.println("Se inserto una nueva persona con id :"+returnedId);
+			preparedS.close();
+			rs.close();
+			return returnedId;
+		} catch (SQLException e) {
+			System.err.println("Error al insertar nueva persona");
+			e.printStackTrace();
+			return -1;
+			
+		}
+		
+	}
+	
+	public boolean insertarDocumentos(int id_persona,String ci_uruguaya, String pasaporte, String fecha_carnet_salud, String ci_venezolana){
+		//funcion que inserta nuevos documentos para una persona dada
+		ConnectionObject.initializeConnection();
+		boolean completed = false;
+		int rowsUpdated;
+		try {
+			PreparedStatement preparedS = ConnectionObject.getConnection().prepareStatement(querys.insertDocumentosNuevos());
+			preparedS.setInt(1, id_persona);
+			preparedS.setString(2,ci_venezolana);
+			preparedS.setString(3, ci_uruguaya);
+			preparedS.setString(4, pasaporte);
+			preparedS.setString(5, fecha_carnet_salud);
+			rowsUpdated = preparedS.executeUpdate();
+			System.err.println("Se insertaron nuevos datos en documentos");
+			preparedS.close();
+			if(rowsUpdated>0){
+				completed = true;
+			}
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+			completed =  false;
+			
+		}
+		return completed;
 	}
 	
 	public HashMap<String,String> Datos_Persona(String ci_venezolana){

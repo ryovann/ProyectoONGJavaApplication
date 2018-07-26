@@ -154,11 +154,19 @@ public class Facade {
 		dbAccess.InsertarIdiomaPersona(vopi.getIdioma(),vopi.getNivel(),vopi.getCi_venezolana());
 		
 	}
-	public void InsertarPersona(VO_Persona vop) {
+	public int InsertarPersona(VO_Persona vop) { 
 		dbFunctions dbAccess = new dbFunctions(config);
-		dbAccess.InsertarPersona(vop.getPrimer_nombre(),vop.getSegundo_nombre(),vop.getPrimer_apellido(),vop.getSegundo_apellido(),vop.getSexo(),vop.getEstado_civil(),vop.getEmail(),vop.getOcupacion(),vop.getMotivo_contacto(),vop.getFecha_reside(),vop.getDireccion(),vop.getPais_nac(),vop.getFecha_nac(),vop.getCiudad_nac());
+		int recivedData = -1;
+		recivedData = dbAccess.InsertarPersona(vop.getPrimer_nombre(),vop.getSegundo_nombre(),vop.getPrimer_apellido(),vop.getSegundo_apellido(),vop.getSexo(),vop.getEstado_civil(),vop.getEmail(),vop.getOcupacion(),vop.getMotivo_contacto(),vop.getFecha_reside(),vop.getDireccion(),vop.getPais_nac(),vop.getFecha_nac(),vop.getCiudad_nac());
+		return recivedData;
 		
+	}
+	public boolean InsertarDocumentos(VO_Documentos vod) {
+		dbFunctions dbAccess = new dbFunctions(config);
+		boolean creado = false;
+		creado = dbAccess.insertarDocumentos(vod.get_Id_persona(), vod.getCi_uruguaya(), vod.getPasaporte(), vod.getFecha_carnet_salud(), vod.getCi_venezolana());
 		
+		return creado;                                                                                                                
 	}
 	
 	public HashMap<String,String> Datos_Persona(VO_Documentos vod){
