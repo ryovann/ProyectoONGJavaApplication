@@ -77,7 +77,10 @@ public class FormularioRegistro extends JFrame {
 	private int anio;
 	private JComboBox cmbSexo = new JComboBox();
 	private JComboBox cmbCarnetSaludVigente_Anio = new JComboBox();
-	
+	private JComboBox cmbOcupacion = new JComboBox();
+	private JComboBox cmbResideDesde_Dia = new JComboBox();
+	private JComboBox cmbResideDesde_Mes = new JComboBox();
+	private JComboBox cmbResideDesde_Anio = new JComboBox();
 	
 	
 	
@@ -139,7 +142,27 @@ public class FormularioRegistro extends JFrame {
 		text_direccion.setText(datos_persona.get("domicilio"));
 		cmbSexo.setModel(new DefaultComboBoxModel(new String[] {"F", "M"}));
 		cmbSexo.setSelectedItem(datos_persona.get("sexo"));
-	
+		txtCorreoElectronico.setText(datos_persona.get("email"));
+		cmbOcupacion.addItem("Trabajo fijo");
+		cmbOcupacion.addItem("Trabajo zafral o temporal");
+		cmbOcupacion.addItem("Desocupado");
+		cmbOcupacion.addItem("Jubilado/Pensionista");
+		cmbOcupacion.addItem("Estudiante");
+		cmbOcupacion.setSelectedItem(datos_persona.get("ocupacion"));
+		cmbResideDesde_Anio.addItem("AAAA");
+		anio=1910;
+		while(anio<2019){
+			cmbResideDesde_Anio.addItem(anio);
+			anio++;
+		}
+		String[] reside_desde = datos_persona.get("reside_desde").split("/");
+		cmbResideDesde_Dia.setSelectedItem(Integer.parseInt(reside_desde[0]));
+		cmbResideDesde_Mes.setSelectedItem(Integer.parseInt(reside_desde[1]));
+		cmbResideDesde_Anio.setSelectedItem(Integer.parseInt(reside_desde[2]));
+		
+		
+		
+		
 		
 		//obtengo los docuentos 
 		HashMap<String,String> documentos = controlador.Documentos(ciVenezolana+"");
@@ -148,6 +171,7 @@ public class FormularioRegistro extends JFrame {
 			cmbCarnetSaludVigente_Anio.addItem(anio);
 			anio++;
 		}
+		
 		
 		//obtengo los datos de la formacion academica 
 		HashMap<String,String> formacion_academica = controlador.Datos_Formacion_Academica(ciVenezolana+"");
@@ -1066,33 +1090,39 @@ public class FormularioRegistro extends JFrame {
 		lblOcupacion.setBounds(10, 11, 96, 29);
 		panel.add(lblOcupacion);
 		
-		JComboBox cmbOcupacion = new JComboBox();
+		
 		cmbOcupacion.setBounds(116, 15, 136, 20);
 		panel.add(cmbOcupacion);
-		cmbOcupacion.addItem("Trabajo fijo");
-		cmbOcupacion.addItem("Trabajo zafral o temporal");
-		cmbOcupacion.addItem("Desocupado");
-		cmbOcupacion.addItem("Jubilado/Pensionista");
-		cmbOcupacion.addItem("Estudiante");
+		if(tipoDeRegistro!=2){
+			cmbOcupacion.addItem("Trabajo fijo");
+			cmbOcupacion.addItem("Trabajo zafral o temporal");
+			cmbOcupacion.addItem("Desocupado");
+			cmbOcupacion.addItem("Jubilado/Pensionista");
+			cmbOcupacion.addItem("Estudiante");
+		}
+		
 		
 		
 		JLabel lblResideDesde = new JLabel("Reside desde");
 		lblResideDesde.setBounds(262, 18, 96, 14);
 		panel.add(lblResideDesde);
 		
-		JComboBox cmbResideDesde_Dia = new JComboBox();
+		
+		
 		cmbResideDesde_Dia.setBounds(347, 15, 57, 20);
 		panel.add(cmbResideDesde_Dia);
 		cmbResideDesde_Dia.addItem("DD");
-		 cmbResideDesde_Dia.setModel(new DefaultComboBoxModel(new String[] {"DD", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
-		
-		JComboBox cmbResideDesde_Mes = new JComboBox();
-		cmbResideDesde_Mes.setBounds(414, 15, 58, 20);
-		panel.add(cmbResideDesde_Mes);
 		cmbResideDesde_Mes.addItem("MM");
+		cmbResideDesde_Dia.setModel(new DefaultComboBoxModel(new String[] {"DD", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
 		cmbResideDesde_Mes.setModel(new DefaultComboBoxModel(new String[] {"MM", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"}));
 		
-		JComboBox cmbResideDesde_Anio = new JComboBox();
+		
+		cmbResideDesde_Mes.setBounds(414, 15, 58, 20);
+		panel.add(cmbResideDesde_Mes);
+		
+		
+		
+		
 		cmbResideDesde_Anio.setBounds(482, 15, 76, 20);
 		panel.add(cmbResideDesde_Anio);
 		cmbResideDesde_Anio.addItem("AAAA");
