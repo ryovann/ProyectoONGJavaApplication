@@ -15,16 +15,22 @@ import javax.swing.DefaultListModel;
 import javax.swing.JRadioButton;
 import javax.swing.border.LineBorder;
 import grafica.controller.FormularioRegistro_Controller;
+import grafica.controller.VerInformacion_Controller;
+
 import java.awt.Color;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.DropMode;
 
 public class FormularioRegistro extends JFrame {
 
@@ -53,6 +59,9 @@ public class FormularioRegistro extends JFrame {
 	private JComboBox cmbViveCon = new JComboBox();
 	private JComboBox cmbDetalleViveConFamilia = new JComboBox();
 	private JComboBox cmbNivelCursado = new JComboBox();
+	private JComboBox cmbFechaNac_Dia = new JComboBox();
+	private JComboBox cmbFechaNac_Mes = new JComboBox();
+	private JComboBox cmbFechaNac_Anio = new JComboBox();
 	private JRadioButton radio_carnet_salud_no = new JRadioButton("No");
 	private JRadioButton radio_carnet_salud_si = new JRadioButton("Si");
 	private JRadioButton radio_ci_uy_si = new JRadioButton("Si");
@@ -65,11 +74,13 @@ public class FormularioRegistro extends JFrame {
 	private JRadioButton radio_NivelCursadoIncompleto = new JRadioButton("Incompleto");
 	private JLabel lblHomologado = new JLabel("Homologado");
 	private JLabel lblTituloObtenido = new JLabel("Titulo obtenido");
+	private int anio;
+	private JComboBox cmbSexo = new JComboBox();
+	private JComboBox cmbCarnetSaludVigente_Anio = new JComboBox();
 	
-
-	/**
-	 * Launch the application.
-	 */
+	
+	
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -98,6 +109,66 @@ public class FormularioRegistro extends JFrame {
 		txtPrimerApellido.setText(primerApellido);
 		txtPrimerApellido.setEditable(false);
 		txtMotivoContacto.setText(motivoContacto);
+	}
+	public void RellenarFormularioFromModificarUsuario(int ciVenezolana){
+		txtCIVenezolana.setText(String.valueOf(ciVenezolana));
+		txtCIVenezolana.setEnabled(false);
+		RellenarFormularioConBD();
+		VerInformacion_Controller controlador = VerInformacion_Controller.getIntancia();
+		//obtengo los datos de la tabla persona
+		HashMap<String,String> datos_persona = controlador.Datos_Persona(ciVenezolana+"");
+		///////////////////////////////////////////////////////////////////////////////
+		//Muestro datos de persona relleno los campos que poseen datos guardados en datos_persona
+		txtPrimerNombre.setText(datos_persona.get("primer_nombre"));
+		txtSegundoNombre.setText(datos_persona.get("segundo_nombre"));
+		txtPrimerApellido.setText(datos_persona.get("primer_apellido"));
+		txtSegundoApellido.setText(datos_persona.get("segundo_apellido"));
+		String[] fecha = datos_persona.get("fecha_nac").split("/");
+		cmbFechaNac_Dia.setSelectedItem(fecha[0]);
+		cmbFechaNac_Mes.setSelectedItem(fecha[1]);
+		anio=1910;
+		cmbFechaNac_Anio.addItem("AAAA");
+		while(anio<2019){
+			cmbFechaNac_Anio.addItem(anio);
+			anio++;
+		}
+		
+		cmbFechaNac_Anio.setSelectedItem(Integer.parseInt(fecha[2]));
+		cmbPaisNacimiento.setSelectedItem(datos_persona.get("pais_nac"));
+		txtCiudadNacimiento.setText(datos_persona.get("ciudad_nac"));
+		text_direccion.setText(datos_persona.get("domicilio"));
+		cmbSexo.setModel(new DefaultComboBoxModel(new String[] {"F", "M"}));
+		cmbSexo.setSelectedItem(datos_persona.get("sexo"));
+	
+		
+		//obtengo los docuentos 
+		HashMap<String,String> documentos = controlador.Documentos(ciVenezolana+"");
+		cmbCarnetSaludVigente_Anio.setModel(new DefaultComboBoxModel(new String[] {"AAAA"}));
+		while(anio<=2070){
+			cmbCarnetSaludVigente_Anio.addItem(anio);
+			anio++;
+		}
+		
+		//obtengo los datos de la formacion academica 
+		HashMap<String,String> formacion_academica = controlador.Datos_Formacion_Academica(ciVenezolana+"");
+		
+		//obtengo profesion 
+		HashMap<String,String> tiene_profesion = controlador.Obtener_Profesion(ciVenezolana+"",formacion_academica.get("nivel"), formacion_academica.get("completado"));
+		
+		//obtengo telefonos 
+		HashMap<String,String> telefonos = controlador.Obtener_tenefonos(ciVenezolana+"");
+		
+		//obtengo familia_persona 
+		HashMap<String,String> familia_persona = controlador.Obtener_Familia_Persona(ciVenezolana+"");
+		
+		//obtengo los idiomas 
+		String[] idiomas = controlador.Obtener_Idiomas(ciVenezolana+"");
+		
+		
+		
+		
+		
+		
 	}
 	public void RellenarFormularioConBD(){
 		FormularioRegistro_Controller controlador = FormularioRegistro_Controller.getIntancia();
@@ -130,6 +201,8 @@ public class FormularioRegistro extends JFrame {
         }
         return result;
     }
+	
+
  
 	public FormularioRegistro() {
 		setTitle("Formulario de Registro");
@@ -172,8 +245,10 @@ public class FormularioRegistro extends JFrame {
 		lblFechaDeNacimiento.setBounds(415, 11, 124, 14);
 		panelDatosPersonales.add(lblFechaDeNacimiento);
 		
-		JComboBox cmbSexo = new JComboBox();
-		cmbSexo.setModel(new DefaultComboBoxModel(new String[] {"F", "M"}));
+		if(tipoDeRegistro!=2){
+			cmbSexo.setModel(new DefaultComboBoxModel(new String[] {"F", "M"}));
+		}
+		
 		cmbSexo.setBounds(277, 86, 128, 20);
 		panelDatosPersonales.add(cmbSexo);
 		
@@ -198,26 +273,31 @@ public class FormularioRegistro extends JFrame {
 		panelDatosPersonales.add(txtCiudadNacimiento);
 		txtCiudadNacimiento.setColumns(10);
 		
-		JComboBox cmbFechaNac_Dia = new JComboBox();
+		
 		cmbFechaNac_Dia.setBounds(571, 8, 57, 20);
 		panelDatosPersonales.add(cmbFechaNac_Dia);
 		cmbFechaNac_Dia .setModel(new DefaultComboBoxModel(new String[] {"DD", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
 		
 		
-		JComboBox cmbFechaNac_Mes = new JComboBox();
+		
 		cmbFechaNac_Mes.setBounds(638, 8, 58, 20);
 		panelDatosPersonales.add(cmbFechaNac_Mes);
 		cmbFechaNac_Mes.setModel(new DefaultComboBoxModel(new String[] {"MM", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"}));
 		
-		JComboBox cmbFechaNac_Anio = new JComboBox();
+		
 		cmbFechaNac_Anio.setBounds(706, 8, 76, 20);
 		panelDatosPersonales.add(cmbFechaNac_Anio);
-		cmbFechaNac_Anio.addItem("AAAA");
-		int anio=1910;
-		while(anio<=2018){
-			cmbFechaNac_Anio.addItem(anio);
-			anio++;
+		
+		if(tipoDeRegistro!=2){
+			//Si el tipo de form es un registro o continuacion de registro
+			cmbFechaNac_Anio.addItem("AAAA");
+			int anio=1910;
+			while(anio<=2018){
+				cmbFechaNac_Anio.addItem(anio);
+				anio++;
+			}
 		}
+		
 		
 		JLabel lblPrimerNombree = new JLabel("Primer nombre");
 		lblPrimerNombree.setBounds(10, 11, 107, 14);
@@ -242,6 +322,35 @@ public class FormularioRegistro extends JFrame {
 		panelDatosPersonales.add(lblCedulaVenezolana);
 		
 		txtCIVenezolana = new JTextField();
+		txtCIVenezolana.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(txtCIVenezolana.getText().length()>=8){
+					if(e.getKeyCode()!=e.VK_BACK_SPACE){
+						e.consume();
+					}else{
+						String data = String.valueOf(e.getKeyChar());
+						try{
+							int parsed = Integer.parseInt(data);
+						}catch (Exception es){
+							e.consume();
+						}
+					}
+				}else{
+					String data = String.valueOf(e.getKeyChar());
+					
+						try{
+							int parsed = Integer.parseInt(data);
+						}catch (Exception es){
+							e.consume();
+						}
+					
+				}
+				
+			}
+			
+		
+		});
 		txtCIVenezolana.setBounds(125, 86, 86, 20);
 		panelDatosPersonales.add(txtCIVenezolana);
 		txtCIVenezolana.setColumns(10);
@@ -282,6 +391,28 @@ public class FormularioRegistro extends JFrame {
 		panelDocumentacion.add(lblNumero_ci_uy);
 		
 		txtNumeroCIUY = new JTextField();
+		txtNumeroCIUY.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(txtNumeroCIUY.getText().length()>=8){
+					if(e.getKeyCode()!=e.VK_BACK_SPACE){
+						e.consume();
+					}else{
+						String data = String.valueOf(e.getKeyChar());
+						if(!verificarInteger(data)){
+							e.consume();
+						}
+					}
+				}else{
+					String data = String.valueOf(e.getKeyChar());
+					
+					if(!verificarInteger(data)){
+						e.consume();
+					}
+					
+				}
+			}
+		});
 		txtNumeroCIUY.setBounds(291, 8, 242, 20);
 		panelDocumentacion.add(txtNumeroCIUY);
 		txtNumeroCIUY.setVisible(false);
@@ -308,15 +439,20 @@ public class FormularioRegistro extends JFrame {
 		panelDocumentacion.add(cmbCarnetSaludVigente_Mes);
 		cmbCarnetSaludVigente_Mes.setModel(new DefaultComboBoxModel(new String[] {"MM", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"}));
 		
-		JComboBox cmbCarnetSaludVigente_Anio = new JComboBox();
+		
 		cmbCarnetSaludVigente_Anio.setBounds(457, 47, 76, 20);
 		cmbCarnetSaludVigente_Anio.setVisible(false);
 		panelDocumentacion.add(cmbCarnetSaludVigente_Anio);
-		cmbCarnetSaludVigente_Anio.setModel(new DefaultComboBoxModel(new String[] {"AAAA"}));
-		anio=2018;
-		while(anio<=2070){
-			cmbCarnetSaludVigente_Anio.addItem(anio);
-			anio++;
+		
+		
+		if(tipoDeRegistro!=2){
+			//Si el tipo de form es un registro o continuacion de registro
+			cmbCarnetSaludVigente_Anio.addItem("AAAA");
+			anio=2018;
+			while(anio<=2070){
+				cmbCarnetSaludVigente_Anio.addItem(anio);
+				anio++;
+			}
 		}
 		JLabel lblPasaporte = new JLabel("Pasaporte:");
 		lblPasaporte.setBounds(10, 89, 76, 14);
@@ -459,11 +595,55 @@ public class FormularioRegistro extends JFrame {
 		panelContacto.add(lblTelefono);
 		
 		txtTelefono = new JTextField();
+		txtTelefono.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(txtTelefono.getText().length()>=12){
+					if(e.getKeyCode()!=e.VK_BACK_SPACE){
+						e.consume();
+					}else{
+						String data = String.valueOf(e.getKeyChar());
+						if(!verificarInteger(data)){
+							e.consume();
+						}
+					}
+				}else{
+					String data = String.valueOf(e.getKeyChar());
+					
+					if(!verificarInteger(data)){
+						e.consume();
+					}
+					
+				}
+			}
+		});
 		txtTelefono.setBounds(78, 8, 126, 20);
 		panelContacto.add(txtTelefono);
 		txtTelefono.setColumns(10);
 		
 		txtOtroTelefono = new JTextField();
+		txtOtroTelefono.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(txtOtroTelefono.getText().length()>=12){
+					if(e.getKeyCode()!=e.VK_BACK_SPACE){
+						e.consume();
+					}else{
+						String data = String.valueOf(e.getKeyChar());
+						if(!verificarInteger(data)){
+							e.consume();
+						}
+					}
+				}else{
+					String data = String.valueOf(e.getKeyChar());
+					
+					if(!verificarInteger(data)){
+						e.consume();
+					}
+					
+				}
+			}
+		});
 		txtOtroTelefono.setColumns(10);
 		txtOtroTelefono.setBounds(78, 39, 126, 20);
 		panelContacto.add(txtOtroTelefono);
@@ -489,8 +669,27 @@ public class FormularioRegistro extends JFrame {
 		panelTxtMotivoContacto.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelTxtMotivoContacto.setBounds(10, 156, 194, 67);
 		panelContacto.add(panelTxtMotivoContacto);
-		panelTxtMotivoContacto.setLayout(new BorderLayout(0, 0));
-		panelTxtMotivoContacto.add(txtMotivoContacto, BorderLayout.CENTER);
+		panelTxtMotivoContacto.setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 0, 194, 67);
+		panelTxtMotivoContacto.add(scrollPane);
+		scrollPane.setViewportView(txtMotivoContacto);
+		txtMotivoContacto.setLineWrap(true);
+		txtMotivoContacto.setColumns(26);
+		txtMotivoContacto.setRows(5);
+		txtMotivoContacto.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(txtMotivoContacto.getText().length()>250){
+					if(e.getKeyChar() != e.VK_BACK_SPACE){
+						e.consume();
+					}
+				}
+				
+					
+			}
+		});
 		
 		JLabel lblContacto = new JLabel("Contacto");
 		lblContacto.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -717,7 +916,7 @@ public class FormularioRegistro extends JFrame {
 		panelSituacionFamiliar.add(lblEstadoCivil);
 		
 		JComboBox cmbEstadoCivil = new JComboBox();
-		cmbEstadoCivil.setModel(new DefaultComboBoxModel(new String[] {"Soltero/a", "Casado/a", "Divorciado", "Viudo"}));
+		cmbEstadoCivil.setModel(new DefaultComboBoxModel(new String[] {"Soltero/a", "Casado/a", "Divorciado", "Viudo", "Concubinato"}));
 		cmbEstadoCivil.setBounds(285, 50, 124, 20);
 		panelSituacionFamiliar.add(cmbEstadoCivil);
 		
@@ -788,6 +987,30 @@ public class FormularioRegistro extends JFrame {
 		panelSituacionFamiliar.add(lblCantidadDeHijos);
 		
 		txtCantHijos = new JTextField();
+		txtCantHijos.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(txtCantHijos.getText().length()>=3){
+					if(e.getKeyCode()!=e.VK_BACK_SPACE){
+						e.consume();
+					}else{
+						String data = String.valueOf(e.getKeyChar());
+						if(!verificarInteger(data)){
+							e.consume();
+						}
+					}
+				}else{
+					String data = String.valueOf(e.getKeyChar());
+					
+					if(!verificarInteger(data)){
+						e.consume();
+					}
+					
+				}
+				
+				
+			}
+		});
 		txtCantHijos.setBounds(121, 89, 46, 20);
 		panelSituacionFamiliar.add(txtCantHijos);
 		txtCantHijos.setColumns(10);
@@ -797,6 +1020,28 @@ public class FormularioRegistro extends JFrame {
 		panelSituacionFamiliar.add(lblCantidadDeHijos_1);
 		
 		txtCantidadHijosExtranjero = new JTextField();
+		txtCantidadHijosExtranjero.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(txtCantidadHijosExtranjero.getText().length()>=3){
+					if(e.getKeyCode()!=e.VK_BACK_SPACE){
+						e.consume();
+					}else{
+						String data = String.valueOf(e.getKeyChar());
+						if(!verificarInteger(data)){
+							e.consume();
+						}
+					}
+				}else{
+					String data = String.valueOf(e.getKeyChar());
+					
+					if(!verificarInteger(data)){
+						e.consume();
+					}
+					
+				}
+			}
+		});
 		txtCantidadHijosExtranjero.setColumns(10);
 		txtCantidadHijosExtranjero.setBounds(391, 89, 46, 20);
 		panelSituacionFamiliar.add(txtCantidadHijosExtranjero);
@@ -851,17 +1096,38 @@ public class FormularioRegistro extends JFrame {
 		cmbResideDesde_Anio.setBounds(482, 15, 76, 20);
 		panel.add(cmbResideDesde_Anio);
 		cmbResideDesde_Anio.addItem("AAAA");
-		anio=1910;
-		while(anio<2019){
-			cmbResideDesde_Anio.addItem(anio);
-			anio++;
+		if(tipoDeRegistro!=2){
+			anio=1910;
+			while(anio<2019){
+				cmbResideDesde_Anio.addItem(anio);
+				anio++;
+			}
 		}
+		radio_NivelCursadoIncompleto.setSelected(true);
+		radio_HomologadoNo.setSelected(true);
 		
 		JButton btnConfirmarRegistro = new JButton("CONFIRMAR REGISTRO");
 		btnConfirmarRegistro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				FormularioRegistro_Controller controlador = FormularioRegistro_Controller.getIntancia();
 				//DATOS QUE NECESITA TABLA PERSONA 
+				boolean docInserted = false;
+				boolean textInCIVN = false,textInCIUY = false;
+				try{
+					//VERIFICACION DE TEXTO EN CI VENEZOLANA
+					int civn = Integer.parseInt(txtCIVenezolana.getText());
+					textInCIVN = false;
+				}catch (Exception e){
+					textInCIVN = true;
+				}
+				try{
+					//VERIFICACION DE TEXTO EN CI URUGUAYA
+					int ciuy = Integer.parseInt(txtNumeroCIUY.getText());
+					textInCIUY = false;
+				}catch (Exception e){
+					textInCIUY = true;
+				}
+				
 				String ci_venezolana =txtCIVenezolana.getText();
 				String primer_nombre = txtPrimerNombre.getText();
 				String segundo_nombre = txtSegundoNombre.getText();
@@ -882,7 +1148,6 @@ public class FormularioRegistro extends JFrame {
 				String email =txtCorreoElectronico.getText();
 				String motivo_contacto = txtMotivoContacto.getText();
 				int id_persona = 0;
-				boolean docInserted = false;
 				
 				//telefonos 
 				String tel1 = txtTelefono.getText();
@@ -939,10 +1204,16 @@ public class FormularioRegistro extends JFrame {
 				}else if (!verificar_email){
 					JOptionPane.showMessageDialog(null, "El email es inválido", "ERROR EMAIL", JOptionPane.ERROR_MESSAGE);
 				}else if(dia_nac.equals("DD") ||mes_nac.equals("MM")|| anio_nac.equals("AAAA")){
-					JOptionPane.showMessageDialog(null, "Fecha de nacimiento inválida", "ERRORFECHA DE NACIMIENTO", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Fecha de nacimiento inválida", "ERROR FECHA DE NACIMIENTO", JOptionPane.ERROR_MESSAGE);
 				}else if(dia_reside.equals("DD")|| mes_reside.equals("MM")|| anio_reside.equals("AAAA")){
 					JOptionPane.showMessageDialog(null, "Fecha de residencia inválida", "ERROR FECHA DE RESIDENCIA", JOptionPane.ERROR_MESSAGE);
-				}else {
+				}else if(txtMotivoContacto.getText().length()>255){
+					JOptionPane.showMessageDialog(null, "Motivo de contacto demasiado largo (max 255 chars)", "ERROR MOTIVO DE CONTACTO", JOptionPane.ERROR_MESSAGE);
+				}else if(textInCIVN){
+					JOptionPane.showMessageDialog(null, "La cedula venezolana no puede contener texo", "ERROR CEDULA VENEZOLANA", JOptionPane.ERROR_MESSAGE);
+				}else if(textInCIUY){
+					JOptionPane.showMessageDialog(null, "La cedula uruguaya no puede contener texto", "ERROR CEDULA URUGUAYA", JOptionPane.ERROR_MESSAGE);
+				}else{
 					//if tipo es 0 o 1 insertar o hacer update
 					if(tipoDeRegistro==1){
 						controlador.UpdatePersona(primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, sexo, dia_nac, mes_nac, anio_nac, pais_nac, ciudad_nac, estado_civil, ocupacion, direccion, dia_reside, mes_reside, anio_reside, email, motivo_contacto, ci_venezolana);
@@ -1046,16 +1317,15 @@ public class FormularioRegistro extends JFrame {
 		btnConfirmarRegistro.setBounds(588, 695, 214, 23);
 		contentPane.add(btnConfirmarRegistro);
 		RellenarFormularioConBD();
-		
-		
 	}
 	public FormularioRegistro(int type){
 		this();
 		this.tipoDeRegistro = type;
 		if(type==0){
 			setTitle("Formulario de Registro: Usuario nuevo");
+		}else if(type==2){
+			setTitle("Formulario de modificacion: ");
 		}
-			
 	}
 	public void verificarEscoladidad(){
 		int idNivelSelected = cmbNivelCursado.getSelectedIndex();
@@ -1071,6 +1341,14 @@ public class FormularioRegistro extends JFrame {
 			cmbTituloObtenido.setVisible(false);
 			lblHomologado.setVisible(false);
 			lblTituloObtenido.setVisible(false);
+		}
+	}
+	public boolean verificarInteger(String data){
+		try{
+			int parsed = Integer.parseInt(data);
+			return true;
+		}catch (Exception es){
+			return false;
 		}
 	}
 }

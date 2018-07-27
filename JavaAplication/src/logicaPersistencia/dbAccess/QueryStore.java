@@ -87,7 +87,7 @@ public class QueryStore {
 	}
 	
 	public String Obtener_Datos_Persona(){
-		String query = "SELECT segundo_nombre,segundo_apellido,sexo,email,ocupacion,reside_desde,domicilio,id_pais_nac,fecha_nac,ciudad_nac,estado_civil FROM Persona WHERE id_persona = (?);";
+		String query = "SELECT primer_nombre, segundo_nombre, primer_apellido,segundo_apellido,sexo,email,ocupacion,reside_desde,domicilio,id_pais_nac,fecha_nac,ciudad_nac,estado_civil FROM Persona WHERE id_persona = (?);";
 		return query;
 	}
 	

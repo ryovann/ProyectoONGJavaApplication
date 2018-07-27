@@ -525,6 +525,12 @@ public class dbFunctions {
 				datos = new HashMap<String, String>();
 				while (rs.next()) {
 					//voy obteniendo los datos e insertandolos en el HashMap, la clave es el nombre del atributo
+					String primer_nombre = rs.getString("primer_nombre");
+					if(primer_nombre!=null){
+						datos.put("primer_nombre", primer_nombre);
+					}else{
+						datos.put("primer_nombre","---");
+					}
 					String segundo_nombre= rs.getString("segundo_nombre");
 					System.out.println(segundo_nombre);
 					//puede ser que no tenga segundo nombre
@@ -533,7 +539,12 @@ public class dbFunctions {
 					}else{
 						datos.put("segundo_nombre", "---");
 					}
-					
+					String primer_apellido = rs.getString("primer_apellido");
+					if(primer_apellido!=null){
+						datos.put("primer_apellido", primer_apellido);
+					}else{
+						datos.put("primer_apellido", "---");
+					}
 					String segundo_apellido = rs.getString("segundo_apellido");
 					if (segundo_apellido!=null){
 						datos.put("segundo_apellido",segundo_apellido);

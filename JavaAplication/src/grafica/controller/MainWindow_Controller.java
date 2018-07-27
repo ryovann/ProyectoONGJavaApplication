@@ -120,5 +120,22 @@ public class MainWindow_Controller {
 			f.EliminarUsuario(vo);
           }	
 	}
+	public void modificarUsuario(int ciVenezolana) {
+		FormularioRegistro formulario = new FormularioRegistro(2);
+		formulario.RellenarFormularioFromModificarUsuario(ciVenezolana);
+		formulario.setVisible(true);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
 	
 }

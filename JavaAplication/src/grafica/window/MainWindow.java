@@ -24,6 +24,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.JSeparator;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.basic.BasicBorders.RadioButtonBorder;
 import javax.swing.table.DefaultTableModel;
 import grafica.controller.MainWindow_Controller;
@@ -152,6 +154,17 @@ public class MainWindow extends JFrame {
 		panelNuevasPersonas.add(panelListaUsuarios);
 		panelListaUsuarios.setLayout(null);
 		tableUsuarios = new JTable();
+		
+		
+		tableUsuarios.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+		    public void valueChanged(ListSelectionEvent lse) {
+		        int idSelectedRow = tableUsuarios.getSelectedRow();
+		        if(tableUsuarios.getRowCount()>0){
+			        lblUsuarioSeleccionado.setText("Usuario seleccionado: "+tableUsuarios.getModel().getValueAt(idSelectedRow, 1)+" "+tableUsuarios.getModel().getValueAt(idSelectedRow, 2));
+		        }
+		    }
+		});
 		tableUsuarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		JScrollPane scrollPaneListaUsuariosNuevos = new JScrollPane();
@@ -304,6 +317,24 @@ public class MainWindow extends JFrame {
 		
 		btnVerInformacionUsuario.setBounds(524, 42, 210, 23);
 		panelMenuAccionesUsuarios.add(btnVerInformacionUsuario);
+		btnModificarUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int idSelectedRow = tableUsuarios.getSelectedRow();
+				if(idSelectedRow == -1){
+					//Si no hay filas seleccionadas
+					JOptionPane.showMessageDialog(null, "Debes seleccionar un usuario");
+				}else{
+					//Si hay almenos una fila seleccionada
+					int ciVenezolana = Integer.parseInt((String) tableUsuarios.getModel().getValueAt(idSelectedRow, 0));
+					String primerNombre = (String) tableUsuarios.getModel().getValueAt(idSelectedRow, 1);
+					String primerApellido = (String) tableUsuarios.getModel().getValueAt(idSelectedRow, 2);
+					MainWindow_Controller controlador = MainWindow_Controller.getInstancia();
+					//Llamo al metodo que se encarga de la modificacion del usuario
+					controlador.modificarUsuario(ciVenezolana);	
+				}
+				
+			}
+		});
 		
 		
 		btnModificarUsuario.setBounds(10, 42, 185, 23);
