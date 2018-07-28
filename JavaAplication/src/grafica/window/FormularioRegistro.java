@@ -333,20 +333,25 @@ public class FormularioRegistro extends JFrame {
 	
 	
 	public static boolean Verificar_Email(String email) {
-		 
-        // Patrón para validar el email
-        Pattern pattern = Pattern
-                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
- 
-        Matcher mather = pattern.matcher(email);
-        boolean result;
-        if (mather.find() == true) {
-            result=true;
-        } else {
-            result=false;
-        }
-        return result;
+		boolean result;
+       if(!email.equals("")){
+    	   // Patrón para validar el email
+           Pattern pattern = Pattern
+                   .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                           + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+    
+           Matcher mather = pattern.matcher(email);
+          
+           if (mather.find() == true) {
+               result=true;
+           } else {
+               result=false;
+           }
+           return result;
+       }else{
+    	   return true;
+       }
+       
     }
 	
 
@@ -1364,16 +1369,21 @@ public class FormularioRegistro extends JFrame {
 					detalle = txtDetalleViveConOtro.getText();
 				}
 				int vino_con=cmbVinoCon.getSelectedIndex();//si es 0 vino solo, si es 1 vino acompañado
+				int cant_hijos = 0,hijos_exterior=0;
 				//FALTA PONER TRY CATCH DE CUANDO CANT_HIJOS O HIJOS_EXTERIOR NO SON UN INT
-				int cant_hijos = Integer.parseInt(txtCantHijos.getText());
-				int hijos_exterior=Integer.parseInt(txtCantidadHijosExtranjero.getText());
+				try{
+					cant_hijos = Integer.parseInt(txtCantHijos.getText());
+					hijos_exterior=Integer.parseInt(txtCantidadHijosExtranjero.getText());
+				}catch(Exception e){
+					
+				}
+					
 				
 				//ejecuto todas las consultas 
 				boolean verificar_email = Verificar_Email(email);
 				boolean cerrar_ventana = false;
 				if(hijos_exterior>cant_hijos){//no dijo toda la cantidad de hijos
 					JOptionPane.showMessageDialog(null, "La cantida de hijos en el exterior es mayor a la cantidad de hijos en total, eso no es posible", "ERROR", JOptionPane.ERROR_MESSAGE);
-					
 				}else if (!verificar_email){
 					JOptionPane.showMessageDialog(null, "El email es inválido", "ERROR EMAIL", JOptionPane.ERROR_MESSAGE);
 				}else if(dia_nac.equals("DD") ||mes_nac.equals("MM")|| anio_nac.equals("AAAA")){
@@ -1382,12 +1392,19 @@ public class FormularioRegistro extends JFrame {
 					JOptionPane.showMessageDialog(null, "Fecha de residencia inválida", "ERROR FECHA DE RESIDENCIA", JOptionPane.ERROR_MESSAGE);
 				}else if(txtMotivoContacto.getText().length()>255){
 					JOptionPane.showMessageDialog(null, "Motivo de contacto demasiado largo (max 255 chars)", "ERROR MOTIVO DE CONTACTO", JOptionPane.ERROR_MESSAGE);
+				}else if(ci_venezolana.equals("")){
+					JOptionPane.showMessageDialog(null, "La cedula venezolana no puede estar vacia", "ERROR CEDULA VENEZOLANA", JOptionPane.ERROR_MESSAGE);
+				}else if(textInCIUY&&!ci_uruguaya.equals("")){
+					JOptionPane.showMessageDialog(null, "La cedula uruguaya no puede contener texto", "ERROR CEDULA URUGUAYA", JOptionPane.ERROR_MESSAGE);
+				}else if(primer_nombre.equals("")){
+					JOptionPane.showMessageDialog(null, "El primer nombre no puede estar vacio","ERROR PRIMER NOMBRE",JOptionPane.ERROR_MESSAGE);
+				}else if(primer_apellido.equals("")){
+					JOptionPane.showMessageDialog(null, "El primer apellido no puede estar vacio", "ERROR PRIMER APELLIDO", JOptionPane.ERROR_MESSAGE);
 				}else if(textInCIVN){
 					JOptionPane.showMessageDialog(null, "La cedula venezolana no puede contener texo", "ERROR CEDULA VENEZOLANA", JOptionPane.ERROR_MESSAGE);
-				}else if(textInCIUY){
-					JOptionPane.showMessageDialog(null, "La cedula uruguaya no puede contener texto", "ERROR CEDULA URUGUAYA", JOptionPane.ERROR_MESSAGE);
 				}else{
-					//if tipo es 0 o 1 insertar o hacer update
+					
+				//if tipo es 0 o 1 insertar o hacer update
 					if(tipoDeRegistro==1||tipoDeRegistro==2){
 						//UPDATE PERSONA
 						controlador.UpdatePersona(primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, sexo, dia_nac, mes_nac, anio_nac, pais_nac, ciudad_nac, estado_civil, ocupacion, direccion, dia_reside, mes_reside, anio_reside, email, motivo_contacto, ci_venezolana);
