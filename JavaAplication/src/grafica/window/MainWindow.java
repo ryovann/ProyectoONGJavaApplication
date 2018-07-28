@@ -181,65 +181,77 @@ public class MainWindow extends JFrame {
 		btnBuscar.addActionListener(new ActionListener() {
 			//Eventto del boton para buscar personas que son nuevas
 			public void actionPerformed(ActionEvent arg0) {
-				
-				int typeOfSearch = 0;
-				if(radio_UsuariosNuevos.isSelected()){
-					typeOfSearch = 0;
-				}else if(radio_UsuariosYaRegistrados.isSelected()){
-					typeOfSearch = 1;
+				boolean error = false;
+				if(txtBusquedaString.getText().equals("")){
+					if(cmbCriterioBusqueda.getSelectedIndex()==0){
+						JOptionPane.showMessageDialog(null,"ERROR: Se debe escribir una cedula","ERROR DE BUSQUEDA",JOptionPane.ERROR_MESSAGE);
+						error = true;
+					}else{
+						error = false;
+					}
 				}
-
-				tableUsuarios.setModel(new DefaultTableModel());
-				//Instancio el controlador
-				MainWindow_Controller controller = MainWindow_Controller.getInstancia();
-				//int que identifica que tipo de criterio selecciono
-				int typeOfQuery = cmbCriterioBusqueda.getSelectedIndex();
-				//Texto para la busqueda
-				String value = txtBusquedaString.getText();
-				//Llamo al metodo que se encarga de
-				//controlar la funcionalidad del boton buscar
-				//Luego debo recibir los datos y mostrarlos
-				DefaultTableModel model = controller.btnBuscarFunction(typeOfSearch,typeOfQuery, value);
-				if(model.getRowCount()!=0){
-					tableUsuarios.setModel(model);//muestro los datos en la tabla
-					
-					panelListaUsuarios.setVisible(true);//muestro el panel con la lista
-					
-					
+				if(!error){
+					int typeOfSearch = 0;
 					if(radio_UsuariosNuevos.isSelected()){
-						panelMenuAccionesUsuarios.setVisible(true);
-						btnContinuarRegistro.setVisible(true);
-						lblUsuarioSeleccionado.setText("Usuario seleccionado: Ninguno");
-						lblUsuarioSeleccionado.setVisible(true);
+						typeOfSearch = 0;
+					}else if(radio_UsuariosYaRegistrados.isSelected()){
+						typeOfSearch = 1;
+					}
+
+					tableUsuarios.setModel(new DefaultTableModel());
+					//Instancio el controlador
+					MainWindow_Controller controller = MainWindow_Controller.getInstancia();
+					//int que identifica que tipo de criterio selecciono
+					int typeOfQuery = cmbCriterioBusqueda.getSelectedIndex();
+					//Texto para la busqueda
+					String value = txtBusquedaString.getText();
+					//Llamo al metodo que se encarga de
+					//controlar la funcionalidad del boton buscar
+					//Luego debo recibir los datos y mostrarlos
+					DefaultTableModel model = controller.btnBuscarFunction(typeOfSearch,typeOfQuery, value);
+					if(model.getRowCount()!=0){
+						tableUsuarios.setModel(model);//muestro los datos en la tabla
+						
+						panelListaUsuarios.setVisible(true);//muestro el panel con la lista
+						
+						
+						if(radio_UsuariosNuevos.isSelected()){
+							panelMenuAccionesUsuarios.setVisible(true);
+							btnContinuarRegistro.setVisible(true);
+							lblUsuarioSeleccionado.setText("Usuario seleccionado: Ninguno");
+							lblUsuarioSeleccionado.setVisible(true);
+							btnModificarUsuario.setVisible(false);
+							btnEliminarUsuario.setVisible(false);
+							btnVerInformacionUsuario.setVisible(false);
+							separatorAccionesUsuarios.setVisible(false);
+						}else{
+							
+							panelMenuAccionesUsuarios.setVisible(true);
+							btnContinuarRegistro.setVisible(false);
+							lblUsuarioSeleccionado.setText("Usuario seleccionado: Ninguno");
+							lblUsuarioSeleccionado.setVisible(true);
+							btnModificarUsuario.setVisible(true);
+							btnEliminarUsuario.setVisible(true);
+							btnVerInformacionUsuario.setVisible(true);
+							separatorAccionesUsuarios.setVisible(true);
+						}
+						
+					}else{
+						panelListaUsuarios.setVisible(false);
+						scrollPaneListaUsuariosNuevos.setBorder(null);
+						
+						lblUsuarioSeleccionado.setVisible(false);
+						btnContinuarRegistro.setVisible(false);
+						separatorAccionesUsuarios.setVisible(false);
 						btnModificarUsuario.setVisible(false);
 						btnEliminarUsuario.setVisible(false);
 						btnVerInformacionUsuario.setVisible(false);
-						separatorAccionesUsuarios.setVisible(false);
-					}else{
-						
-						panelMenuAccionesUsuarios.setVisible(true);
-						btnContinuarRegistro.setVisible(false);
-						lblUsuarioSeleccionado.setText("Usuario seleccionado: Ninguno");
-						lblUsuarioSeleccionado.setVisible(true);
-						btnModificarUsuario.setVisible(true);
-						btnEliminarUsuario.setVisible(true);
-						btnVerInformacionUsuario.setVisible(true);
-						separatorAccionesUsuarios.setVisible(true);
+						panelMenuAccionesUsuarios.setVisible(false);
 					}
-					
-				}else{
-					panelListaUsuarios.setVisible(false);
-					scrollPaneListaUsuariosNuevos.setBorder(null);
-					
-					lblUsuarioSeleccionado.setVisible(false);
-					btnContinuarRegistro.setVisible(false);
-					separatorAccionesUsuarios.setVisible(false);
-					btnModificarUsuario.setVisible(false);
-					btnEliminarUsuario.setVisible(false);
-					btnVerInformacionUsuario.setVisible(false);
-					panelMenuAccionesUsuarios.setVisible(false);
+				
 				}
 				
+					
 			}
 		});
 		btnBuscar.setBounds(669, 50, 89, 23);
