@@ -16,12 +16,14 @@ import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.SystemColor;
 import java.util.HashMap;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextArea;
 
 public class VerInformacion extends JFrame {
 	private JPanel contentPane;
@@ -29,7 +31,7 @@ public class VerInformacion extends JFrame {
 		setTitle("Informacion de: "+primerNombre+" "+primerApellido+" - CI: "+cedulaVenezolana);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 701, 556);
+		setBounds(100, 100, 701, 539);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -104,7 +106,7 @@ public class VerInformacion extends JFrame {
 		panel.add(lblCiudadDeNacimiento);
 		
 		JLabel lblSexo = new JLabel("Sexo: "+datos_persona.get("sexo"));
-		lblSexo.setBounds(219, 86, 46, 14);
+		lblSexo.setBounds(219, 86, 73, 14);
 		panel.add(lblSexo);
 		
 		JLabel lblDocumentacion = new JLabel("Documentacion");
@@ -206,15 +208,15 @@ public class VerInformacion extends JFrame {
 		
 		//TELEFONOS
 		JLabel lblTelefono = new JLabel("Telefono: "+telefonos.get("tel1"));
-		lblTelefono.setBounds(10, 50, 199, 14);
+		lblTelefono.setBounds(12, 11, 199, 14);
 		panel_5.add(lblTelefono);
 		
 		JLabel lblOtroTel = new JLabel("Otro telefono:"+telefonos.get("tel2"));
-		lblOtroTel.setBounds(10, 75, 199, 14);
+		lblOtroTel.setBounds(12, 36, 199, 14);
 		panel_5.add(lblOtroTel);
 		
 		JLabel lblDireccionDeEmail = new JLabel("Email: "+datos_persona.get("email"));
-		lblDireccionDeEmail.setBounds(8, 100, 201, 14);
+		lblDireccionDeEmail.setBounds(10, 61, 201, 14);
 		panel_5.add(lblDireccionDeEmail);
 		
 		JLabel lblInformacionFamiliar = new JLabel("Informacion familiar");
@@ -244,9 +246,11 @@ public class VerInformacion extends JFrame {
 		JList list = new JList();
 		DefaultListModel oldModel = new DefaultListModel();//objeto temporal que contiene los elementos de la lista
 		for(int i=0; i<idiomas.length;i++){
-			oldModel.addElement(idiomas[i]);
-			list.setModel(oldModel);
+			if(idiomas[i]!=null){
+				oldModel.addElement(idiomas[i]);
+			}
 		}
+		list.setModel(oldModel);
 		list.setBackground(SystemColor.control);
 		scrollPane.setViewportView(list);
 		
