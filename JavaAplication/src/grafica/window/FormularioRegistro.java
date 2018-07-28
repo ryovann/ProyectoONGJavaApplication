@@ -1413,7 +1413,11 @@ public class FormularioRegistro extends JFrame {
 						
 					}
 					
-					if(tipoDeRegistro==1){
+					if(tipoDeRegistro==1||tipoDeRegistro==2){
+						if(tipoDeRegistro==2){
+							controlador.EliminarDatosPersona(ci_venezolana);//ELIMINO LOS TELEFONOS
+						}
+						
 						if(tel1.equals("") || tel1==null){
 							System.out.println("tel1 vacio");
 						}else{

@@ -193,7 +193,11 @@ public class FormularioRegistro_Controller {
 			return recivedData;
 		}
 	
-	
+	public void EliminarDatosPersona(String ci_venezolana){
+		VO_Documentos vo = new VO_Documentos(ci_venezolana);
+		Facade f = new Facade();
+		f.EliminarDatosPersona(vo);
+	}
 	
 	
 	

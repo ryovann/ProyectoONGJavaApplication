@@ -211,7 +211,7 @@ public class VerInformacion extends JFrame {
 		lblTelefono.setBounds(12, 11, 199, 14);
 		panel_5.add(lblTelefono);
 		
-		JLabel lblOtroTel = new JLabel("Otro telefono:"+telefonos.get("tel2"));
+		JLabel lblOtroTel = new JLabel("Otro telefono: "+telefonos.get("tel2"));
 		lblOtroTel.setBounds(12, 36, 199, 14);
 		panel_5.add(lblOtroTel);
 		

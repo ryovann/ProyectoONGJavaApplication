@@ -132,7 +132,26 @@ public class QueryStore {
 		return query;
 	}
 	
-	
+	public String eliminarTelefonosPersona(){
+		String query = "DELETE FROM telefono_persona where id_persona = (?)";
+		return query;
+	}
+	public String eliminarIdiomasPersona(){
+		String query = "DELETE FROM sabe_idioma where id_persona = (?)";
+		return query;
+	}
+	public String eliminarFamiliaPersona(){
+		String query = "DELETE FROM familia_persona where id_persona = (?)";
+		return query;
+	}
+	public String eliminarFormacionAcademica(){
+		String query = "DELETE FROM formacion_academica where id_persona = (?)";
+		return query;
+	}
+	public String eliminarTieneProfesion(){
+		String query = "DELETE FROM tiene_profesion where id_persona = (?)";
+		return query;
+	}
 
 	
 

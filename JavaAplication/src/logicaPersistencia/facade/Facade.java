@@ -215,4 +215,8 @@ public class Facade {
 		dbFunctions dbAccess = new dbFunctions(config);
 		dbAccess.EliminarUsuario(vo.getCi_venezolana());
 	}
+	public void EliminarDatosPersona(VO_Documentos vo){
+		dbFunctions dbAccess = new dbFunctions(config);
+		dbAccess.EliminarDatosPersona(vo.getCi_venezolana());
+	}
 }
