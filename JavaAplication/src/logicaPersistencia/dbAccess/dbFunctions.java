@@ -627,6 +627,12 @@ public class dbFunctions {
 					}else{
 						datos.put("estado_civil", "---");
 					}
+					String motivo_contacto = rs.getString("motivo_contacto");
+					if(motivo_contacto!=null){
+						datos.put("motivo_contacto", motivo_contacto);
+					}else{
+						datos.put("motivo_contacto", "---");
+					}
 						
 				} //end while
 				rs.close();
@@ -666,8 +672,8 @@ public class dbFunctions {
 					String nivel = rs.getString("nivel");
 					formacion_academica.put("nivel", nivel);
 					int completado = rs.getInt("completado");
-					if(completado == 0){
-						formacion_academica.put("completado","completo");
+					if(completado == 1){
+						formacion_academica.put("completado","Completo");
 					}else{
 						formacion_academica.put("completado","Incompleto");
 					}
@@ -934,7 +940,7 @@ public class dbFunctions {
 					System.out.println(idioma);
 					String nivel = rs.getString("nivel");
 					System.out.println(nivel);
-					idiomas[cont]=idioma+"-"+nivel;
+					idiomas[cont]=idioma+" - "+nivel;
 					cont++;
 				}	
 			}else{
