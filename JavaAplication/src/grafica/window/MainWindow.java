@@ -353,6 +353,11 @@ public class MainWindow extends JFrame {
 					MainWindow_Controller controlador = MainWindow_Controller.getInstancia();
 					//Llamo al metodo que se encarga de la eliminacion de el usuario
 					controlador.eliminarUsuario(ciVenezolana, primerNombre, primerApellido);	
+					btnBuscar.doClick();
+					
+					
+					
+					
 				}
 					
 			}
