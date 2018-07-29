@@ -355,7 +355,20 @@ public class FormularioRegistro extends JFrame {
     }
 	
 
- 
+	public boolean Verificar_Fecha(String dia, String mes){
+		boolean result = true; 
+		if(!dia.equals("DD") && !mes.equals("MM")){
+			if(mes.equals("04")|| mes.equals("06")|| mes.equals("09")|| mes.equals("11")){
+				if(dia.equals("31")){
+					result = false;
+				}
+			}else if(mes.equals("02")&& (dia.equals("30")|| dia.equals("31"))){
+				result = false;
+			}
+		}
+		return result;
+	}
+	
 	public FormularioRegistro(int type) {
 		tipoDeRegistro = type;
 		
@@ -1381,6 +1394,8 @@ public class FormularioRegistro extends JFrame {
 				
 				//ejecuto todas las consultas 
 				boolean verificar_email = Verificar_Email(email);
+				boolean verificar_fecha_nac =Verificar_Fecha(dia_nac,mes_nac);
+				boolean verificar_fecha_reside = Verificar_Fecha(dia_reside,mes_reside);
 				boolean cerrar_ventana = false;
 				if(hijos_exterior>cant_hijos){//no dijo toda la cantidad de hijos
 					JOptionPane.showMessageDialog(null, "La cantida de hijos en el exterior es mayor a la cantidad de hijos en total, eso no es posible", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -1394,7 +1409,7 @@ public class FormularioRegistro extends JFrame {
 					JOptionPane.showMessageDialog(null, "Motivo de contacto demasiado largo (max 255 chars)", "ERROR MOTIVO DE CONTACTO", JOptionPane.ERROR_MESSAGE);
 				}else if(ci_venezolana.equals("")){
 					JOptionPane.showMessageDialog(null, "La cedula venezolana no puede estar vacia", "ERROR CEDULA VENEZOLANA", JOptionPane.ERROR_MESSAGE);
-				}else if(textInCIUY&&!ci_uruguaya.equals("")){
+				}else if(radio_ci_uy_si.isSelected() && textInCIUY &&!ci_uruguaya.equals("")){
 					JOptionPane.showMessageDialog(null, "La cedula uruguaya no puede contener texto", "ERROR CEDULA URUGUAYA", JOptionPane.ERROR_MESSAGE);
 				}else if(primer_nombre.equals("")){
 					JOptionPane.showMessageDialog(null, "El primer nombre no puede estar vacio","ERROR PRIMER NOMBRE",JOptionPane.ERROR_MESSAGE);
@@ -1402,6 +1417,12 @@ public class FormularioRegistro extends JFrame {
 					JOptionPane.showMessageDialog(null, "El primer apellido no puede estar vacio", "ERROR PRIMER APELLIDO", JOptionPane.ERROR_MESSAGE);
 				}else if(textInCIVN){
 					JOptionPane.showMessageDialog(null, "La cedula venezolana no puede contener texo", "ERROR CEDULA VENEZOLANA", JOptionPane.ERROR_MESSAGE);
+				}else if (mes_reside.equals("02") && (dia_reside.equals("29")|| dia_reside.equals("30")|| dia_reside.equals("31"))){
+					JOptionPane.showMessageDialog(null, "Fecha de residencia inválida", "ERROR FECHA RESIDENCIA", JOptionPane.ERROR_MESSAGE);
+				}else if (!verificar_fecha_nac){
+					JOptionPane.showMessageDialog(null, "Fecha de nacimiento inválida", "ERROR FECHA DE NACIMIENTO", JOptionPane.ERROR_MESSAGE);
+				}else if(!verificar_fecha_reside){
+					JOptionPane.showMessageDialog(null, "Fecha residencia inválida", "ERROR FECHA DE RESIDENCIA", JOptionPane.ERROR_MESSAGE);
 				}else{
 					
 				//if tipo es 0 o 1 insertar o hacer update
