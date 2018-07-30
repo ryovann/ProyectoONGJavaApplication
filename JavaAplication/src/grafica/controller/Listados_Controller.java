@@ -45,5 +45,8 @@ public class Listados_Controller {
 		}
 		return modelo;
 		}
-
+	public void generarReporte(){
+		Facade f = new Facade();
+		f.GenerarReporte();
+	}
 }

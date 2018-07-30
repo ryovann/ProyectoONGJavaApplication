@@ -22,6 +22,7 @@ import java.net.URL;
 import java.awt.event.ActionEvent;
 import java.awt.Canvas;
 import java.awt.Panel;
+import java.awt.BorderLayout;
 
 public class LoginWindow extends JFrame {
 
@@ -93,6 +94,15 @@ public class LoginWindow extends JFrame {
 		txtPassword = new JPasswordField();
 		txtPassword.setBounds(65, 225, 170, 20);
 		contentPane.add(txtPassword);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(65, 11, 170, 135);
+		contentPane.add(panel);
+		panel.setLayout(new BorderLayout(0, 0));
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Alumnos\\git\\ProyectoONGJavaApplication\\JavaAplication\\resources\\img\\logo_veneguaya.png"));
+		panel.add(lblNewLabel, BorderLayout.CENTER);
 		
 	
 		

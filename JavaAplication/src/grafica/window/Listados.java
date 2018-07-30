@@ -122,6 +122,15 @@ public class Listados extends JFrame {
 		
 	
 		JButton btnExportarListado = new JButton("Exportar listado");
+		btnExportarListado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Listados_Controller controlador = Listados_Controller.getIntancia();
+				controlador.generarReporte();
+				
+				
+				
+			}
+		});
 		btnExportarListado.setBounds(552, 407, 122, 23);
 		contentPane.add(btnExportarListado);
 		cmbCriterioBusqueda.addActionListener(new ActionListener() {

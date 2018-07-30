@@ -1,10 +1,18 @@
 package logicaPersistencia.dbAccess;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class dbFunctions {
 	// Esta clase contiene todos los metodos que permitiran
@@ -1025,6 +1033,21 @@ public class dbFunctions {
 
 		} catch (SQLException e) {
 			System.out.println("dbFunctions.EliminarDatosPersona(): Error en la consulta: ");
+			e.printStackTrace();
+		}
+	}
+	public void generarReporte(){
+		ConnectionObject.initializeConnection();
+		JasperReport reporte = null;
+		String path = "src\\resources\\reportTemplate1.jasper";
+		try {
+			reporte = (JasperReport) JRLoader.loadObjectFromFile(path);
+			JasperPrint print = JasperFillManager.fillReport(path,null,ConnectionObject.getConnection());
+			JasperViewer view = new JasperViewer(print,false);
+			view.setDefaultCloseOperation(view.DISPOSE_ON_CLOSE);
+			view.setVisible(true);
+		} catch (JRException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

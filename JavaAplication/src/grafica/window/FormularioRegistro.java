@@ -1385,12 +1385,13 @@ public class FormularioRegistro extends JFrame {
 				}
 				int vino_con=cmbVinoCon.getSelectedIndex();//si es 0 vino solo, si es 1 vino acompañado
 				int cant_hijos = 0,hijos_exterior=0;
+				boolean textInCantHijos = false;
 				//FALTA PONER TRY CATCH DE CUANDO CANT_HIJOS O HIJOS_EXTERIOR NO SON UN INT
 				try{
 					cant_hijos = Integer.parseInt(txtCantHijos.getText());
 					hijos_exterior=Integer.parseInt(txtCantidadHijosExtranjero.getText());
 				}catch(Exception e){
-					
+					textInCantHijos = true;
 				}
 					
 				
@@ -1400,7 +1401,9 @@ public class FormularioRegistro extends JFrame {
 				boolean verificar_fecha_reside = Verificar_Fecha(dia_reside,mes_reside);
 				boolean cerrar_ventana = false;
 				if(hijos_exterior>cant_hijos){//no dijo toda la cantidad de hijos
-					JOptionPane.showMessageDialog(null, "La cantida de hijos en el exterior es mayor a la cantidad de hijos en total, eso no es posible", "ERROR", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "La cantida de hijos en el exterior es mayor a la cantidad de hijos en total, eso no es posible", "ERROR ", JOptionPane.ERROR_MESSAGE);
+				}else if(textInCantHijos){
+					JOptionPane.showMessageDialog(null, "No puede haber texto en los campos de cantidad de hijos", "ERROR CANTIDAD DE HIJOS", JOptionPane.ERROR_MESSAGE);
 				}else if (!verificar_email){
 					JOptionPane.showMessageDialog(null, "El email es inválido", "ERROR EMAIL", JOptionPane.ERROR_MESSAGE);
 				}else if(dia_nac.equals("DD") ||mes_nac.equals("MM")|| anio_nac.equals("AAAA")){

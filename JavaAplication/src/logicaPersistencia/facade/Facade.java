@@ -59,6 +59,9 @@ public class Facade {
 			e.printStackTrace();
 		}
 	}
+	public String[] getConfig(){
+		return config;
+	}
 	public ResultSet UsuariosNuevosBusqueda_Function(ValueObject_UsuariosBusqueda data){
 		//Funcion que permite buscar en la base datos los nuevos usuarios registrados
 		//Obtengo los datos encapsulados en el ValueObject
@@ -218,5 +221,9 @@ public class Facade {
 	public void EliminarDatosPersona(VO_Documentos vo){
 		dbFunctions dbAccess = new dbFunctions(config);
 		dbAccess.EliminarDatosPersona(vo.getCi_venezolana());
+	}
+	public void GenerarReporte(){
+		dbFunctions dbAccess = new dbFunctions(config);
+		dbAccess.generarReporte();
 	}
 }
