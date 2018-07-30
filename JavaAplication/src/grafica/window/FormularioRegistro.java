@@ -365,6 +365,8 @@ public class FormularioRegistro extends JFrame {
 			}else if(mes.equals("02")&& (dia.equals("30")|| dia.equals("31"))){
 				result = false;
 			}
+		}else{
+			result = false;
 		}
 		return result;
 	}
@@ -1344,7 +1346,7 @@ public class FormularioRegistro extends JFrame {
 				String tel1 = txtTelefono.getText();
 				String tel2=txtOtroTelefono.getText();
 				//empiezo con la documentacion 
-				String ci_uruguaya ="0";
+				String ci_uruguaya ="";
 				if (radio_ci_uy_si.isSelected()){
 					 ci_uruguaya =txtNumeroCIUY.getText();
 				}
