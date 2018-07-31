@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.Map;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -1036,20 +1037,81 @@ public class dbFunctions {
 			e.printStackTrace();
 		}
 	}
-	public void generarReporte(){
+	public void generarReporte(int type,String parametro){
 		ConnectionObject.initializeConnection();
 		JasperReport reporte = null;
-		String path = "src\\resources\\reportTemplate1.jasper";
-		try {
-			reporte = (JasperReport) JRLoader.loadObjectFromFile(path);
-			JasperPrint print = JasperFillManager.fillReport(path,null,ConnectionObject.getConnection());
-			JasperViewer view = new JasperViewer(print,false);
-			view.setDefaultCloseOperation(view.DISPOSE_ON_CLOSE);
-			view.setVisible(true);
-		} catch (JRException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(type==0){
+			//REPORTE SIN CRITERIO DE BUSQUEDA
+			String path = "resources\\reportTemplateWithOutParams2.jasper";
+			try {
+				reporte = (JasperReport) JRLoader.loadObjectFromFile(path);
+				JasperPrint print = JasperFillManager.fillReport(reporte,null,ConnectionObject.getConnection());
+				JasperViewer view = new JasperViewer(print,false);
+				view.setDefaultCloseOperation(view.DISPOSE_ON_CLOSE);
+				view.setVisible(true);
+			} catch (JRException e) {
+				System.out.println("ERROR AL GENERAR REPORTE SIN PARAMETROS");
+				e.printStackTrace();
+			}
+		}else if(type==1){
+			//REPORTE POR NOMBRE Y APELLIDO
+			String path = "resources\\reportTemplateForNombreYApe.jasper";
+			Map parametrosMap = new HashMap();
+			parametrosMap.put("nombreyape", "%"+parametro+"%");
+			try {
+				reporte = (JasperReport) JRLoader.loadObjectFromFile(path);
+				JasperPrint print = JasperFillManager.fillReport(reporte,parametrosMap,ConnectionObject.getConnection());
+				JasperViewer view = new JasperViewer(print,false);
+				view.setDefaultCloseOperation(view.DISPOSE_ON_CLOSE);
+				view.setVisible(true);
+			} catch (JRException e) {
+				System.out.println("ERROR AL GENERAR REPORTE POR NOMBRE Y APELLIDO");
+				e.printStackTrace();
+			}
+		}else if(type==2){
+			//REPORTE POR EDAD
+			String path = "resources\\reportTemplateForEdad.jasper";
+			Map parametrosMap = new HashMap();
+			parametrosMap.put("edad", parametro);
+			try {
+				reporte = (JasperReport) JRLoader.loadObjectFromFile(path);
+				JasperPrint print = JasperFillManager.fillReport(reporte,parametrosMap,ConnectionObject.getConnection());
+				JasperViewer view = new JasperViewer(print,false);
+				view.setDefaultCloseOperation(view.DISPOSE_ON_CLOSE);
+				view.setVisible(true);
+			} catch (JRException e) {
+				System.out.println("ERROR AL GENERAR REPORTE POR EDAD");
+				e.printStackTrace();
+			}
+		}else if(type==3){
+			String path = "resources\\reportTemplateForIdPais.jasper";
+			Map parametrosMap = new HashMap();
+			
+			PreparedStatement preparedS;
+			try {
+				preparedS = ConnectionObject.getConnection().prepareStatement(querys.buscar_pais_por_nombre());
+				preparedS.setString(1,parametro);
+				ResultSet rs2 = preparedS.executeQuery();
+				while (rs2.next()){
+					parametrosMap.put("id_pais", rs2.getInt("id_pais"));
+				}
+				rs2.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}			
+			try {
+				reporte = (JasperReport) JRLoader.loadObjectFromFile(path);
+				JasperPrint print = JasperFillManager.fillReport(reporte,parametrosMap,ConnectionObject.getConnection());
+				JasperViewer view = new JasperViewer(print,false);
+				view.setDefaultCloseOperation(view.DISPOSE_ON_CLOSE);
+				view.setVisible(true);
+			} catch (JRException e) {
+				System.out.println("ERROR AL GENERAR REPORTE POR EDAD");
+				e.printStackTrace();
+			}
 		}
+		
+		
 	}
 	
 	

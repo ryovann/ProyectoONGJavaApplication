@@ -74,10 +74,19 @@ public class Listados extends JFrame {
 		lblBusqueda.setBounds(10, 44, 199, 14);
 		panelBusqueda.add(lblBusqueda);
 		
+		Listados_Controller controlador = Listados_Controller.getIntancia();
 		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+				
+				
+			}
+		});
 		btnBuscar.setBounds(565, 40, 89, 23);
 		panelBusqueda.add(btnBuscar);
-		Listados_Controller controlador = Listados_Controller.getIntancia();
+		
 		
 		txtBusquedaTexto = new JTextField();
 		txtBusquedaTexto.setBounds(276, 41, 279, 20);
@@ -125,7 +134,25 @@ public class Listados extends JFrame {
 		btnExportarListado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Listados_Controller controlador = Listados_Controller.getIntancia();
-				controlador.generarReporte();
+				int type = 0;
+				if(cmbCriterioBusqueda.getSelectedIndex()==0){
+					if(txtBusquedaTexto.getText().equals("")){
+						type = 0;
+						controlador.generarReporte(type,"");
+					}else{
+						type = 1;
+						controlador.generarReporte(type,txtBusquedaTexto.getText());
+					}
+				}else if(cmbCriterioBusqueda.getSelectedIndex()==1){
+					//Criterio de edad
+					type=2;
+					controlador.generarReporte(type,txtBusquedaTexto.getText());
+				}else if(cmbCriterioBusqueda.getSelectedIndex()==2){
+					//Criterio de pais
+					type=3;
+					controlador.generarReporte(type,cmbPaisDeOrigen.getSelectedItem().toString());
+					
+				}
 				
 				
 				

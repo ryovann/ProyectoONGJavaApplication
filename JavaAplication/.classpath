@@ -3,11 +3,13 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.0.8-bin.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Alumnos/git/ProyectoONGJavaApplication/JavaAplication/lib/jasperreports-6.6.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Alumnos/git/ProyectoONGJavaApplication/JavaAplication/lib/jasperreports-chart-customizers-6.6.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Alumnos/git/ProyectoONGJavaApplication/JavaAplication/lib/jasperreports-chart-themes-6.6.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Alumnos/git/ProyectoONGJavaApplication/JavaAplication/lib/jasperreports-fonts-6.6.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Alumnos/git/ProyectoONGJavaApplication/JavaAplication/lib/jasperreports-functions-6.6.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Alumnos/git/ProyectoONGJavaApplication/JavaAplication/lib/jasperreports-javaflow-6.6.0.jar"/>
+	<classpathentry kind="lib" path="lib/AbsoluteLayout.jar"/>
+	<classpathentry kind="lib" path="lib/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-digester-2.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/groovy-2.4.5.jar"/>
+	<classpathentry kind="lib" path="lib/itext-pdfa-5.5.4.jar"/>
+	<classpathentry kind="lib" path="lib/itextpdf-5.5.4.jar"/>
+	<classpathentry kind="lib" path="lib/jasperreports-6.0.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import logicaPersistencia.dbAccess.dbFunctions;
@@ -222,8 +223,9 @@ public class Facade {
 		dbFunctions dbAccess = new dbFunctions(config);
 		dbAccess.EliminarDatosPersona(vo.getCi_venezolana());
 	}
-	public void GenerarReporte(){
+	public void GenerarReporte(int type, String parametro){
 		dbFunctions dbAccess = new dbFunctions(config);
-		dbAccess.generarReporte();
+		dbAccess.generarReporte(type,parametro);
 	}
+	
 }

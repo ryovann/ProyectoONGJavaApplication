@@ -2,6 +2,8 @@ package grafica.controller;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.DefaultComboBoxModel;
 
@@ -45,8 +47,11 @@ public class Listados_Controller {
 		}
 		return modelo;
 		}
-	public void generarReporte(){
+	public void generarReporte(int type,String parametro){
+		
+		
 		Facade f = new Facade();
-		f.GenerarReporte();
+		
+		f.GenerarReporte(type,parametro);
 	}
 }
