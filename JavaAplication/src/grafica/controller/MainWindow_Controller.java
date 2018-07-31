@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import grafica.window.FormularioRegistro;
+import grafica.window.Listados;
 import grafica.window.TableModel;
 import grafica.window.VerInformacion;
 import logicaPersistencia.facade.Facade;
@@ -111,6 +112,7 @@ public class MainWindow_Controller {
 		ventanaInformacion.setVisible(true);
 		
 	}
+	
 	public void eliminarUsuario(int cedulaVenezolana, String primerNombre, String primerApellido){
 		int question = JOptionPane.showOptionDialog(null, "Realmente desea eliminar de los registros a: "+primerNombre+" "+primerApellido+"?", "Pregunta", 0,JOptionPane.YES_NO_OPTION, null, null, null);
 		System.out.println(question);
@@ -120,22 +122,17 @@ public class MainWindow_Controller {
 			f.EliminarUsuario(vo);
           }	
 	}
+	
 	public void modificarUsuario(int ciVenezolana) {
 		FormularioRegistro formulario = new FormularioRegistro(2);
 		formulario.RellenarFormularioFromModificarUsuario(ciVenezolana);
 		formulario.setVisible(true);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	}
+	
+	public void listadosAccion() {
+		Listados listadosWindow = new Listados();
+		listadosWindow.setLocationRelativeTo(null);
+		listadosWindow.setVisible(true);
 	}
 	
 }

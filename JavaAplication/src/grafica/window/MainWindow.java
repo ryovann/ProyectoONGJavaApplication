@@ -111,6 +111,12 @@ public class MainWindow extends JFrame {
 		menuBar.add(mnListados);
 		
 		JMenuItem mntmGenerarLista = new JMenuItem("Generar lista");
+		mntmGenerarLista.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				MainWindow_Controller controlador = MainWindow_Controller.getInstancia();
+				controlador.listadosAccion();
+			}
+		});
 		mnListados.add(mntmGenerarLista);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

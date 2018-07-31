@@ -1410,6 +1410,8 @@ public class FormularioRegistro extends JFrame {
 					JOptionPane.showMessageDialog(null, "Fecha de nacimiento inválida", "ERROR FECHA DE NACIMIENTO", JOptionPane.ERROR_MESSAGE);
 				}else if(dia_reside.equals("DD")|| mes_reside.equals("MM")|| anio_reside.equals("AAAA")){
 					JOptionPane.showMessageDialog(null, "Fecha de residencia inválida", "ERROR FECHA DE RESIDENCIA", JOptionPane.ERROR_MESSAGE);
+				}else if(radio_carnet_salud_si.isSelected()&&(dia_carnet_salud.equals("DD")|| mes_carnet_salud.equals("MM")||anio_carnet_salud.equals("AAAA"))){
+					JOptionPane.showMessageDialog(null, "Fecha de carnet de salud invalida", "ERROR FECHA DE CARNET DE SALUD", JOptionPane.ERROR_MESSAGE);
 				}else if(txtMotivoContacto.getText().length()>255){
 					JOptionPane.showMessageDialog(null, "Motivo de contacto demasiado largo (max 255 chars)", "ERROR MOTIVO DE CONTACTO", JOptionPane.ERROR_MESSAGE);
 				}else if(ci_venezolana.equals("")){

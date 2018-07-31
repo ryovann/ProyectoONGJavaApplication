@@ -27,7 +27,6 @@ public class Listados extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtBusquedaTexto;
-	private JTable tableResultadosBusqueda;
 
 	/**
 	 * Launch the application.
@@ -51,7 +50,7 @@ public class Listados extends JFrame {
 	public Listados() {
 		setTitle("Generador de listados");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 480);
+		setBounds(100, 100, 700, 137);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -75,21 +74,10 @@ public class Listados extends JFrame {
 		panelBusqueda.add(lblBusqueda);
 		
 		Listados_Controller controlador = Listados_Controller.getIntancia();
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				
-				
-				
-			}
-		});
-		btnBuscar.setBounds(565, 40, 89, 23);
-		panelBusqueda.add(btnBuscar);
 		
 		
 		txtBusquedaTexto = new JTextField();
-		txtBusquedaTexto.setBounds(276, 41, 279, 20);
+		txtBusquedaTexto.setBounds(276, 41, 246, 20);
 		panelBusqueda.add(txtBusquedaTexto);
 		txtBusquedaTexto.setColumns(10);
 		
@@ -109,28 +97,10 @@ public class Listados extends JFrame {
 		cmbPaisDeOrigen.setVisible(false);
 		cmbPaisDeOrigen.setModel(controlador.ObtenerPaises());
 		
-		JPanel panelResultados = new JPanel();
-		panelResultados.setBounds(10, 121, 664, 275);
-		contentPane.add(panelResultados);
-		panelResultados.setLayout(null);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 0, 664, 275);
-		panelResultados.add(scrollPane);
-		
-		
-		tableResultadosBusqueda = new JTable();
-		tableResultadosBusqueda.setBorder(new LineBorder(new Color(0, 0, 0)));
-		tableResultadosBusqueda.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPane.setViewportView(tableResultadosBusqueda);
-		
-		JLabel lblResultadosDeLa = new JLabel("Resultados de la busqueda");
-		lblResultadosDeLa.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblResultadosDeLa.setBounds(10, 96, 664, 14);
-		contentPane.add(lblResultadosDeLa);
-		
 	
 		JButton btnExportarListado = new JButton("Exportar listado");
+		btnExportarListado.setBounds(532, 40, 122, 23);
+		panelBusqueda.add(btnExportarListado);
 		btnExportarListado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Listados_Controller controlador = Listados_Controller.getIntancia();
@@ -158,8 +128,6 @@ public class Listados extends JFrame {
 				
 			}
 		});
-		btnExportarListado.setBounds(552, 407, 122, 23);
-		contentPane.add(btnExportarListado);
 		cmbCriterioBusqueda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(cmbCriterioBusqueda.getSelectedIndex()==0){

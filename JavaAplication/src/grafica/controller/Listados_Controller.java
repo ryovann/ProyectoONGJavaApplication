@@ -48,10 +48,7 @@ public class Listados_Controller {
 		return modelo;
 		}
 	public void generarReporte(int type,String parametro){
-		
-		
 		Facade f = new Facade();
-		
 		f.GenerarReporte(type,parametro);
 	}
 }
