@@ -1346,7 +1346,7 @@ public class FormularioRegistro extends JFrame {
 				String tel1 = txtTelefono.getText();
 				String tel2=txtOtroTelefono.getText();
 				//empiezo con la documentacion 
-				String ci_uruguaya ="";
+				String ci_uruguaya = null;
 				if (radio_ci_uy_si.isSelected()){
 					 ci_uruguaya =txtNumeroCIUY.getText();
 				}

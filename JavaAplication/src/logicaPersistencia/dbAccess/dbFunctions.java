@@ -192,13 +192,21 @@ public class dbFunctions {
 		ConnectionObject.initializeConnection();
 		try {
 			PreparedStatement preparedS = ConnectionObject.getConnection().prepareStatement(querys.UpdateDocumentos());
-			preparedS.setInt(1, Integer.parseInt(ci_uruguaya));
+			
+			if(ci_uruguaya == null){
+				preparedS.setString(1, null);
+			}else{
+				preparedS.setInt(1, Integer.parseInt(ci_uruguaya));
+			}
+			
 			preparedS.setString(2, pasaporte);
+			
 			if (fecha_carnet_salud.equals("null-null-null")) {
 				preparedS.setString(3, null);
 			} else {
 				preparedS.setString(3, fecha_carnet_salud);
 			}
+			
 			preparedS.setString(4, ci_venezolana);
 			preparedS.executeUpdate();
 			System.out.println("Se insertaron los documentos ");
@@ -492,9 +500,22 @@ public class dbFunctions {
 			PreparedStatement preparedS = ConnectionObject.getConnection().prepareStatement(querys.insertDocumentosNuevos());
 			preparedS.setInt(1, id_persona);
 			preparedS.setString(2,ci_venezolana);
-			preparedS.setString(3, ci_uruguaya);
+			
+			if(ci_uruguaya == null){
+				preparedS.setString(3, null);
+			}else{
+				preparedS.setString(3, ci_uruguaya);
+			}
+			
 			preparedS.setString(4, pasaporte);
-			preparedS.setString(5, fecha_carnet_salud);
+			
+			if(fecha_carnet_salud.equals("null-null-null")){
+				preparedS.setString(5, null);
+			}else{
+				preparedS.setString(5, fecha_carnet_salud);
+			}
+			
+			
 			rowsUpdated = preparedS.executeUpdate();
 			System.err.println("Se insertaron nuevos datos en documentos");
 			preparedS.close();
