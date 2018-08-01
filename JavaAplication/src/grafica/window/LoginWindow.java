@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import grafica.controller.LoginWindow_Controller;
 import javax.swing.JLabel;
@@ -18,6 +19,7 @@ import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.net.URL;
 import java.awt.event.ActionEvent;
 import java.awt.Canvas;
@@ -73,7 +75,7 @@ public class LoginWindow extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(new String(txtPassword.getPassword()).equals("")){
-					JOptionPane.showMessageDialog(null, "¡¡Debes ingresar una contraseña!!");
+					JOptionPane.showMessageDialog(null, "¡¡Debes ingresar una contraseña!!","ERROR de login",JOptionPane.ERROR_MESSAGE);
 				}else{
 					LoginWindow_Controller controller = LoginWindow_Controller.getInstancia();
 					boolean returnedValue = controller.ingresarBtnAcction(new String(txtPassword.getPassword()));
@@ -96,13 +98,17 @@ public class LoginWindow extends JFrame {
 		contentPane.add(txtPassword);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(65, 11, 170, 135);
+		panel.setBounds(65, 50, 170, 120);
 		contentPane.add(panel);
 		panel.setLayout(new BorderLayout(0, 0));
 		
+		File archivoImagen = new File("resources/img/logo_veneguaya.png");
+		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Alumnos\\git\\ProyectoONGJavaApplication\\JavaAplication\\resources\\img\\logo_veneguaya.png"));
-		panel.add(lblNewLabel, BorderLayout.CENTER);
+		panel.add(lblNewLabel, BorderLayout.NORTH);
+		lblNewLabel.setIcon(new ImageIcon(archivoImagen.getPath()));
+		
+		
 		
 	
 		

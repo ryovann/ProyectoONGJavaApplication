@@ -22,7 +22,6 @@ public class LoginWindow_Controller {
 		String storedPassword = obtainConfiguredPassword();
 		System.out.println(storedPassword);
 		if (pass.equals(storedPassword)) {
-			JOptionPane.showMessageDialog(null, "¡¡Contraseña correcta!!\n Ingresando al Sistema");
 			MainWindow ventanaPrincipal = new MainWindow();
 			ventanaPrincipal.setLocationRelativeTo(null);
 			ventanaPrincipal.setVisible(true);
