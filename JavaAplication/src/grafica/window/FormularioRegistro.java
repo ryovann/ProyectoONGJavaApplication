@@ -1240,6 +1240,14 @@ public class FormularioRegistro extends JFrame {
 		lblSituacionFamiliar.setBounds(10, 478, 141, 14);
 		contentPane.add(lblSituacionFamiliar);
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int des = JOptionPane.showConfirmDialog(null, "CAMBIOS NO GUARDADOS\n¿Esta seguro de que desea cancelar?","ALERTA CAMBIOS NO GUARDADOS",JOptionPane.YES_NO_OPTION);
+				if(des==0){
+					dispose();
+				}
+			}
+		});
 		btnCancelar.setBounds(424, 695, 154, 23);
 		contentPane.add(btnCancelar);
 		JPanel panel = new JPanel();

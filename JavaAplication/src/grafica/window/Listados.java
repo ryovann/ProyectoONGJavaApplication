@@ -9,6 +9,8 @@ import javax.swing.border.LineBorder;
 import grafica.controller.Listados_Controller;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -22,6 +24,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.JEditorPane;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Listados extends JFrame {
 
@@ -50,7 +54,7 @@ public class Listados extends JFrame {
 	public Listados() {
 		setTitle("Generador de listados");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 137);
+		setBounds(100, 100, 700, 163);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -77,6 +81,7 @@ public class Listados extends JFrame {
 		
 		
 		txtBusquedaTexto = new JTextField();
+		
 		txtBusquedaTexto.setBounds(276, 41, 246, 20);
 		panelBusqueda.add(txtBusquedaTexto);
 		txtBusquedaTexto.setColumns(10);
@@ -97,10 +102,24 @@ public class Listados extends JFrame {
 		cmbPaisDeOrigen.setVisible(false);
 		cmbPaisDeOrigen.setModel(controlador.ObtenerPaises());
 		
+		txtBusquedaTexto.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(cmbCriterioBusqueda.getSelectedIndex()==1){
+					String data = String.valueOf(e.getKeyChar());
+					if(!verificarInteger(data)){
+						e.consume();
+					}
+				}
+				
+				
+			}
+		});
+		
 	
 		JButton btnExportarListado = new JButton("Exportar listado");
-		btnExportarListado.setBounds(532, 40, 122, 23);
-		panelBusqueda.add(btnExportarListado);
+		btnExportarListado.setBounds(552, 90, 122, 23);
+		contentPane.add(btnExportarListado);
 		btnExportarListado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Listados_Controller controlador = Listados_Controller.getIntancia();
@@ -116,12 +135,22 @@ public class Listados extends JFrame {
 				}else if(cmbCriterioBusqueda.getSelectedIndex()==1){
 					//Criterio de edad
 					type=2;
-					controlador.generarReporte(type,txtBusquedaTexto.getText());
+					if(txtBusquedaTexto.getText().equals("")){
+						JOptionPane.showMessageDialog(null, "Error de edad: Se debe ingresar una edad valida","ERROR DE EDAD",JOptionPane.ERROR_MESSAGE);
+						
+					}else{
+						if(verificarInteger(txtBusquedaTexto.getText())){
+							controlador.generarReporte(type,txtBusquedaTexto.getText());
+						}else{
+							JOptionPane.showMessageDialog(null, "Error de edad: La edad no puede contener texto","ERROR DE EDAD",JOptionPane.ERROR_MESSAGE);
+						}
+						
+					}
+					
 				}else if(cmbCriterioBusqueda.getSelectedIndex()==2){
 					//Criterio de pais
 					type=3;
 					controlador.generarReporte(type,cmbPaisDeOrigen.getSelectedItem().toString());
-					
 				}
 				
 				
@@ -134,15 +163,15 @@ public class Listados extends JFrame {
 					txtBusquedaTexto.setVisible(true);
 					cmbPaisDeOrigen.setVisible(false);
 					lblAnios.setVisible(false);
-					txtBusquedaTexto.setBounds(276, 41, 279, 20);
+					txtBusquedaTexto.setBounds(276, 41, 246, 20);
 					lblBusqueda.setText("Texto de la busqueda");
-					
-					
+					txtBusquedaTexto.setText("");
 				}else if(cmbCriterioBusqueda.getSelectedIndex()==1){
 					txtBusquedaTexto.setVisible(true);
 					cmbPaisDeOrigen.setVisible(false);
 					lblAnios.setVisible(true);
 					txtBusquedaTexto.setBounds(276, 41, 80, 20);
+					txtBusquedaTexto.setText("");
 					lblBusqueda.setText("Edad de las personas");
 				}else if(cmbCriterioBusqueda.getSelectedIndex()==2){
 					txtBusquedaTexto.setVisible(false);
@@ -150,10 +179,6 @@ public class Listados extends JFrame {
 					lblAnios.setVisible(false);
 					lblBusqueda.setText("Pais de origen de las personas");
 				}
-				
-				
-				
-				
 			}
 		});
 		
@@ -161,5 +186,13 @@ public class Listados extends JFrame {
 		
 		
 		
+	}
+	public boolean verificarInteger(String data){
+		try{
+			int parsed = Integer.parseInt(data);
+			return true;
+		}catch (Exception es){
+			return false;
+		}
 	}
 }

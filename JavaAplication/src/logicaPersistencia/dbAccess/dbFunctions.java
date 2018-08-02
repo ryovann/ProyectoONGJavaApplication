@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -1067,9 +1069,13 @@ public class dbFunctions {
 			try {
 				reporte = (JasperReport) JRLoader.loadObjectFromFile(path);
 				JasperPrint print = JasperFillManager.fillReport(reporte,null,ConnectionObject.getConnection());
-				JasperViewer view = new JasperViewer(print,false);
-				view.setDefaultCloseOperation(view.DISPOSE_ON_CLOSE);
-				view.setVisible(true);
+				if(print.getPages().size()<1){
+					JOptionPane.showMessageDialog(null, "No se han encontrado resultados","Informacion",JOptionPane.OK_OPTION);
+				}else{
+					JasperViewer view = new JasperViewer(print,false);
+					view.setDefaultCloseOperation(view.DISPOSE_ON_CLOSE);
+					view.setVisible(true);
+				}
 			} catch (JRException e) {
 				System.out.println("ERROR AL GENERAR REPORTE SIN PARAMETROS");
 				e.printStackTrace();
@@ -1082,9 +1088,13 @@ public class dbFunctions {
 			try {
 				reporte = (JasperReport) JRLoader.loadObjectFromFile(path);
 				JasperPrint print = JasperFillManager.fillReport(reporte,parametrosMap,ConnectionObject.getConnection());
-				JasperViewer view = new JasperViewer(print,false);
-				view.setDefaultCloseOperation(view.DISPOSE_ON_CLOSE);
-				view.setVisible(true);
+				if(print.getPages().size()<1){
+					JOptionPane.showMessageDialog(null, "No se han encontrado resultados","Informacion",JOptionPane.OK_OPTION);
+				}else{
+					JasperViewer view = new JasperViewer(print,false);
+					view.setDefaultCloseOperation(view.DISPOSE_ON_CLOSE);
+					view.setVisible(true);
+				}
 			} catch (JRException e) {
 				System.out.println("ERROR AL GENERAR REPORTE POR NOMBRE Y APELLIDO");
 				e.printStackTrace();
@@ -1097,9 +1107,13 @@ public class dbFunctions {
 			try {
 				reporte = (JasperReport) JRLoader.loadObjectFromFile(path);
 				JasperPrint print = JasperFillManager.fillReport(reporte,parametrosMap,ConnectionObject.getConnection());
-				JasperViewer view = new JasperViewer(print,false);
-				view.setDefaultCloseOperation(view.DISPOSE_ON_CLOSE);
-				view.setVisible(true);
+				if(print.getPages().size()<1){
+					JOptionPane.showMessageDialog(null, "No se han encontrado resultados","Informacion",JOptionPane.OK_OPTION);
+				}else{
+					JasperViewer view = new JasperViewer(print,false);
+					view.setDefaultCloseOperation(view.DISPOSE_ON_CLOSE);
+					view.setVisible(true);
+				}
 			} catch (JRException e) {
 				System.out.println("ERROR AL GENERAR REPORTE POR EDAD");
 				e.printStackTrace();
@@ -1123,9 +1137,16 @@ public class dbFunctions {
 			try {
 				reporte = (JasperReport) JRLoader.loadObjectFromFile(path);
 				JasperPrint print = JasperFillManager.fillReport(reporte,parametrosMap,ConnectionObject.getConnection());
-				JasperViewer view = new JasperViewer(print,false);
-				view.setDefaultCloseOperation(view.DISPOSE_ON_CLOSE);
-				view.setVisible(true);
+				
+				if(print.getPages().size()<1){
+					JOptionPane.showMessageDialog(null, "No se han encontrado resultados","Informacion",JOptionPane.OK_OPTION);
+				}else{
+					JasperViewer view = new JasperViewer(print,false);
+					view.setTitle("Visualizador de reportes");
+					view.setDefaultCloseOperation(view.DISPOSE_ON_CLOSE);
+					view.setVisible(true);
+				}
+				
 			} catch (JRException e) {
 				System.out.println("ERROR AL GENERAR REPORTE POR EDAD");
 				e.printStackTrace();
