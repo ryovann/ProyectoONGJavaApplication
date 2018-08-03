@@ -26,6 +26,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JEditorPane;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.Toolkit;
 
 public class Listados extends JFrame {
 
@@ -52,10 +53,11 @@ public class Listados extends JFrame {
 	 * Create the frame.
 	 */
 	public Listados() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("resources\\img\\logo_veneguaya.png"));
 		setResizable(false);
 		setTitle("Generador de listados");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 163);
+		setBounds(100, 100, 687, 151);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -119,7 +121,7 @@ public class Listados extends JFrame {
 		
 	
 		JButton btnExportarListado = new JButton("Exportar listado");
-		btnExportarListado.setBounds(552, 90, 122, 23);
+		btnExportarListado.setBounds(552, 88, 122, 23);
 		contentPane.add(btnExportarListado);
 		btnExportarListado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

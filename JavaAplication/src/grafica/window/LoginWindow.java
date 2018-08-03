@@ -25,6 +25,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Canvas;
 import java.awt.Panel;
 import java.awt.BorderLayout;
+import java.awt.Toolkit;
 
 public class LoginWindow extends JFrame {
 
@@ -55,12 +56,14 @@ public class LoginWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginWindow() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("resources\\img\\logo_veneguaya.png"));
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setTitle("Ingresar - Manos Veneguayas");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 300, 377);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -98,6 +101,7 @@ public class LoginWindow extends JFrame {
 		contentPane.add(txtPassword);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
 		panel.setBounds(65, 50, 170, 120);
 		contentPane.add(panel);
 		panel.setLayout(new BorderLayout(0, 0));

@@ -81,6 +81,7 @@ public class MainWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public MainWindow() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("resources\\img\\logo_veneguaya.png"));
 		setResizable(false);
 		setTitle("Inicio - Manos Veneguayas");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

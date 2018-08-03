@@ -24,10 +24,12 @@ import java.util.HashMap;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
+import java.awt.Toolkit;
 
 public class VerInformacion extends JFrame {
 	private JPanel contentPane;
 	public VerInformacion(int cedulaVenezolana,String primerNombre, String primerApellido, String motivoContacto) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("resources\\img\\logo_veneguaya.png"));
 		setResizable(false);
 		setTitle("Informacion de: "+primerNombre+" "+primerApellido+" - CI: "+cedulaVenezolana);
 		setVisible(true);

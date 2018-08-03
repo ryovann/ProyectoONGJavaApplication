@@ -30,6 +30,7 @@ import javax.swing.JScrollPane;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.DropMode;
+import java.awt.Toolkit;
 
 public class FormularioRegistro extends JFrame {
 
@@ -372,6 +373,7 @@ public class FormularioRegistro extends JFrame {
 	}
 	
 	public FormularioRegistro(int type) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("resources\\img\\logo_veneguaya.png"));
 		tipoDeRegistro = type;
 		
 		if(type==0){
