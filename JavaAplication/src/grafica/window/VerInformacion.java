@@ -28,6 +28,7 @@ import javax.swing.JTextArea;
 public class VerInformacion extends JFrame {
 	private JPanel contentPane;
 	public VerInformacion(int cedulaVenezolana,String primerNombre, String primerApellido, String motivoContacto) {
+		setResizable(false);
 		setTitle("Informacion de: "+primerNombre+" "+primerApellido+" - CI: "+cedulaVenezolana);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
