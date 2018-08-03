@@ -1440,6 +1440,10 @@ public class FormularioRegistro extends JFrame {
 					JOptionPane.showMessageDialog(null, "Fecha de nacimiento inválida", "ERROR FECHA DE NACIMIENTO", JOptionPane.ERROR_MESSAGE);
 				}else if(!verificar_fecha_reside){
 					JOptionPane.showMessageDialog(null, "Fecha residencia inválida", "ERROR FECHA DE RESIDENCIA", JOptionPane.ERROR_MESSAGE);
+				}else if(radio_ci_uy_si.isSelected()&&txtNumeroCIUY.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "La cedula no puede estar vacia", "ERROR CEDULA URUGUAYA", JOptionPane.ERROR_MESSAGE);
+				}else if(radio_pasaporteSi.isSelected()&&txtPasaporte.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "El pasaporte no puede estar vacio", "ERROR DE PASAPORTE", JOptionPane.ERROR_MESSAGE);
 				}else{
 					
 				//if tipo es 0 o 1 insertar o hacer update
