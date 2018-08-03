@@ -271,9 +271,17 @@ public class FormularioRegistro extends JFrame {
 		
 		//obtengo telefonos 
 		HashMap<String,String> telefonos = controlador.Obtener_tenefonos(ciVenezolana+"");
+		if(telefonos.get("tel1").equals("---")){
+			txtTelefono.setText("");
+		}else{
+			txtTelefono.setText(telefonos.get("tel1"));
+		}
+		if(telefonos.get("tel2").equals("---")){
+			txtOtroTelefono.setText("");
+		}else{
+			txtOtroTelefono.setText(telefonos.get("tel2"));
+		}
 		
-		txtTelefono.setText(telefonos.get("tel1"));
-		txtOtroTelefono.setText(telefonos.get("tel2"));
 		
 		//obtengo familia_persona 
 		HashMap<String,String> familia_persona = controlador.Obtener_Familia_Persona(ciVenezolana+"");
@@ -417,7 +425,7 @@ public class FormularioRegistro extends JFrame {
 		txtSegundoApellido.setBounds(329, 47, 91, 20);
 		panelDatosPersonales.add(txtSegundoApellido);
 		
-		JLabel lblFechaDeNacimiento = new JLabel("Fecha de nacimiento");
+		JLabel lblFechaDeNacimiento = new JLabel("Fecha de nacimiento*");
 		lblFechaDeNacimiento.setBounds(415, 11, 124, 14);
 		panelDatosPersonales.add(lblFechaDeNacimiento);
 		
@@ -432,7 +440,7 @@ public class FormularioRegistro extends JFrame {
 		lblSexo.setBounds(226, 89, 40, 14);
 		panelDatosPersonales.add(lblSexo);
 		
-		JLabel lblPaisDeNacimiento = new JLabel("Pais de nacimiento");
+		JLabel lblPaisDeNacimiento = new JLabel("Pa\u00EDs de nacimiento");
 		lblPaisDeNacimiento.setBounds(430, 50, 115, 14);
 		panelDatosPersonales.add(lblPaisDeNacimiento);
 		
@@ -479,7 +487,7 @@ public class FormularioRegistro extends JFrame {
 		}
 		
 		
-		JLabel lblPrimerNombree = new JLabel("Primer nombre");
+		JLabel lblPrimerNombree = new JLabel("Primer nombre*");
 		lblPrimerNombree.setBounds(10, 11, 107, 14);
 		panelDatosPersonales.add(lblPrimerNombree);
 		
@@ -488,7 +496,7 @@ public class FormularioRegistro extends JFrame {
 		panelDatosPersonales.add(txtPrimerNombre);
 		txtPrimerNombre.setColumns(10);
 		
-		JLabel lblPrimerApellido = new JLabel("Primer apellido");
+		JLabel lblPrimerApellido = new JLabel("Primer apellido*");
 		lblPrimerApellido.setBounds(221, 11, 106, 14);
 		panelDatosPersonales.add(lblPrimerApellido);
 		
@@ -497,7 +505,7 @@ public class FormularioRegistro extends JFrame {
 		panelDatosPersonales.add(txtPrimerApellido);
 		txtPrimerApellido.setColumns(10);
 		
-		JLabel lblCedulaVenezolana = new JLabel("Cedula venezolana");
+		JLabel lblCedulaVenezolana = new JLabel("C\u00E9dula venezolana*");
 		lblCedulaVenezolana.setBounds(10, 89, 111, 14);
 		panelDatosPersonales.add(lblCedulaVenezolana);
 		
@@ -561,7 +569,7 @@ public class FormularioRegistro extends JFrame {
 		panelDocumentacion.setBounds(10, 233, 568, 119);
 		contentPane.add(panelDocumentacion);
 		
-		JLabel lblCedulaUruguaya = new JLabel("Cedula uruguaya");
+		JLabel lblCedulaUruguaya = new JLabel("C\u00E9dula uruguaya");
 		lblCedulaUruguaya.setBounds(10, 11, 100, 14);
 		panelDocumentacion.add(lblCedulaUruguaya);
 		
@@ -1401,7 +1409,12 @@ public class FormularioRegistro extends JFrame {
 					cant_hijos = Integer.parseInt(txtCantHijos.getText());
 					hijos_exterior=Integer.parseInt(txtCantidadHijosExtranjero.getText());
 				}catch(Exception e){
-					textInCantHijos = true;
+					if(txtCantHijos.getText().equals("")||txtCantidadHijosExtranjero.getText().equals("")){
+						textInCantHijos = false;
+					}else{
+						textInCantHijos = true;
+					}
+					
 				}
 					
 				
@@ -1552,15 +1565,12 @@ public class FormularioRegistro extends JFrame {
 					JOptionPane.showMessageDialog(null, "Se han guardado lo datos correctamente");
 					dispose();
 				}
-				
 			}
-			
 		});
 		btnConfirmarRegistro.setBounds(588, 695, 214, 23);
 		contentPane.add(btnConfirmarRegistro);
 		RellenarFormularioConBD();
 	}
-	
 	public void verificarEscoladidad(){
 		int idNivelSelected = cmbNivelCursado.getSelectedIndex();
 		if(idNivelSelected>=2 && radio_nivelCursadoCompleto.isSelected()){
