@@ -60,7 +60,7 @@ public class LoginWindow extends JFrame {
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setTitle("Ingresar - Manos Veneguayas");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 300, 377);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);

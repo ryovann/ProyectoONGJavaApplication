@@ -18,9 +18,7 @@ public class LoginWindow_Controller {
 		return instancia;
 	}
 	public boolean ingresarBtnAcction(String pass) {
-		System.out.println("Recived text: " + pass);
 		String storedPassword = obtainConfiguredPassword();
-		System.out.println(storedPassword);
 		if (pass.equals(storedPassword)) {
 			MainWindow ventanaPrincipal = new MainWindow();
 			ventanaPrincipal.setLocationRelativeTo(null);
