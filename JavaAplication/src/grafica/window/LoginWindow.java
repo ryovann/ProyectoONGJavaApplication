@@ -26,6 +26,7 @@ import java.awt.Canvas;
 import java.awt.Panel;
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
+import java.awt.Dialog.ModalExclusionType;
 
 public class LoginWindow extends JFrame {
 
@@ -56,6 +57,7 @@ public class LoginWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginWindow() {
+		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("resources\\img\\logo_veneguaya.png"));
 		setResizable(false);
 		setLocationRelativeTo(null);

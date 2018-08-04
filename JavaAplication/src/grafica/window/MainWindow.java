@@ -88,6 +88,7 @@ public class MainWindow extends JFrame {
 		setBounds(100, 100, 800, 508);
 		
 		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBackground(Color.WHITE);
 		setJMenuBar(menuBar);
 		
 		JMenu menuUsuarios = new JMenu("Usuarios");
