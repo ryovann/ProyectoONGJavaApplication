@@ -218,6 +218,7 @@ public class FormularioRegistro extends JFrame {
 			radio_ci_uy_si.setSelected(true);
 			lblNumero_ci_uy.setVisible(true);
 			txtNumeroCIUY.setVisible(true);
+			txtNumeroCIUY.setEnabled(false);
 			txtNumeroCIUY.setText(documentos.get("ci_uruguaya"));
 		}
 		if(documentos.get("pasaporte").equals("---")){
@@ -513,7 +514,7 @@ public class FormularioRegistro extends JFrame {
 		txtCIVenezolana.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if(txtCIVenezolana.getText().length()>=8){
+				if(txtCIVenezolana.getText().length()>=9){
 					if(e.getKeyCode()!=e.VK_BACK_SPACE){
 						e.consume();
 					}else{
@@ -782,7 +783,7 @@ public class FormularioRegistro extends JFrame {
 		contentPane.add(panelContacto);
 		panelContacto.setLayout(null);
 		
-		JLabel lblTelefono = new JLabel("Telefono");
+		JLabel lblTelefono = new JLabel("Tel\u00E9fono");
 		lblTelefono.setBounds(10, 11, 58, 14);
 		panelContacto.add(lblTelefono);
 		
@@ -1390,8 +1391,14 @@ public class FormularioRegistro extends JFrame {
 				if (radio_HomologadoSi.isSelected()){
 					homologacion =1;
 				}
-				int id_titulo = cmbTituloObtenido.getSelectedIndex()+1;//el indice+1 equivale a l clave en la base de datos
-				//ya que el combobox esta cargada desde la misma 
+				int id_titulo;
+				if(cmbNivelCursado.getSelectedIndex()>=2&&radio_nivelCursadoCompleto.isSelected()){
+					id_titulo = cmbTituloObtenido.getSelectedIndex()+1;//el indice+1 equivale a l clave en la base de datos
+					//ya que el combobox esta cargada desde la misma 
+				}else{
+					id_titulo = 0;
+				}
+				
 				
 				//EMPIEZO CON SITUACION FAMILIAR
 				String vive_con=cmbViveCon.getSelectedItem().toString();
@@ -1424,7 +1431,7 @@ public class FormularioRegistro extends JFrame {
 				boolean verificar_fecha_reside = Verificar_Fecha(dia_reside,mes_reside);
 				boolean cerrar_ventana = false;
 				if(hijos_exterior>cant_hijos){//no dijo toda la cantidad de hijos
-					JOptionPane.showMessageDialog(null, "La cantida de hijos en el exterior es mayor a la cantidad de hijos en total, eso no es posible", "ERROR ", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "La cantidad de hijos en el exterior es mayor a la cantidad de hijos en total, eso no es posible", "ERROR ", JOptionPane.ERROR_MESSAGE);
 				}else if(textInCantHijos){
 					JOptionPane.showMessageDialog(null, "No puede haber texto en los campos de cantidad de hijos", "ERROR CANTIDAD DE HIJOS", JOptionPane.ERROR_MESSAGE);
 				}else if (!verificar_email){

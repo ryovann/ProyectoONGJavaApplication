@@ -257,34 +257,36 @@ public class dbFunctions {
 
 	public void InsertarTiene_profesion(int id_titulo, int homologacion, String ci_venezolana) {
 		ConnectionObject.initializeConnection();
-		try {
-			// consigo el id de la persona
-			PreparedStatement preparedS = ConnectionObject.getConnection()
-					.prepareStatement(querys.idPersona_por_ci_venezolana());
-			preparedS.setString(1, ci_venezolana);
-			ResultSet rs = preparedS.executeQuery();
-			int id_persona = 0;
-			if (rs == null) { // SI ES UN rs VACIO
-				System.out.println("no hay persona con esa cedula venezolana, estoy en dbfunctions");
-			} else {
-				while (rs.next()) {
-					id_persona = rs.getInt("id_persona");
-					System.out.println("se encontro id_persona por la cedula, estoy en dbfunctions");
-				}
-				PreparedStatement preparedS2 = ConnectionObject.getConnection()
-						.prepareStatement(querys.InsertarProfesion());
-				preparedS2.setInt(1, id_persona);
-				preparedS2.setInt(2, id_titulo);
-				preparedS2.setInt(3, homologacion);
-				preparedS2.executeUpdate();
-				System.out.println("se inserto la profesion, estoy en dbFunctions");
-			} // end else
-			rs.close();
-			preparedS.close();
+		if(id_titulo!=0){
+			try {
+				// consigo el id de la persona
+				PreparedStatement preparedS = ConnectionObject.getConnection()
+						.prepareStatement(querys.idPersona_por_ci_venezolana());
+				preparedS.setString(1, ci_venezolana);
+				ResultSet rs = preparedS.executeQuery();
+				int id_persona = 0;
+				if (rs == null) { // SI ES UN rs VACIO
+					System.out.println("no hay persona con esa cedula venezolana, estoy en dbfunctions");
+				} else {
+					while (rs.next()) {
+						id_persona = rs.getInt("id_persona");
+						System.out.println("se encontro id_persona por la cedula, estoy en dbfunctions");
+					}
+					PreparedStatement preparedS2 = ConnectionObject.getConnection()
+							.prepareStatement(querys.InsertarProfesion());
+					preparedS2.setInt(1, id_persona);
+					preparedS2.setInt(2, id_titulo);
+					preparedS2.setInt(3, homologacion);
+					preparedS2.executeUpdate();
+					System.out.println("se inserto la profesion, estoy en dbFunctions");
+				} // end else
+				rs.close();
+				preparedS.close();
 
-		} catch (SQLException e) {
-			System.out.println("dbFunctions.InsertarProfesion(): Error en la consulta: ");
-			e.printStackTrace();
+			} catch (SQLException e) {
+				System.out.println("dbFunctions.InsertarProfesion(): Error en la consulta: ");
+				e.printStackTrace();
+			}
 		}
 	}
 
